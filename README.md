@@ -34,10 +34,10 @@ This folder is already a git repo with an initial commit. To publish it:
 
 ```bash
 # with the GitHub CLI
-gh repo create mallorca-itinerary --private --source . --push
+gh repo create itinerary-playbook --private --source . --push
 
-# or manually
-git remote add origin https://github.com/<you>/mallorca-itinerary.git
+# or manually (the remote is already set in this repo)
+git remote add origin https://github.com/Callum-RenewaBlox/itinerary-playbook.git
 git push -u origin main
 ```
 
