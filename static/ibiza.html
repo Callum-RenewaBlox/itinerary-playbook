@@ -69,10 +69,33 @@ img,svg{max-width:100%}
 }
 .bar .mark{font-family:var(--disp);font-size:1.1rem;letter-spacing:.05em;white-space:nowrap}
 .bar .mark i{color:var(--coral);font-style:normal}
-.bar nav{margin-left:auto;display:flex;gap:clamp(9px,1.8vw,20px);overflow-x:auto;scrollbar-width:none}
+.bar nav{display:flex;align-items:center;gap:6px;scrollbar-width:none;padding:0 2px}
 .bar nav::-webkit-scrollbar{display:none}
-.bar nav a{color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .18s}
-.bar nav a:hover{color:var(--ink)}
+.daynav{margin-left:auto;overflow-x:auto;min-width:0}
+.secnav{gap:clamp(9px,1.6vw,18px);flex-shrink:0}
+
+/* Day shortcuts. Deliberately shaped like buttons rather than text links —
+   they are the main way people move around this page, so they have to look
+   pressable at a glance rather than reveal themselves on hover. */
+.daynav a{
+  display:inline-flex;align-items:baseline;gap:.4em;
+  padding:5px 11px;border:1px solid #D3E2E8;border-radius:999px;
+  background:#EDF5F8;color:var(--sea);text-decoration:none;
+  white-space:nowrap;transition:background .16s,border-color .16s,color .16s;
+}
+.daynav a b{color:var(--ink);font-weight:700;letter-spacing:.04em}
+/* the date in the accent colour is the cue that these are day jumps */
+.daynav a .dt{color:var(--coral);font-weight:700;font-variant-numeric:tabular-nums}
+.daynav a:hover{background:var(--sea);border-color:var(--sea);color:#fff}
+.daynav a:hover b,.daynav a:hover .dt{color:#fff}
+.daynav a.on{background:var(--coral);border-color:var(--coral);color:#FFF0EC}
+.daynav a.on b,.daynav a.on .dt{color:#fff}
+
+.bar .sep{width:1px;height:22px;background:var(--line);flex-shrink:0;margin:0 4px}
+.secnav a{color:var(--muted);text-decoration:none;white-space:nowrap;
+  transition:color .18s;padding:4px 2px;border-bottom:1.5px solid transparent}
+.secnav a:hover{color:var(--ink);border-bottom-color:var(--coral)}
+@media(max-width:900px){.bar .sep,.secnav{display:none}}
 
 /* ---------------- hero ---------------- */
 .hero{position:relative;padding:clamp(30px,5vw,58px) 0 0;overflow:hidden}
@@ -122,9 +145,22 @@ section{padding:clamp(44px,7vw,90px) 0}
 .wday{display:flex;flex-direction:column;gap:2px}
 .wday b{font-family:var(--disp);font-size:1.45rem;line-height:1;color:var(--ink)}
 .wday span{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;color:var(--dim);text-transform:uppercase}
-.wrow.big{background:linear-gradient(90deg,rgba(217,69,42,.07),transparent 65%)}
+.wrow.big{background:linear-gradient(90deg,rgba(196,58,34,.07),transparent 65%)}
 .wrow.big .wday b{color:var(--coral)}
 .wcell-n{color:var(--grape);font-weight:500}
+
+/* the whole row is the shortcut — bigger target than a link, and the chevron
+   says so without needing a hover to find out */
+a.wrow{text-decoration:none;color:inherit;cursor:pointer}
+a.wrow:hover{background:#EAF4F7}
+a.wrow.big:hover{background:linear-gradient(90deg,rgba(196,58,34,.13),transparent 65%)}
+a.wrow:hover .wday b{color:var(--sea)}
+a.wrow.big:hover .wday b{color:var(--coral)}
+.wday .go{display:inline-flex;align-items:center;gap:.3em;margin-top:3px;
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sea);opacity:.75;transition:opacity .16s}
+a.wrow:hover .wday .go{opacity:1}
+a.wrow.big .wday .go{color:var(--coral)}
 @media(max-width:720px){
   .wrow{grid-template-columns:74px 1fr}
   .wrow.head{display:none}
@@ -134,7 +170,9 @@ section{padding:clamp(44px,7vw,90px) 0}
 }
 
 /* ---------------- day ---------------- */
-.day{margin-bottom:clamp(40px,6vw,72px);scroll-margin-top:72px}
+/* scroll-margin here ADDS to html's scroll-padding-top, so keep it small —
+   72 + 72 landed each day 144px down, which is further than it needs to be */
+.day{margin-bottom:clamp(40px,6vw,72px);scroll-margin-top:16px}
 .dayband{
   position:relative;border-radius:var(--r) var(--r) 0 0;overflow:hidden;
   border:1px solid var(--line);border-bottom:0;background:var(--paper);
@@ -265,10 +303,19 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
 
 <div class="bar">
   <span class="mark">IBIZA<i>.</i></span>
-  <nav class="m">
-    <a href="#week">Week</a><a href="#d02">Wed</a><a href="#d03">Thu</a><a href="#d04">Fri</a>
-    <a href="#d05">Sat</a><a href="#d06">Sun</a><a href="#d07">Mon</a><a href="#d08">Tue</a>
-    <a href="#buses">Buses</a><a href="#eat">Eat</a><a href="#pack">Before you fly</a>
+  <nav class="daynav m" id="daynav" aria-label="Jump to a day">
+    <a href="#d02"><b>Wed</b><span class="dt">2</span></a>
+    <a href="#d03"><b>Thu</b><span class="dt">3</span></a>
+    <a href="#d04"><b>Fri</b><span class="dt">4</span></a>
+    <a href="#d05"><b>Sat</b><span class="dt">5</span></a>
+    <a href="#d06"><b>Sun</b><span class="dt">6</span></a>
+    <a href="#d07"><b>Mon</b><span class="dt">7</span></a>
+    <a href="#d08"><b>Tue</b><span class="dt">8</span></a>
+    <a href="#d09"><b>Wed</b><span class="dt">9</span></a>
+    <span class="sep" aria-hidden="true"></span>
+  </nav>
+  <nav class="secnav m" aria-label="Sections">
+    <a href="#week">Week</a><a href="#buses">Buses</a><a href="#eat">Eat</a><a href="#pack">Admin</a>
   </nav>
 </div>
 
@@ -341,14 +388,14 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
   </div>
   <div class="week">
     <div class="wrow head"><div>Day</div><div>Daylight</div><div>After dark</div></div>
-    <div class="wrow"><div class="wday"><b>02</b><span>Wed</span></div><div>Land 19:25 · AERO1 to San Antonio</div><div class="wcell-n">Kumharas, six minutes on foot</div></div>
-    <div class="wrow"><div class="wday"><b>03</b><span>Thu</span></div><div>FORMENTERA · ferry from Ibiza Town, L3 to Ses Illetes</div><div class="wcell-n">Pom Thai, then San Antonio</div></div>
-    <div class="wrow big"><div class="wday"><b>04</b><span>Fri</span></div><div>Pool day. Nothing that costs energy.</div><div class="wcell-n">★ CALVIN HARRIS · Ushuaïa</div></div>
-    <div class="wrow big"><div class="wday"><b>05</b><span>Sat</span></div><div>Cala Bassa on the P5 · back for sunset</div><div class="wcell-n">Es Virot, then ★ BRESH · Amnesia</div></div>
-    <div class="wrow"><div class="wday"><b>06</b><span>Sun</span></div><div>Cala Comte on the P4 · then the old town</div><div class="wcell-n">El Olivo Mio 20:30 ✓ · Dalt Vila bars</div></div>
-    <div class="wrow big"><div class="wday"><b>07</b><span>Mon</span></div><div>Cala Saladeta on the P7 · sunset on the strip</div><div class="wcell-n">Aragma, then Es Paradís · walk home</div></div>
-    <div class="wrow"><div class="wday"><b>08</b><span>Tue</span></div><div>Es Vedrà by catamaran</div><div class="wcell-n">Chi Kee Wun · optional Pacha</div></div>
-    <div class="wrow"><div class="wday"><b>09</b><span>Wed</span></div><div>Last swim at Xinxó, lunch, bags</div><div class="wcell-n">AERO1 16:30 · fly 20:15</div></div>
+    <a class="wrow" href="#d02"><div class="wday"><b>02</b><span>Wed</span><span class="go">Open ›</span></div><div>Land 19:25 · AERO1 to San Antonio</div><div class="wcell-n">Kumharas, six minutes on foot</div></a>
+    <a class="wrow" href="#d03"><div class="wday"><b>03</b><span>Thu</span><span class="go">Open ›</span></div><div>FORMENTERA · ferry from Ibiza Town, L3 to Ses Illetes</div><div class="wcell-n">Pom Thai, then San Antonio</div></a>
+    <a class="wrow big" href="#d04"><div class="wday"><b>04</b><span>Fri</span><span class="go">Open ›</span></div><div>Pool day. Nothing that costs energy.</div><div class="wcell-n">★ CALVIN HARRIS · Ushuaïa</div></a>
+    <a class="wrow big" href="#d05"><div class="wday"><b>05</b><span>Sat</span><span class="go">Open ›</span></div><div>Cala Bassa on the P5 · back for sunset</div><div class="wcell-n">Es Virot, then ★ BRESH · Amnesia</div></a>
+    <a class="wrow" href="#d06"><div class="wday"><b>06</b><span>Sun</span><span class="go">Open ›</span></div><div>Cala Comte on the P4 · then the old town</div><div class="wcell-n">El Olivo Mio 20:30 ✓ · Dalt Vila bars</div></a>
+    <a class="wrow big" href="#d07"><div class="wday"><b>07</b><span>Mon</span><span class="go">Open ›</span></div><div>Cala Saladeta on the P7 · sunset on the strip</div><div class="wcell-n">Aragma, then Es Paradís · walk home</div></a>
+    <a class="wrow" href="#d08"><div class="wday"><b>08</b><span>Tue</span><span class="go">Open ›</span></div><div>Es Vedrà by catamaran</div><div class="wcell-n">Chi Kee Wun · optional Pacha</div></a>
+    <a class="wrow" href="#d09"><div class="wday"><b>09</b><span>Wed</span><span class="go">Open ›</span></div><div>Last swim at Xinxó, lunch, bags</div><div class="wcell-n">AERO1 16:30 · fly 20:15</div></a>
   </div>
 
   <div class="call info" style="margin:22px 0 0">
@@ -1032,6 +1079,39 @@ document.querySelectorAll('.chk').forEach(function(c){
     c.setAttribute('aria-pressed', String(done));
   });
 });
+
+/* Highlight whichever day you are actually looking at, and keep that chip in
+   view inside the strip — on a phone the later days start off-screen, so
+   without this you would never see the marker move. */
+(function(){
+  var nav = document.getElementById('daynav');
+  if(!nav || !('IntersectionObserver' in window)) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var days = links.map(function(a){
+    try { return document.querySelector(a.getAttribute('href')); } catch(e){ return null; }
+  }).filter(Boolean);
+  if(!days.length) return;
+
+  function setActive(id){
+    var active = null;
+    links.forEach(function(a){
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('on', on);
+      if(on){ active = a; }
+    });
+    if(!active) return;
+    /* scroll the strip only — never the page */
+    var target = active.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2;
+    nav.scrollTo({left: Math.max(0, target), behavior: 'smooth'});
+  }
+
+  /* -45%/-50% leaves a thin band at the middle of the screen, so exactly one
+     day can be intersecting at a time */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ setActive(e.target.id); } });
+  }, {rootMargin: '-45% 0px -50% 0px'});
+  days.forEach(function(d){ io.observe(d); });
+})();
 </script>
 </body>
 </html>
