@@ -31,7 +31,10 @@ st.set_page_config(
 
 
 @st.cache_data(show_spinner=False)
-def _read(path: str, _mtime: float) -> str:
+def _read(path: str, mtime: float) -> str:
+    # NB: `mtime` must NOT be named with a leading underscore — Streamlit
+    # treats underscore-prefixed arguments as unhashable and leaves them out
+    # of the cache key, which would silently defeat the point of passing it.
     return Path(path).read_text(encoding="utf-8")
 
 
