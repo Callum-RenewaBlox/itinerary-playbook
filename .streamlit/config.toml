@@ -1,9 +1,12 @@
+# Matches the default page (Ibiza), so there is no flash of the wrong colour
+# on load and nothing pale bleeds around the edges. Each itinerary re-themes
+# the surrounding chrome to its own palette when it renders.
 [theme]
-base = "light"
-backgroundColor = "#f6efe1"
-secondaryBackgroundColor = "#efe5d2"
-primaryColor = "#c2562f"
-textColor = "#23201b"
+base = "dark"
+backgroundColor = "#06050A"
+secondaryBackgroundColor = "#100D19"
+primaryColor = "#FF2E8B"
+textColor = "#FFF6FA"
 
 [browser]
 gatherUsageStats = false
