@@ -265,9 +265,12 @@ section{padding:clamp(60px,9vw,132px) var(--pad)}
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:13px 18px;border-bottom:1px solid var(--line-2);
 }
-.panel.sun{background:linear-gradient(180deg,rgba(255,174,59,.075),rgba(255,174,59,.012) 45%,transparent)}
+/* background-image, NOT the background shorthand: the shorthand resets
+   background-color to transparent, which would let the ambient light through
+   onto the schedule. These panels carry the bus times. */
+.panel.sun{background-color:var(--panel);background-image:linear-gradient(180deg,rgba(255,174,59,.075),rgba(255,174,59,.012) 45%,transparent)}
 .panel.sun .ph{color:var(--sun);border-bottom-color:rgba(255,174,59,.2)}
-.panel.moon{background:linear-gradient(180deg,rgba(255,46,139,.085),rgba(155,107,255,.03) 45%,transparent)}
+.panel.moon{background-color:var(--panel);background-image:linear-gradient(180deg,rgba(255,46,139,.085),rgba(155,107,255,.03) 45%,transparent)}
 .panel.moon .ph{color:var(--mag);border-bottom-color:rgba(255,46,139,.22)}
 .panel .ph .tsp{color:var(--dim);font-size:.6rem}
 .panel ul{list-style:none;padding:6px 0}
@@ -286,12 +289,18 @@ body.hide-sun .panel.sun{opacity:.16;filter:saturate(0)}
 body.hide-moon .panel.moon{opacity:.16;filter:saturate(0)}
 
 /* ============ CALLOUT ============ */
+/* opaque base + tint as background-image — these callouts carry the taxi
+   numbers and the last-mile warning, so nothing may show through them */
 .call{
   border:1px solid rgba(255,46,139,.34);border-left:3px solid var(--mag);
-  background:rgba(255,46,139,.055);border-radius:3px;padding:16px 20px;margin-top:16px;
+  background-color:var(--panel);
+  background-image:linear-gradient(0deg,rgba(255,46,139,.055),rgba(255,46,139,.055));
+  border-radius:3px;padding:16px 20px;margin-top:16px;
 }
-.call.info{border-color:rgba(43,232,255,.32);border-left-color:var(--cyan);background:rgba(43,232,255,.05)}
-.call.warn{border-color:rgba(255,174,59,.34);border-left-color:var(--sun);background:rgba(255,174,59,.055)}
+.call.info{border-color:rgba(43,232,255,.32);border-left-color:var(--cyan);
+  background-image:linear-gradient(0deg,rgba(43,232,255,.05),rgba(43,232,255,.05))}
+.call.warn{border-color:rgba(255,174,59,.34);border-left-color:var(--sun);
+  background-image:linear-gradient(0deg,rgba(255,174,59,.055),rgba(255,174,59,.055))}
 .call .ct{color:var(--mag);margin-bottom:7px}
 .call.info .ct{color:var(--cyan)}
 .call.warn .ct{color:var(--sun)}
@@ -396,8 +405,8 @@ footer a{color:var(--muted)}
    where the real 20:15 sunset lives. (It is --sunpos, not --sun: --sun
    is already the amber colour token at the top of this file.)
 
-   THE INVARIANT: this system may only ever write --sunpos, --k-* and
-   --ecl, and may only ever paint low-opacity light at the top and
+   THE INVARIANT: this system may only ever write --sunpos, --k-*, --ecl
+   and --spot-x/--spot-y, and may only ever paint low-opacity light at the top and
    bottom edges of the viewport. It must NEVER touch --ink, --muted,
    --panel, --panel-2 or --line, and must never lay light behind body
    copy. Legibility is not negotiable — this is a document two people
@@ -455,11 +464,19 @@ body::after{opacity:var(--k-night,1);transition:opacity 1s cubic-bezier(.4,0,.2,
 .sun{
   left:62%;bottom:50vh;
   width:clamp(112px,15vw,230px);aspect-ratio:1;border-radius:50%;
+  /* Alpha is capped at .20. A disc anywhere above the waterline is, on any
+     viewport, in the vertical middle of the screen — so it WILL sit behind
+     copy that has no panel under it (section standfirsts, day notes). At .20
+     over --bg, --muted still measures ~5.2:1; at .25 it drops to 4.5 and
+     below that it fails outright. The sun reads through bloom and the light
+     it throws on the sky and water, not through raw luminance. */
   background:radial-gradient(circle at 50% 50%,
-    #FFF6DC 0%, #FFD067 34%, #FF8A38 62%, rgba(255,122,47,.28) 74%, rgba(255,122,47,0) 78%);
+    rgba(255,246,220,.20) 0%, rgba(255,208,103,.175) 34%, rgba(255,138,56,.115) 62%,
+    rgba(255,122,47,.05) 74%, rgba(255,122,47,0) 78%);
   opacity:calc(var(--k-sun,1) * var(--ecl,1));
   transform:translate3d(0, calc((1 - var(--sunpos,1)) * 48vh), 0);
-  transition:opacity .8s ease;
+  /* the scalar is quantised to 20 steps, so ease the hop between them */
+  transition:opacity .8s ease, transform .45s linear;
 }
 /* the specular road the low sun lays on the water — anchored at the
    waterline and spreading towards the reader, in the sun's own column */
@@ -501,18 +518,33 @@ body::after{opacity:var(--k-night,1);transition:opacity 1s cubic-bezier(.4,0,.2,
 .lights{
   margin-left:14px;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;
   background:transparent;border:1px solid var(--line);border-radius:2px;
-  color:var(--dim);cursor:pointer;padding:6px 10px;transition:.2s;
+  /* --dim on the bar measures ~3.7:1; --muted clears AA at this size */
+  color:var(--muted);cursor:pointer;transition:.2s;
+  /* a real touch target, not a 25x21 sliver */
+  min-height:44px;min-width:44px;justify-content:center;padding:6px 12px;
 }
 .lights:hover{border-color:var(--muted);color:var(--ink)}
 .lights .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);
-  box-shadow:0 0 8px rgba(255,174,59,.8);transition:.2s}
+  box-shadow:0 0 8px rgba(255,174,59,.8);transition:.2s;flex-shrink:0}
 body.lights-off .lights .dot{background:var(--dim);box-shadow:none}
 body.lights-off #amb{opacity:0}
 body.lights-off .wordmark{animation:none}
+/* with the engine parked, the page's original glow field must come back on
+   rather than freeze at whatever --k-night happened to be */
+body.lights-off::after{opacity:1}
+
+/* screen-reader-only, for facts that are visually carried by decoration */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+@media(max-width:900px){
+  /* the board and the section nav cannot share this row below 900px —
+     the nav is the one that navigates, so the decoration goes */
+  .board{display:none}
+}
 @media(max-width:640px){
-  .lights{margin-left:auto}
+  .lights{margin-left:auto;padding:6px 10px}
   .lights .ltxt{display:none}
-  .lights{padding:6px 8px}
 }
 
 /* ============ DEPARTURE BOARD ============ */
@@ -544,9 +576,16 @@ body.lights-off .wordmark{animation:none}
   100%{opacity:1;transform:translateY(0) rotate(.35deg)}
 }
 
-/* the wordmark catches the light, slowly, and only while it is on screen */
-.wordmark{background-size:200% 100%;background-position:0% 50%}
-.wordmark.lit{animation:sweep 14s ease-in-out infinite}
+/* The wordmark catches the light once, on arrival — not on a loop.
+   background-position is not compositable, so each frame repaints the glyphs
+   AND re-runs the inherited 46px drop-shadow over them. On a loop that burns
+   the main thread for as long as the hero is on screen, which is exactly when
+   the reader is sitting still. One pass costs 14s and then stops dead; the
+   .lit class is removed and re-added by the observer, so it replays whenever
+   you come back to the top. Base position matches the keyframe so nothing
+   snaps when it finishes. */
+.wordmark{background-size:200% 100%;background-position:6% 50%}
+.wordmark.lit{animation:sweep 14s ease-in-out 1 both}
 @keyframes sweep{0%,100%{background-position:6% 50%}50%{background-position:94% 50%}}
 
 /* ============ THE TIME SPINE ============
@@ -639,6 +678,9 @@ body.lights-off .wordmark{animation:none}
 
 <div class="bar">
   <span class="mark">IBIZA<i>.</i></span>
+  <!-- the dates the board replaced: still announced, and still here when the
+       board is hidden on narrow screens -->
+  <span class="vh">02—09 September 2026 · Caroline + cousin</span>
   <!-- decorative: it mirrors the section headings, so announcing it on every
        scroll would just be noise for a screen reader -->
   <span class="board m" id="board" aria-hidden="true"></span>
@@ -1197,7 +1239,7 @@ document.getElementById('traps').innerHTML = TRAPS.map(t=>`
 
 /* checks */
 document.getElementById('checks').innerHTML = CHECKS.map(c=>`
-  <button type="button" class="chk" aria-pressed="false"><span class="box">✓</span><span class="ctxt"><strong>${c.h}</strong><span>${c.s}</span></span></button>`).join('');
+  <button type="button" class="chk" aria-pressed="false"><span class="box" aria-hidden="true">✓</span><span class="ctxt"><strong>${c.h}</strong><span>${c.s}</span></span></button>`).join('');
 document.querySelectorAll('.chk').forEach(c=>c.addEventListener('click',()=>{
   const done = c.classList.toggle('done');
   c.setAttribute('aria-pressed', String(done));
@@ -1237,7 +1279,7 @@ document.querySelectorAll('.tg').forEach(b=>{
    scrolling, this stops doing anything at all. Everything it drives
    animates on opacity/transform, so the compositor does the work.
 
-   It may only write --sunpos, --k-* and --ecl. It never touches text,
+   It may only write --sunpos, --k-*, --ecl and --spot-*. It never touches text,
    panel or line colour — see the invariant in the stylesheet.
    ================================================================== */
 (function(){
@@ -1276,7 +1318,7 @@ document.querySelectorAll('.tg').forEach(b=>{
 
   /* ---------------- the scalar ----------------
      --sun runs 1 -> 0 with scroll depth, and is warped so that it is
-     exactly .53 (the horizon) when section 05 crosses the middle of
+     exactly .667 (the waterline) when section 05 crosses the middle of
      the screen. That is where the real 20:15 sunset lives. */
   let sandAt = .62;
   function measure(){
@@ -1441,14 +1483,35 @@ document.querySelectorAll('.tg').forEach(b=>{
       items.push(el);
     });
   });
-  function showAll(){ items.forEach(el=>el.classList.add('in')); }
+  /* Once an element has arrived, drop the reveal classes altogether.
+     .rv.in sets transform:none, which sits at equal specificity to — and
+     later in the sheet than — the .stub/.route/.trap hover lifts, so leaving
+     it on would silently kill every hover transform on the page. */
+  function reveal(el){
+    el.classList.add('in');
+    let done = false;
+    const settle = function(){
+      if(done) return;
+      done = true;
+      el.classList.remove('rv','in');
+    };
+    el.addEventListener('transitionend', settle, {once:true});
+    /* transitionend never fires in a background tab, so don't rely on it */
+    setTimeout(settle, 2000);
+  }
+  function showAll(){ items.forEach(reveal); }
+
+  let arrived = 0;
   if(hasIO && !reduce.matches){
     const io = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      es.forEach(e=>{ if(e.isIntersecting){ arrived++; reveal(e.target); io.unobserve(e.target); } });
     }, {threshold:.06, rootMargin:'0px 0px -6% 0px'});
     items.forEach(el=>io.observe(el));
   } else showAll();
-  setTimeout(showAll, 3500);
+  /* Failsafe only if the observer never reported anything at all — a hidden
+     tab, no rendering opportunities, a thrown error. Firing it unconditionally
+     would flash the entire page in at 3.5s and cancel the effect outright. */
+  setTimeout(function(){ if(arrived === 0) showAll(); }, 3500);
 
   /* the time spine fills once, as each panel arrives */
   const panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
