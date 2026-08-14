@@ -3,1538 +3,1035 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IBIZA · 02–09 SEP 26 · Caroline + Cousin</title>
+<title>Ibiza · 02–09 Sep 26 · Caroline + Cousin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ============ TOKENS ============ */
+/* ============================================================
+   IBIZA — a fortnight's worth of plan in a week.
+   Lit for daylight: whitewash walls, sea, terracotta, sun. The
+   old dark version is kept at static/ibiza-dark-backup.html.
+   Every colour is a token; nothing is hard-coded downstream.
+   ============================================================ */
 :root{
-  --bg:#06050A;
-  --bg-2:#0B0913;
-  --panel:#100D19;
-  --panel-2:#171223;
-  --ink:#FFF6FA;
-  --muted:#A79FBC;
-  --dim:#6E6785;
-  --line:rgba(255,255,255,.10);
-  --line-2:rgba(255,255,255,.055);
+  --sand:#FAF6EE;      /* ground — whitewash with a warm bias */
+  --sand-2:#F3EADB;    /* sunk panels */
+  --paper:#FFFFFF;     /* cards */
+  --ink:#1B2733;       /* deep sea-navy, never pure black */
+  --ink-2:#33414F;
+  /* Greys are set by measurement, not by eye: every one of them carries text
+     that matters (bus labels, table headers, the sub-notes), so they all clear
+     4.5:1 on paper AND on the two sand grounds. Hierarchy comes from size and
+     weight instead of from fading the colour out. */
+  --muted:#55636F;
+  --dim:#64727F;
+  --line:#E6DBC9;
+  --line-2:#F0E8DB;
 
-  --mag:#FF2E8B;
-  --cyan:#2BE8FF;
-  --lime:#C9FF35;
-  --sun:#FFAE3B;
-  --violet:#9B6BFF;
+  /* darkened from a brighter coral: this is the colour of the last-bus times,
+     the single most important text on the page, so it has to clear AA */
+  --coral:#C43A22;     /* action, sunset, the thing that strands you */
+  --sea:#0A7089;       /* water, transport, buses */
+  --sun:#DE8C10;       /* daylight, beaches */
+  --grape:#6F44B0;     /* after dark */
+  --olive:#5F7C43;     /* free, walkable */
 
   --disp:'Anton','Arial Narrow',Haettenschweiler,Impact,sans-serif;
   --body:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
-  --rail:200px;
-  --pad:clamp(18px,5vw,72px);
+  --maxw:1080px;
+  --pad:clamp(18px,4.5vw,56px);
+  --r:6px;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:88px;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.55;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  background:var(--sand);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.d{font-family:var(--disp);text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.m{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase}
+.tnum,.m,.mono{font-variant-numeric:tabular-nums}
+a{color:var(--sea)}
+:focus-visible{outline:2.5px solid var(--sea);outline-offset:3px;border-radius:3px}
+img,svg{max-width:100%}
 
-/* grain + glow field */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.30;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='.5'/></svg>");
-  mix-blend-mode:overlay;
-}
-body::after{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(60vw 60vw at 8% -6%, rgba(255,46,139,.20), transparent 62%),
-    radial-gradient(52vw 52vw at 100% 12%, rgba(43,232,255,.13), transparent 60%),
-    radial-gradient(70vw 46vw at 50% 108%, rgba(155,107,255,.16), transparent 66%);
-}
-main,header,footer,nav{position:relative;z-index:1}
-
-::selection{background:var(--mag);color:#0A0410}
-
-/* ============ TYPE ============ */
-.d{font-family:var(--disp);font-weight:400;letter-spacing:.005em;line-height:.86;text-transform:uppercase}
-.m{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
-.mm{font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
-a{color:inherit}
-.hl{color:var(--mag)}
-.hlc{color:var(--cyan)}
-.hls{color:var(--sun)}
-.hll{color:var(--lime)}
-
-/* ============ TOP BAR ============ */
+/* ---------------- top bar ---------------- */
 .bar{
-  position:sticky;top:0;z-index:60;
-  display:flex;align-items:center;gap:20px;
-  padding:0 var(--pad);height:60px;
-  /* a backdrop-filter re-rasterises whenever anything behind it moves, so
-     with a moving sky underneath this is the most expensive thing on the
-     page. 8px over a more opaque bar reads the same and costs far less. */
-  background:rgba(6,5,10,.88);backdrop-filter:blur(8px) saturate(1.35);
-  border-bottom:1px solid var(--line-2);
+  position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  padding:0 var(--pad);height:56px;
+  background:rgba(250,246,238,.93);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
 }
-.bar .mark{font-family:var(--disp);font-size:1.15rem;letter-spacing:.06em;white-space:nowrap}
-.bar .mark i{color:var(--mag);font-style:normal}
-.bar .when{color:var(--dim);white-space:nowrap}
-.bar nav{margin-left:auto;display:flex;gap:22px;overflow-x:auto;scrollbar-width:none}
+.bar .mark{font-family:var(--disp);font-size:1.1rem;letter-spacing:.05em;white-space:nowrap}
+.bar .mark i{color:var(--coral);font-style:normal}
+.bar nav{margin-left:auto;display:flex;gap:clamp(9px,1.8vw,20px);overflow-x:auto;scrollbar-width:none}
 .bar nav::-webkit-scrollbar{display:none}
 .bar nav a{color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .18s}
 .bar nav a:hover{color:var(--ink)}
-@media(max-width:900px){.bar .when{display:none}}
-@media(max-width:640px){.bar nav{display:none}}
 
-/* ============ HERO ============ */
-.hero{padding:clamp(48px,9vw,110px) var(--pad) 0;position:relative}
-.kicker{display:flex;align-items:center;gap:12px;color:var(--mag);margin-bottom:22px;flex-wrap:wrap}
-.kicker::before{content:'';width:44px;height:1px;background:var(--mag)}
-.wordmark{
-  font-family:var(--disp);text-transform:uppercase;
-  font-size:clamp(4.6rem,20.5vw,17rem);line-height:.78;letter-spacing:-.012em;
-  background:linear-gradient(96deg,#FFF6FA 4%,var(--mag) 34%,var(--violet) 58%,var(--cyan) 88%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 46px rgba(255,46,139,.34));
-  margin-left:-.012em;
-}
-.sub{
-  font-size:clamp(1.12rem,2.5vw,1.85rem);line-height:1.3;max-width:22ch;
-  margin-top:clamp(18px,3vw,30px);font-weight:600;
-}
-.sub em{font-style:italic;color:var(--mag)}
+/* ---------------- hero ---------------- */
+.hero{position:relative;padding:clamp(30px,5vw,58px) 0 0;overflow:hidden}
+.hero .scene{display:block;width:100%;height:auto;margin-top:clamp(18px,3vw,30px)}
+.kicker{display:flex;align-items:center;gap:.7em;color:var(--coral);margin-bottom:1rem;flex-wrap:wrap}
+.kicker::before{content:'';width:34px;height:2px;background:var(--coral)}
+.wordmark{font-family:var(--disp);text-transform:uppercase;
+  font-size:clamp(3.6rem,15vw,11rem);line-height:.8;letter-spacing:-.015em;color:var(--ink)}
+.sub{font-size:clamp(1.05rem,2.3vw,1.5rem);line-height:1.35;max-width:24ch;
+  margin-top:1rem;font-weight:600;color:var(--ink-2)}
+.sub em{font-style:italic;color:var(--coral)}
 
-/* boarding strip */
 .strip{
-  margin-top:clamp(34px,6vw,64px);
-  border:1px solid var(--line);border-radius:3px;
-  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
-  display:grid;grid-template-columns:repeat(4,1fr);
-  position:relative;overflow:hidden;
+  margin-top:clamp(22px,4vw,38px);display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
 }
-.strip::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--mag),var(--violet),var(--cyan),var(--lime));
-}
-.strip > div{padding:20px 22px;border-right:1px dashed var(--line)}
+.strip > div{padding:15px 16px;border-right:1px solid var(--line-2)}
 .strip > div:last-child{border-right:0}
-.strip .lab{color:var(--dim);margin-bottom:7px}
-.strip .val{font-family:var(--disp);font-size:clamp(1rem,2vw,1.5rem);line-height:1.06}
-.strip .val small{display:block;font-family:var(--body);font-size:.72rem;font-weight:400;letter-spacing:0;color:var(--muted);text-transform:none;margin-top:5px;line-height:1.4}
-@media(max-width:820px){.strip{grid-template-columns:repeat(2,1fr)}.strip>div:nth-child(2){border-right:0}.strip>div:nth-child(-n+2){border-bottom:1px dashed var(--line)}}
+.strip .lab{color:var(--dim);margin-bottom:5px}
+.strip .val{font-family:var(--disp);font-size:clamp(.95rem,1.7vw,1.25rem);line-height:1.05;color:var(--ink)}
+.strip .val small{display:block;font-family:var(--body);font-size:.72rem;font-weight:400;
+  letter-spacing:0;color:var(--muted);text-transform:none;margin-top:4px;line-height:1.4}
+@media(max-width:760px){
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .strip>div:nth-child(2){border-right:0}
+  .strip>div:nth-child(-n+2){border-bottom:1px solid var(--line-2)}
+}
 
-/* ============ SECTION ============ */
-section{padding:clamp(60px,9vw,132px) var(--pad)}
-.sechead{display:flex;align-items:flex-end;gap:24px;margin-bottom:clamp(28px,4vw,52px);flex-wrap:wrap}
-.sechead h2{font-family:var(--disp);font-size:clamp(2.1rem,6.2vw,4.6rem);line-height:.88;text-transform:uppercase;letter-spacing:-.005em}
-.sechead .no{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--mag);padding-bottom:.55em;white-space:nowrap}
-.sechead p{color:var(--muted);max-width:46ch;margin-left:auto;font-size:.94rem;padding-bottom:.35em}
-.rule{height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+/* ---------------- sections ---------------- */
+section{padding:clamp(44px,7vw,90px) 0}
+.sechead{display:flex;align-items:flex-end;gap:20px;margin-bottom:1.6rem;flex-wrap:wrap}
+.sechead h2{font-family:var(--disp);text-transform:uppercase;
+  font-size:clamp(1.9rem,5.4vw,3.6rem);line-height:.9}
+.sechead .no{color:var(--coral);padding-bottom:.5em;white-space:nowrap}
+.sechead p{color:var(--muted);max-width:44ch;margin-left:auto;font-size:.93rem;padding-bottom:.4em}
 
-/* ============ WEEK GRID ============ */
-.week{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel)}
-.wrow{display:grid;grid-template-columns:112px 1fr 1fr 1.05fr;border-bottom:1px solid var(--line-2);transition:background .2s}
+/* ---------------- week glance ---------------- */
+.week{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--paper)}
+.wrow{display:grid;grid-template-columns:92px 1fr 1fr;border-bottom:1px solid var(--line-2);transition:background .18s}
 .wrow:last-child{border-bottom:0}
-.wrow:hover{background:rgba(255,255,255,.028)}
-.wrow.head{background:rgba(255,255,255,.05);position:sticky;top:60px;z-index:5}
-.wrow.head > div{padding:11px 16px;color:var(--dim);font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase}
-.wrow > div{padding:16px;border-right:1px solid var(--line-2);font-size:.87rem}
+.wrow:hover{background:var(--sand)}
+.wrow.head{background:var(--sand-2)}
+.wrow.head > div{padding:10px 15px;color:var(--muted);font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.16em;text-transform:uppercase}
+.wrow > div{padding:14px 15px;border-right:1px solid var(--line-2);font-size:.87rem}
 .wrow > div:last-child{border-right:0}
-.wday{display:flex;flex-direction:column;gap:3px}
-.wday b{font-family:var(--disp);font-size:1.5rem;line-height:1}
-.wday span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
-.wrow.big{background:linear-gradient(90deg,rgba(255,46,139,.13),rgba(255,46,139,.02) 62%)}
-.wrow.big .wday b{color:var(--mag)}
-.wrow.big:hover{background:linear-gradient(90deg,rgba(255,46,139,.19),rgba(255,46,139,.04) 62%)}
-.wcell-n{color:#FFD9EA}
-.wcell-d{color:var(--muted)}
-.tagline{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-top:8px}
-.t-big{background:var(--mag);color:#12000A}
-.t-easy{background:rgba(43,232,255,.15);color:var(--cyan);border:1px solid rgba(43,232,255,.3)}
-.t-sun{background:rgba(255,174,59,.15);color:var(--sun);border:1px solid rgba(255,174,59,.3)}
-@media(max-width:860px){
-  .wrow{grid-template-columns:76px 1fr}
-  .wrow.head{display:none}
-  .wrow > div:nth-child(3),.wrow > div:nth-child(4){grid-column:2;border-top:1px solid var(--line-2)}
-  .wrow > div:nth-child(2){border-right:0}
-  .wrow > div:first-child{grid-row:span 3;border-right:1px solid var(--line-2)}
-}
-
-/* ============ TICKET STUBS ============ */
-.stubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
-.stub{
-  position:relative;background:var(--panel);border:1px solid var(--line);border-radius:4px;
-  padding:26px 24px 24px;
-  display:flex;flex-direction:column;
-  transition:transform .25s cubic-bezier(.2,.8,.3,1),border-color .25s,box-shadow .25s;
-}
-.stub:hover{transform:translateY(-5px);border-color:rgba(255,46,139,.45);box-shadow:0 22px 60px -22px rgba(255,46,139,.55)}
-.stub::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:var(--mag)}
-.stub.c2::before{background:var(--cyan)}
-.stub.c3::before{background:var(--violet)}
-.stub.c4::before{background:var(--lime)}
-.stub .perf{
-  position:relative;border-top:1px dashed var(--line);
-  margin:22px -24px 0;padding:20px 24px 0;
-}
-/* perforation notches, pinned to the tear line so they always align */
-.stub .perf::before{
-  content:'';position:absolute;top:-10px;left:-10px;right:-10px;height:20px;pointer-events:none;
-  background:
-    radial-gradient(circle at 10px 10px, var(--bg) 9px, transparent 9.5px) left center/20px 20px no-repeat,
-    radial-gradient(circle at 10px 10px, var(--bg) 9px, transparent 9.5px) right center/20px 20px no-repeat;
-}
-.stub .lineup{flex:1}
-.stub .night{color:var(--mag);margin-bottom:12px}
-.stub.c2 .night{color:var(--cyan)}
-.stub.c3 .night{color:var(--violet)}
-.stub.c4 .night{color:var(--lime)}
-.stub h3{font-family:var(--disp);font-size:clamp(1.5rem,3vw,2.1rem);line-height:.94;text-transform:uppercase;margin-bottom:6px}
-.stub .venue{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.stub .lineup{font-size:.86rem;color:var(--muted);margin-bottom:18px;line-height:1.5}
-.stub .facts{display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start}
-.chip{font-family:var(--mono);font-size:.63rem;letter-spacing:.06em;padding:5px 9px;border:1px solid var(--line);border-radius:2px;color:var(--muted);white-space:nowrap}
-.chip.hot{border-color:rgba(255,46,139,.5);color:#FFA8CE;background:rgba(255,46,139,.09)}
-.chip.paid{border-color:rgba(201,255,53,.4);color:var(--lime);background:rgba(201,255,53,.07)}
-.stub .home{font-size:.8rem;color:var(--muted)}
-.stub .home b{color:var(--ink);font-weight:600}
-
-/* ============ DAY BY DAY ============ */
-.dayzone{display:grid;grid-template-columns:var(--rail) 1fr;gap:clamp(24px,4vw,58px);align-items:start}
-@media(max-width:1080px){.dayzone{grid-template-columns:1fr;gap:0}}
-/* let grid children shrink below their content width, or mobile scrolls sideways */
-.dayzone > *,#dayList,.day,.split > *,.panel,.panel li > *,.rail,.rail ol,.week,.wrow > *{min-width:0}
-.panel li h4,.panel li p,.route p,.trap p,.eatcol li p{overflow-wrap:anywhere}
-
-.rail{position:sticky;top:96px}
-.rail .rl{color:var(--dim);margin-bottom:16px}
-.rail ol{list-style:none;border-left:1px solid var(--line)}
-.rail li a{
-  display:flex;align-items:baseline;gap:10px;padding:9px 0 9px 16px;
-  text-decoration:none;color:var(--dim);position:relative;transition:color .2s;
-  font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
-}
-.rail li a::before{
-  content:'';position:absolute;left:-3px;top:50%;transform:translateY(-50%);
-  width:5px;height:5px;border-radius:50%;background:var(--line);transition:.2s;
-}
-.rail li a:hover{color:var(--muted)}
-.rail li a.on{color:var(--ink)}
-.rail li a.on::before{background:var(--mag);box-shadow:0 0 0 4px rgba(255,46,139,.18)}
-.rail li a b{font-family:var(--disp);font-size:1rem;letter-spacing:0}
-.rail .toggles{margin-top:26px;display:flex;flex-direction:column;gap:8px}
-.tg{
-  font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
-  padding:8px 11px;border:1px solid var(--line);border-radius:2px;background:transparent;
-  color:var(--muted);cursor:pointer;text-align:left;transition:.2s;
-}
-.tg:hover{border-color:var(--muted);color:var(--ink)}
-.tg.on{background:var(--ink);color:#08040C;border-color:var(--ink)}
-@media(max-width:1080px){
-  .rail{position:static;margin-bottom:34px}
-  .rail ol{display:flex;gap:6px;overflow-x:auto;border-left:0;border-bottom:1px solid var(--line);padding-bottom:12px;scrollbar-width:none}
-  .rail ol::-webkit-scrollbar{display:none}
-  .rail li a{padding:8px 12px;border:1px solid var(--line);border-radius:2px;white-space:nowrap}
-  .rail li a::before{display:none}
-  .rail li a.on{background:var(--mag);color:#12000A;border-color:var(--mag)}
-  .rail .toggles{flex-direction:row}
-}
-
-.day{padding-bottom:clamp(48px,7vw,88px);scroll-margin-top:92px}
-.dayhead{display:flex;align-items:flex-start;gap:clamp(14px,2.5vw,26px);margin-bottom:24px;flex-wrap:wrap}
-.daynum{
-  font-family:var(--disp);font-size:clamp(3.4rem,9vw,6.6rem);line-height:.76;
-  color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.30);
-}
-.day.isbig .daynum{-webkit-text-stroke-color:var(--mag);filter:drop-shadow(0 0 24px rgba(255,46,139,.42))}
-.dayhead .meta{padding-top:6px;flex:1;min-width:200px}
-.dayhead .dow{color:var(--mag);margin-bottom:8px}
-.day:not(.isbig) .dayhead .dow{color:var(--cyan)}
-.dayhead h3{font-family:var(--disp);font-size:clamp(1.5rem,4vw,2.6rem);line-height:.95;text-transform:uppercase}
-.dayhead .note{color:var(--muted);font-size:.9rem;margin-top:9px;max-width:60ch}
-
-.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
-@media(max-width:900px){.split{grid-template-columns:1fr}}
-
-.panel{border:1px solid var(--line);border-radius:4px;background:var(--panel);overflow:hidden;transition:opacity .3s,filter .3s}
-.panel .ph{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:13px 18px;border-bottom:1px solid var(--line-2);
-}
-/* background-image, NOT the background shorthand: the shorthand resets
-   background-color to transparent, which would let the ambient light through
-   onto the schedule. These panels carry the bus times. */
-.panel.sun{background-color:var(--panel);background-image:linear-gradient(180deg,rgba(255,174,59,.075),rgba(255,174,59,.012) 45%,transparent)}
-.panel.sun .ph{color:var(--sun);border-bottom-color:rgba(255,174,59,.2)}
-.panel.moon{background-color:var(--panel);background-image:linear-gradient(180deg,rgba(255,46,139,.085),rgba(155,107,255,.03) 45%,transparent)}
-.panel.moon .ph{color:var(--mag);border-bottom-color:rgba(255,46,139,.22)}
-.panel .ph .tsp{color:var(--dim);font-size:.6rem}
-.panel ul{list-style:none;padding:6px 0}
-.panel li{display:grid;grid-template-columns:66px 1fr;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line-2)}
-.panel li:last-child{border-bottom:0}
-.panel li .t{font-family:var(--mono);font-size:.7rem;color:var(--dim);letter-spacing:.04em;padding-top:2px}
-.panel.sun li .t{color:rgba(255,174,59,.72)}
-.panel.moon li .t{color:rgba(255,46,139,.75)}
-.panel li h4{font-size:.95rem;font-weight:600;margin-bottom:4px;line-height:1.35}
-.panel li p{font-size:.83rem;color:var(--muted);line-height:1.5}
-.panel li p b{color:#E8E0F2;font-weight:600}
-.panel li .tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-@media(max-width:420px){.panel li{grid-template-columns:1fr;gap:4px}}
-
-body.hide-sun .panel.sun{opacity:.16;filter:saturate(0)}
-body.hide-moon .panel.moon{opacity:.16;filter:saturate(0)}
-
-/* ============ CALLOUT ============ */
-/* opaque base + tint as background-image — these callouts carry the taxi
-   numbers and the last-mile warning, so nothing may show through them */
-.call{
-  border:1px solid rgba(255,46,139,.34);border-left:3px solid var(--mag);
-  background-color:var(--panel);
-  background-image:linear-gradient(0deg,rgba(255,46,139,.055),rgba(255,46,139,.055));
-  border-radius:3px;padding:16px 20px;margin-top:16px;
-}
-.call.info{border-color:rgba(43,232,255,.32);border-left-color:var(--cyan);
-  background-image:linear-gradient(0deg,rgba(43,232,255,.05),rgba(43,232,255,.05))}
-.call.warn{border-color:rgba(255,174,59,.34);border-left-color:var(--sun);
-  background-image:linear-gradient(0deg,rgba(255,174,59,.055),rgba(255,174,59,.055))}
-.call .ct{color:var(--mag);margin-bottom:7px}
-.call.info .ct{color:var(--cyan)}
-.call.warn .ct{color:var(--sun)}
-.call p{font-size:.87rem;color:#DCD4EA;line-height:1.55}
-.call p + p{margin-top:8px}
-.call b{color:#fff}
-
-/* ============ ROUTES ============ */
-.routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:14px}
-.route{border:1px solid var(--line);border-radius:4px;background:var(--panel);padding:20px;transition:border-color .22s,transform .22s}
-.route:hover{border-color:rgba(43,232,255,.45);transform:translateY(-3px)}
-.badge{
-  display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:30px;padding:0 12px;
-  font-family:var(--disp);font-size:1rem;letter-spacing:.05em;border-radius:2px;color:#05040A;margin-bottom:14px;
-}
-.b-aero{background:var(--lime)}.b-t{background:var(--cyan)}.b-p{background:var(--sun)}
-.b-d{background:var(--mag);color:#fff}.b-n{background:var(--violet);color:#fff}.b-w{background:#fff}
-.route h4{font-size:.98rem;font-weight:700;margin-bottom:8px;line-height:1.3}
-.route p{font-size:.84rem;color:var(--muted);line-height:1.55}
-.route .rdata{margin-top:14px;padding-top:13px;border-top:1px solid var(--line-2);display:flex;flex-wrap:wrap;gap:6px}
-
-/* ============ TABLE ============ */
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
-table{width:100%;border-collapse:collapse;min-width:640px}
-th{
-  text-align:left;padding:12px 16px;font-family:var(--mono);font-size:.61rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);background:rgba(255,255,255,.04);
-  position:sticky;top:60px;
-}
-td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:.87rem;vertical-align:top}
-tr:last-child td{border-bottom:0}
-tbody tr:hover{background:rgba(255,255,255,.028)}
-td b{font-weight:700}
-td .sm{display:block;color:var(--dim);font-size:.76rem;margin-top:3px;line-height:1.45}
-.star{color:var(--lime);font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;white-space:nowrap}
-.star.mid{color:var(--sun)}
-.star.low{color:var(--mag)}
-
-/* ============ EAT ============ */
-.eatgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-.eatcol{border:1px solid var(--line);border-radius:4px;background:var(--panel);overflow:hidden}
-.eatcol > h4{
-  padding:14px 18px;font-family:var(--mono);font-size:.66rem;letter-spacing:.17em;text-transform:uppercase;
-  border-bottom:1px solid var(--line-2);color:var(--cyan);background:rgba(43,232,255,.05);
-}
-.eatcol ul{list-style:none}
-.eatcol li{padding:14px 18px;border-bottom:1px solid var(--line-2)}
-.eatcol li:last-child{border-bottom:0}
-.eatcol li .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:4px}
-.eatcol li strong{font-size:.93rem;font-weight:700}
-.eatcol li .pr{font-family:var(--mono);font-size:.72rem;color:var(--lime);white-space:nowrap}
-.eatcol li p{font-size:.81rem;color:var(--muted);line-height:1.5}
-.eatcol li .bk{display:inline-block;margin-top:7px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mag);border:1px solid rgba(255,46,139,.35);padding:3px 7px;border-radius:2px}
-
-/* ============ TRAPS ============ */
-.traps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.trap{border:1px solid var(--line);border-left:3px solid var(--mag);border-radius:3px;background:var(--panel);padding:18px 20px}
-.trap.ok{border-left-color:var(--lime)}
-.trap h4{font-size:.93rem;font-weight:700;margin-bottom:7px;line-height:1.35}
-.trap p{font-size:.83rem;color:var(--muted);line-height:1.55}
-.trap .vd{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mag);margin-bottom:9px}
-.trap.ok .vd{color:var(--lime)}
-
-/* ============ CHECKLIST ============ */
-.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.chk{
-  display:flex;gap:14px;align-items:flex-start;padding:16px 18px;
-  border:1px solid var(--line);border-radius:3px;background:var(--panel);
-  cursor:pointer;transition:.2s;user-select:none;
-}
-.chk:hover{border-color:var(--muted)}
-.chk .box{
-  flex-shrink:0;width:18px;height:18px;border:1.5px solid var(--dim);border-radius:2px;margin-top:2px;
-  display:grid;place-items:center;transition:.2s;font-size:11px;color:transparent;
-}
-.chk.done .box{background:var(--lime);border-color:var(--lime);color:#06050A}
-.chk.done{opacity:.45}
-.chk.done .ctxt strong{text-decoration:line-through}
-.chk .ctxt strong{display:block;font-size:.9rem;font-weight:700;margin-bottom:3px}
-.chk .ctxt span{font-size:.79rem;color:var(--muted);line-height:1.5}
-
-/* ============ MONEY ============ */
-.money{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.money > div{background:var(--panel);padding:22px 20px}
-.money .mv{font-family:var(--disp);font-size:clamp(1.6rem,4vw,2.5rem);line-height:1;color:var(--lime);margin-bottom:6px}
-.money .ml{color:var(--dim);margin-bottom:8px}
-.money p{font-size:.79rem;color:var(--muted);line-height:1.5}
-
-/* ============ FOOTER ============ */
-footer{padding:clamp(50px,8vw,90px) var(--pad);border-top:1px solid var(--line);background:var(--bg-2)}
-.fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end}
-footer .fw{font-family:var(--disp);font-size:clamp(2.4rem,9vw,6rem);line-height:.82;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2)}
-footer p{color:var(--dim);font-size:.8rem;max-width:52ch;line-height:1.6}
-footer a{color:var(--muted)}
-
-/* ================================================================
-   THE 20:15 LINE — ambient light system
-   ----------------------------------------------------------------
-   One monotonic sunset lights the whole page. A single scalar --sunpos
-   runs 1 (afternoon) -> 0 (deep night) with scroll depth, quantised
-   to 20 steps, and the sun crosses the horizon exactly at section 05,
-   where the real 20:15 sunset lives. (It is --sunpos, not --sun: --sun
-   is already the amber colour token at the top of this file.)
-
-   THE INVARIANT: this system may only ever write --sunpos, --k-*, --ecl
-   and --spot-x/--spot-y, and may only ever paint low-opacity light at the top and
-   bottom edges of the viewport. It must NEVER touch --ink, --muted,
-   --panel, --panel-2 or --line, and must never lay light behind body
-   copy. Legibility is not negotiable — this is a document two people
-   read on a phone at 4am.
-
-   Everything animates on opacity/transform only, so the compositor
-   does the work and nothing repaints.
-   ================================================================ */
-/* z-index:-1, deliberately. This page has no <main>, so its <section>s are
-   in-flow and unpositioned, and the existing rule only lifts main/header/
-   footer/nav to z-index:1. A fixed layer at z-index:0 would therefore paint
-   over every section's text. At -1 it is behind all in-flow content by
-   construction, whatever the markup does later — which is the only way to
-   actually guarantee the invariant above. */
-#amb{
-  position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
-  opacity:1;transition:opacity .55s ease;contain:layout paint style;
-}
-#amb > *{position:absolute}
-/* will-change only on the layers that actually animate — every one of these
-   is a viewport-sized compositor layer, which is real GPU memory on a phone.
-   .sea and .searoad are deliberately left out. */
-.sky,.sun,.vedra,.spot{will-change:opacity}
-.sky{inset:0;opacity:0;transition:opacity 1s cubic-bezier(.4,0,.2,1)}
-
-/* afternoon: warm amber high on the right, heat off the water */
-.sky-golden{
-  opacity:calc(var(--k-golden,0) * var(--ecl,1));
-  background:
-    radial-gradient(64vw 46vh at 80% 4%, rgba(255,174,59,.26), transparent 64%),
-    radial-gradient(86vw 34vh at 26% 104%, rgba(194,69,47,.24), transparent 68%);
-}
-/* dusk: the sky goes over to magenta as the sun touches the line */
-.sky-dusk{
-  opacity:calc(var(--k-dusk,0) * var(--ecl,1));
-  background:
-    radial-gradient(60vw 44vh at 72% 2%, rgba(255,46,139,.20), transparent 62%),
-    radial-gradient(90vw 36vh at 40% 104%, rgba(255,110,60,.20), transparent 66%),
-    radial-gradient(50vw 40vh at 6% 22%, rgba(155,107,255,.14), transparent 60%);
-}
-/* 06:00, the Terraza glass roof: the only warm light in the deep night */
-.sky-dawn{
-  opacity:var(--k-dawn,0);
-  background:
-    radial-gradient(70vw 40vh at 50% 104%, rgba(255,196,120,.24), transparent 62%),
-    radial-gradient(50vw 30vh at 84% 92%, rgba(43,232,255,.12), transparent 60%);
-}
-/* the existing neon glow field becomes the night layer of the same system */
-body::after{opacity:var(--k-night,1);transition:opacity 1s cubic-bezier(.4,0,.2,1)}
-
-/* The sun. It never fades out to fake depth — the sea is simply painted
-   on top of it. Rest is 50vh, the waterline is 34vh and the travel is
-   48vh, so the disc touches the water at --sunpos .667 (where section 05
-   is pinned) and is completely under by 0. */
-.sun{
-  left:62%;bottom:50vh;
-  width:clamp(112px,15vw,230px);aspect-ratio:1;border-radius:50%;
-  /* Alpha is capped at .20. A disc anywhere above the waterline is, on any
-     viewport, in the vertical middle of the screen — so it WILL sit behind
-     copy that has no panel under it (section standfirsts, day notes). At .20
-     over --bg, --muted still measures ~5.2:1; at .25 it drops to 4.5 and
-     below that it fails outright. The sun reads through bloom and the light
-     it throws on the sky and water, not through raw luminance. */
-  background:radial-gradient(circle at 50% 50%,
-    rgba(255,246,220,.20) 0%, rgba(255,208,103,.175) 34%, rgba(255,138,56,.115) 62%,
-    rgba(255,122,47,.05) 74%, rgba(255,122,47,0) 78%);
-  opacity:calc(var(--k-sun,1) * var(--ecl,1));
-  transform:translate3d(0, calc((1 - var(--sunpos,1)) * 48vh), 0);
-  /* the scalar is quantised to 20 steps, so ease the hop between them */
-  transition:opacity .8s ease, transform .45s linear;
-}
-/* the specular road the low sun lays on the water — anchored at the
-   waterline and spreading towards the reader, in the sun's own column */
-.searoad{
-  left:0;right:0;bottom:20vh;height:14vh;
-  opacity:calc(var(--k-road,0) * var(--ecl,1));
-  background:radial-gradient(38vw 14vh at 62% 0%, rgba(255,190,110,.30), transparent 72%);
-  transition:opacity .8s ease;
-}
-/* the sea swallows it: painted after the sun, so the occlusion is real */
-.sea{
-  left:0;right:0;bottom:0;height:34vh;
-  background:linear-gradient(180deg,
-    rgba(6,5,10,0) 0%, rgba(6,5,10,.62) 26%, rgba(6,5,10,.93) 58%, #06050A 100%);
-}
-
-/* Es Vedrà — 400m of rock, and what the coast section is really about.
-   Painted after the sun, so the sun goes down behind it for real. */
-.vedra{
-  bottom:32vh;right:6vw;width:min(30vw,300px);
-  opacity:var(--k-vedra,0);transition:opacity 1.1s ease;
-}
-.vedra svg{display:block;width:100%;height:auto}
+.wday{display:flex;flex-direction:column;gap:2px}
+.wday b{font-family:var(--disp);font-size:1.45rem;line-height:1;color:var(--ink)}
+.wday span{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;color:var(--dim);text-transform:uppercase}
+.wrow.big{background:linear-gradient(90deg,rgba(217,69,42,.07),transparent 65%)}
+.wrow.big .wday b{color:var(--coral)}
+.wcell-n{color:var(--grape);font-weight:500}
 @media(max-width:720px){
-  .vedra{right:1vw;width:46vw}
-  .sun{left:52%}
+  .wrow{grid-template-columns:74px 1fr}
+  .wrow.head{display:none}
+  .wrow > div:nth-child(3){grid-column:2;border-top:1px solid var(--line-2)}
+  .wrow > div:nth-child(2){border-right:0}
+  .wrow > div:first-child{grid-row:span 2;border-right:1px solid var(--line-2)}
 }
 
-/* the follow spot — one beam, and only over the big nights */
-.spot{
-  top:0;left:0;width:46vw;height:52vh;margin:-26vh 0 0 -23vw;
-  opacity:var(--k-spot,0);
-  background:radial-gradient(closest-side, rgba(255,46,139,.20), rgba(155,107,255,.07) 58%, transparent 78%);
-  transform:translate3d(var(--spot-x,50vw), var(--spot-y,40vh), 0);
-  transition:opacity .5s ease, transform .8s cubic-bezier(.3,.8,.3,1);
+/* ---------------- day ---------------- */
+.day{margin-bottom:clamp(40px,6vw,72px);scroll-margin-top:72px}
+.dayband{
+  position:relative;border-radius:var(--r) var(--r) 0 0;overflow:hidden;
+  border:1px solid var(--line);border-bottom:0;background:var(--paper);
+}
+.dayband svg{display:block;width:100%;height:auto}
+.dayhead{
+  display:flex;align-items:flex-start;gap:clamp(14px,2.5vw,24px);flex-wrap:wrap;
+  padding:18px 20px;background:var(--paper);
+  border:1px solid var(--line);border-top:0;border-bottom:0;
+}
+.daynum{font-family:var(--disp);font-size:clamp(2.6rem,7vw,4.4rem);line-height:.78;color:var(--line-2);
+  -webkit-text-stroke:1px var(--line);}
+.day.isbig .daynum{color:rgba(217,69,42,.16);-webkit-text-stroke-color:rgba(217,69,42,.5)}
+.dayhead .meta{flex:1;min-width:220px}
+.dayhead .dow{color:var(--sea);margin-bottom:5px}
+.day.isbig .dayhead .dow{color:var(--coral)}
+.dayhead h3{font-family:var(--disp);text-transform:uppercase;
+  font-size:clamp(1.35rem,3.4vw,2.2rem);line-height:.96;color:var(--ink)}
+.dayhead .note{color:var(--muted);font-size:.9rem;margin-top:8px;max-width:62ch}
+
+.daybody{
+  border:1px solid var(--line);border-top:0;border-radius:0 0 var(--r) var(--r);
+  background:var(--paper);padding:4px 0 0;
 }
 
-/* ============ HOUSE LIGHTS ============ */
-.lights{
-  margin-left:14px;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;
-  background:transparent;border:1px solid var(--line);border-radius:2px;
-  /* --dim on the bar measures ~3.7:1; --muted clears AA at this size */
-  color:var(--muted);cursor:pointer;transition:.2s;
-  /* a real touch target, not a 25x21 sliver */
-  min-height:44px;min-width:44px;justify-content:center;padding:6px 12px;
+/* timeline */
+.tl{list-style:none;padding:6px 0}
+.tl li{display:grid;grid-template-columns:74px 1fr;gap:14px;padding:13px 20px;
+  border-bottom:1px solid var(--line-2)}
+.tl li:last-child{border-bottom:0}
+.tl .t{font-family:var(--mono);font-size:.72rem;color:var(--sea);padding-top:3px;font-weight:700}
+.day.isbig .tl .t{color:var(--coral)}
+.tl h4{font-size:.98rem;font-weight:700;margin-bottom:3px;line-height:1.35}
+.tl p{font-size:.87rem;color:var(--muted);line-height:1.55}
+.tl p b{color:var(--ink-2);font-weight:600}
+@media(max-width:460px){.tl li{grid-template-columns:1fr;gap:3px}}
+
+/* ---------------- transport strip ---------------- */
+.trans{margin:0 20px 18px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.trans + .trans{margin-top:-6px}
+.trans-h{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--sand-2);
+  border-bottom:1px solid var(--line)}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:26px;padding:0 10px;
+  font-family:var(--disp);font-size:.95rem;letter-spacing:.04em;border-radius:3px;color:#fff;flex-shrink:0;
 }
-.lights:hover{border-color:var(--muted);color:var(--ink)}
-.lights .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);
-  box-shadow:0 0 8px rgba(255,174,59,.8);transition:.2s;flex-shrink:0}
-body.lights-off .lights .dot{background:var(--dim);box-shadow:none}
-body.lights-off #amb{opacity:0}
-body.lights-off .wordmark{animation:none}
-/* with the engine parked, the page's original glow field must come back on
-   rather than freeze at whatever --k-night happened to be */
-body.lights-off::after{opacity:1}
+.b-bus{background:var(--sea)}
+.b-boat{background:var(--grape)}
+.b-walk{background:var(--olive)}
+.b-taxi{background:var(--ink-2)}
+.b-air{background:var(--sun)}
+.trans-h .route{font-weight:700;font-size:.9rem;line-height:1.25}
+.trans-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));background:var(--line-2);gap:1px}
+.trans-facts > div{background:var(--paper);padding:9px 13px}
+.trans-facts .k{color:var(--dim);font-family:var(--mono);font-size:.57rem;letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:2px}
+.trans-facts .v{font-size:.83rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3}
+.trans-facts .v.last{color:var(--coral)}
+.trans-note{padding:9px 14px;font-size:.79rem;color:var(--muted);background:var(--paper);
+  border-top:1px solid var(--line-2);line-height:1.5}
+.trans-note b{color:var(--coral)}
 
-/* screen-reader-only, for facts that are visually carried by decoration */
-.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
-  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* ---------------- callouts ---------------- */
+.call{margin:0 20px 18px;border:1px solid var(--line);border-left:4px solid var(--coral);
+  border-radius:4px;background:#FDF4F1;padding:13px 16px}
+.call.info{border-left-color:var(--sea);background:#EFF7FA}
+.call.warn{border-left-color:var(--sun);background:#FDF6E9}
+.call.ok{border-left-color:var(--olive);background:#F1F6EC}
+.call .ct{color:var(--coral);margin-bottom:5px;font-weight:700}
+.call.info .ct{color:var(--sea)} .call.warn .ct{color:var(--sun)} .call.ok .ct{color:var(--olive)}
+.call p{font-size:.86rem;color:var(--ink-2);line-height:1.55}
+.call p + p{margin-top:7px}
+.call b{color:var(--ink)}
 
-@media(max-width:900px){
-  /* the board and the section nav cannot share this row below 900px —
-     the nav is the one that navigates, so the decoration goes */
-  .board{display:none}
-}
-@media(max-width:640px){
-  .lights{margin-left:auto;padding:6px 10px}
-  .lights .ltxt{display:none}
-}
+/* ---------------- eat / option rows ---------------- */
+.opts{margin:0 20px 18px;display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(228px,1fr))}
+.opt{border:1px solid var(--line);border-radius:4px;background:var(--sand);padding:11px 13px}
+.opt .on{font-weight:700;font-size:.9rem;line-height:1.3;margin-bottom:2px}
+.opt .od{font-size:.79rem;color:var(--muted);line-height:1.5}
+.opt .om{font-family:var(--mono);font-size:.63rem;color:var(--sea);margin-top:5px;display:block}
+.opt.pick{background:#F1F6EC;border-color:#C6D9B4}
+.opt.pick .om{color:var(--olive)}
 
-/* ============ DEPARTURE BOARD ============ */
-.board{display:inline-flex;gap:1px;overflow:hidden;white-space:nowrap}
-.board span{
-  display:inline-block;min-width:.62em;
-  animation:flap .34s cubic-bezier(.3,1.4,.4,1) backwards;
-}
-.board span.sp{min-width:.34em}
-@keyframes flap{
-  0%{transform:translateY(-70%) rotateX(-88deg);opacity:0;filter:blur(1.5px)}
-  60%{opacity:1}
-  100%{transform:none;opacity:1;filter:none}
-}
+.tag{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.11em;
+  text-transform:uppercase;padding:3px 7px;border-radius:3px;margin-right:5px}
+.t-day{background:rgba(222,140,16,.15);color:#9A5F02}
+.t-night{background:rgba(111,68,176,.13);color:var(--grape)}
+.t-walk{background:rgba(95,124,67,.14);color:var(--olive)}
+.t-book{background:var(--coral);color:#fff}
 
-/* ============ SCROLL REVEALS ============ */
-.rv{opacity:0;transform:translateY(20px);
-  transition:opacity .75s cubic-bezier(.2,.7,.3,1), transform .75s cubic-bezier(.2,.7,.3,1);
-  transition-delay:calc(var(--i,0) * 52ms);
-}
-.rv.in{opacity:1;transform:none}
+/* ---------------- reference tables ---------------- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+table{width:100%;border-collapse:collapse;min-width:660px}
+th{text-align:left;padding:11px 15px;font-family:var(--mono);font-size:.59rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);background:var(--sand-2)}
+td{padding:12px 15px;border-bottom:1px solid var(--line-2);font-size:.85rem;vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--sand)}
+td .sm{display:block;color:var(--dim);font-size:.75rem;margin-top:2px;line-height:1.45}
+td.last{color:var(--coral);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 
-/* the boarding pass lands, and lands slightly crooked */
-.strip{transform:rotate(0deg)}
-.strip.drop{animation:pass .62s cubic-bezier(.16,.9,.3,1) both}
-@keyframes pass{
-  0%{opacity:0;transform:translateY(-26px) rotate(-1.6deg) scale(.985)}
-  70%{opacity:1;transform:translateY(2px) rotate(.55deg) scale(1)}
-  100%{opacity:1;transform:translateY(0) rotate(.35deg)}
-}
+/* ---------------- checklist ---------------- */
+.checks{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;width:100%;
+  border:1px solid var(--line);border-radius:4px;background:var(--paper);
+  cursor:pointer;transition:.18s;text-align:left;font:inherit;color:inherit}
+.chk:hover{border-color:var(--muted)}
+.chk .box{flex-shrink:0;width:17px;height:17px;border:2px solid var(--dim);border-radius:3px;
+  margin-top:2px;display:grid;place-items:center;font-size:11px;color:transparent;transition:.18s}
+.chk.done .box{background:var(--olive);border-color:var(--olive);color:#fff}
+.chk.done{opacity:.5}
+.chk.done strong{text-decoration:line-through}
+.chk strong{display:block;font-size:.89rem;margin-bottom:2px}
+.chk span{font-size:.78rem;color:var(--muted);line-height:1.5}
 
-/* The wordmark catches the light once, on arrival — not on a loop.
-   background-position is not compositable, so each frame repaints the glyphs
-   AND re-runs the inherited 46px drop-shadow over them. On a loop that burns
-   the main thread for as long as the hero is on screen, which is exactly when
-   the reader is sitting still. One pass costs 14s and then stops dead; the
-   .lit class is removed and re-added by the observer, so it replays whenever
-   you come back to the top. Base position matches the keyframe so nothing
-   snaps when it finishes. */
-.wordmark{background-size:200% 100%;background-position:6% 50%}
-.wordmark.lit{animation:sweep 14s ease-in-out 1 both}
-@keyframes sweep{0%,100%{background-position:6% 50%}50%{background-position:94% 50%}}
+footer{padding:clamp(44px,7vw,84px) 0;border-top:1px solid var(--line);background:var(--sand-2)}
+footer .fw{font-family:var(--disp);text-transform:uppercase;
+  font-size:clamp(2.2rem,8vw,5rem);line-height:.85;color:var(--coral)}
+footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;margin-top:1rem}
 
-/* ============ THE TIME SPINE ============
-   a hairline down the time column of every panel, which fills once as
-   the panel arrives. one-shot, so it costs nothing after it has run. */
-.panel ul{position:relative}
-.panel ul::before{
-  content:'';position:absolute;left:88px;top:10px;bottom:10px;width:1px;
-  background:currentColor;opacity:.22;
-  transform:scaleY(0);transform-origin:top;
-  transition:transform 1.15s cubic-bezier(.25,.8,.3,1);
-}
-.panel.in ul::before{transform:scaleY(1)}
-.panel.sun ul::before{color:var(--sun)}
-.panel.moon ul::before{color:var(--mag)}
-@media(max-width:420px){.panel ul::before{display:none}}
-
-/* ============ WRISTBANDS ============
-   the day rail is eight club wristbands. the one you are on is snapped
-   shut and sits proud; the other seven lie limp. */
-.rail li a{transition:color .2s, transform .28s cubic-bezier(.3,.9,.3,1), border-color .2s}
-.rail li a.on{transform:translateX(3px)}
-.rail li a.on b{color:var(--mag)}
-
-/* ============ CARD LIFT ============ */
-.route,.trap,.eatcol li,.money > div{transition:transform .28s cubic-bezier(.2,.8,.3,1), border-color .25s, background .25s}
-.trap:hover{transform:translateY(-3px)}
-.chk:focus-visible,.tg:focus-visible,.lights:focus-visible,
-.rail li a:focus-visible,.bar nav a:focus-visible{
-  outline:2px solid var(--cyan);outline-offset:3px;border-radius:2px;
-}
-
-/* real numerals: times must never reflow as they change */
-.m,.mm,.panel li .t,.wday b,.star,.chip,.money .mv{font-variant-numeric:tabular-nums}
-
-/* the checklist is a real <button> now, so undo the UA button styling */
-.chk{width:100%;font:inherit;color:inherit;text-align:left;appearance:none}
-.chk .ctxt{display:block}
-
-/* ============ REDUCED MOTION ============
-   the whole ambient system is decoration. if the reader has asked for
-   less movement, it stops — and every reveal is shown, not hidden. */
-@media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{
-    animation-duration:.001ms !important;animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;scroll-behavior:auto !important;
-  }
-  .rv{opacity:1 !important;transform:none !important}
-  .panel ul::before{transform:scaleY(1) !important}
-  #amb{opacity:.55}
-  .sun{transform:translate3d(0,26vh,0)}
+  *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}
 }
 </style>
 </head>
 <body>
 
-<!-- ============ AMBIENT LIGHT ============
-     Painted behind everything (z-index 0; all content is z-index 1).
-     Order matters: sun, then sea, then rock — so the sun is genuinely
-     occluded rather than faded out. -->
-<div id="amb" aria-hidden="true">
-  <div class="sky sky-golden"></div>
-  <div class="sky sky-dusk"></div>
-  <div class="sky sky-dawn"></div>
-  <div class="spot"></div>
-  <div class="sun"></div>
-  <div class="searoad"></div>
-  <div class="sea"></div>
-  <div class="vedra">
-    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet">
-      <defs>
-        <linearGradient id="vgFill" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0" stop-color="#040308"/>
-          <stop offset="1" stop-color="#150D1B"/>
-        </linearGradient>
-        <linearGradient id="vgRim" x1="0" y1="1" x2="0.72" y2="0">
-          <stop offset="0" stop-color="rgba(255,138,56,0)"/>
-          <stop offset="0.55" stop-color="rgba(255,150,70,.32)"/>
-          <stop offset="1" stop-color="rgba(255,214,140,.82)"/>
-        </linearGradient>
-      </defs>
-      <path d="M0,200 L20,197 L38,188 L54,174 L68,152 L84,128 L99,104 L112,78 L126,52
-               L138,30 L149,12 L157,3 L166,15 L175,40 L186,66 L198,92 L212,118
-               L228,144 L246,166 L266,183 L284,194 L300,200 Z"
-            fill="url(#vgFill)" stroke="url(#vgRim)" stroke-width="1.3" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
-
 <div class="bar">
   <span class="mark">IBIZA<i>.</i></span>
-  <!-- the dates the board replaced: still announced, and still here when the
-       board is hidden on narrow screens -->
-  <span class="vh">02—09 September 2026 · Caroline + cousin</span>
-  <!-- decorative: it mirrors the section headings, so announcing it on every
-       scroll would just be noise for a screen reader -->
-  <span class="board m" id="board" aria-hidden="true"></span>
   <nav class="m">
-    <a href="#week">Week</a>
-    <a href="#nights">Big nights</a>
-    <a href="#days">Day by day</a>
-    <a href="#move">Getting around</a>
-    <a href="#sand">Beaches</a>
-    <a href="#eat">Eat</a>
-    <a href="#truth">Truths</a>
-    <a href="#pack">Before you fly</a>
+    <a href="#week">Week</a><a href="#d02">Wed</a><a href="#d03">Thu</a><a href="#d04">Fri</a>
+    <a href="#d05">Sat</a><a href="#d06">Sun</a><a href="#d07">Mon</a><a href="#d08">Tue</a>
+    <a href="#buses">Buses</a><a href="#eat">Eat</a><a href="#pack">Before you fly</a>
   </nav>
-  <button class="lights m" id="lights" type="button" aria-pressed="true"
-          title="Turn the ambient light on or off">
-    <span class="dot"></span><span class="ltxt">Lights</span>
-  </button>
 </div>
 
 <header class="hero">
-  <div class="kicker m">A week of it · Balearic Islands</div>
-  <h1 class="wordmark">Ibiza</h1>
-  <p class="sub">Days for the coastline. Nights for <em>everything else.</em></p>
+  <div class="wrap">
+    <div class="kicker m">A week of it · 02–09 September 2026</div>
+    <h1 class="wordmark">Ibiza</h1>
+    <p class="sub">Days for the coastline. Nights for <em>everything else.</em></p>
+  </div>
 
-  <div class="strip">
-    <div>
-      <div class="lab m">Wheels down</div>
-      <div class="val">Wed 2 Sep · 19:25<small>IBZ · home Wed 9 Sep, 20:15</small></div>
-    </div>
-    <div>
-      <div class="lab m">Base camp</div>
-      <div class="val">Vibra Riviera<small>Cala de Bou, San Antonio Bay · 7 nights</small></div>
-    </div>
-    <div>
-      <div class="lab m">Wheels</div>
-      <div class="val">None. On purpose.<small>Buses, Discobus, boats, four taxis</small></div>
-    </div>
-    <div>
-      <div class="lab m">The anchor</div>
-      <div class="val hl">Calvin Harris<small>Ushuaïa · Friday 4 Sep · booked ✓</small></div>
+  <!-- Es Vedrà across the water, drawn rather than photographed so it always loads -->
+  <svg class="scene" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" role="img"
+       aria-label="The coast at golden hour, with Es Vedrà rising out of the sea">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FAF6EE"/><stop offset=".55" stop-color="#FDE9CE"/>
+        <stop offset="1" stop-color="#F8C89A"/>
+      </linearGradient>
+      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7FC4CF"/><stop offset="1" stop-color="#2E8FA6"/>
+      </linearGradient>
+      <linearGradient id="rock" x1="0" y1="1" x2=".6" y2="0">
+        <stop offset="0" stop-color="#4A5766"/><stop offset="1" stop-color="#8892A0"/>
+      </linearGradient>
+      <linearGradient id="rock2" x1="0" y1="1" x2=".6" y2="0">
+        <stop offset="0" stop-color="#6B7684"/><stop offset="1" stop-color="#A6AFBA"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="300" fill="url(#sky)"/>
+    <circle cx="880" cy="176" r="46" fill="#F6A94C" opacity=".85"/>
+    <!-- far headland -->
+    <path d="M0,205 L90,196 L150,186 L215,193 L280,183 L340,196 L400,204 L400,300 L0,300 Z" fill="#C9BBA6" opacity=".55"/>
+    <!-- Es Vedrà -->
+    <path d="M812,206 L826,190 L838,160 L850,128 L861,96 L870,72 L878,58 L887,74 L896,104
+             L907,138 L919,168 L932,190 L946,206 Z" fill="url(#rock)"/>
+    <path d="M946,206 L956,192 L966,170 L975,152 L983,140 L991,152 L999,174 L1008,192 L1017,206 Z" fill="url(#rock2)"/>
+    <!-- sea -->
+    <rect y="206" width="1200" height="94" fill="url(#water)"/>
+    <!-- specular road -->
+    <path d="M842,206 L918,206 L972,300 L788,300 Z" fill="#FFD9A0" opacity=".30"/>
+    <!-- swell -->
+    <g fill="#FFFFFF" opacity=".30">
+      <rect x="60" y="228" width="86" height="3" rx="1.5"/><rect x="210" y="246" width="120" height="3" rx="1.5"/>
+      <rect x="410" y="232" width="70" height="3" rx="1.5"/><rect x="520" y="262" width="140" height="3" rx="1.5"/>
+      <rect x="120" y="276" width="104" height="3" rx="1.5"/><rect x="700" y="240" width="64" height="3" rx="1.5"/>
+      <rect x="1010" y="258" width="110" height="3" rx="1.5"/><rect x="880" y="278" width="90" height="3" rx="1.5"/>
+    </g>
+    <!-- near cove rocks -->
+    <path d="M0,262 L58,250 L104,258 L142,272 L166,300 L0,300 Z" fill="#B9A88F"/>
+    <path d="M1200,246 L1150,240 L1108,252 L1078,270 L1064,300 L1200,300 Z" fill="#B9A88F"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="strip">
+      <div><div class="lab m">Wheels down</div><div class="val">Wed 2 Sep · 19:25<small>IBZ · home Wed 9 Sep, 20:15</small></div></div>
+      <div><div class="lab m">Base camp</div><div class="val">Vibra Riviera<small>C/ des Caló 49, Cala de Bou · 7 nights</small></div></div>
+      <div><div class="lab m">Wheels</div><div class="val">Buses. On purpose.<small>Taxis are scarce and dear — the bus network was rebuilt in April 2026</small></div></div>
+      <div><div class="lab m">The anchor</div><div class="val" style="color:var(--coral)">Calvin Harris<small>Ushuaïa · Friday 4 Sep · booked ✓</small></div></div>
     </div>
   </div>
 </header>
 
+<main class="wrap">
+
 <section id="week">
   <div class="sechead">
-    <span class="no">01 / OVERVIEW</span>
+    <span class="no m">01 / Overview</span>
     <h2>The shape<br>of the week</h2>
-    <p>Four big nights, three soft ones. Every day is planned around a 10:15 wake-up and a bus that actually runs.</p>
+    <p>Built around one rule: never be the person waiting for a taxi. Every day below ends on a bus you can actually catch.</p>
   </div>
-  <div class="week" id="weekgrid"></div>
-</section>
-
-<section id="nights">
-  <div class="sechead">
-    <span class="no">02 / AFTER DARK</span>
-    <h2>The four<br>big ones</h2>
-    <p>Spaced so you never do two 6am finishes back to back — except Friday into Saturday, which is the whole point of the trip.</p>
+  <div class="week">
+    <div class="wrow head"><div>Day</div><div>Daylight</div><div>After dark</div></div>
+    <div class="wrow"><div class="wday"><b>02</b><span>Wed</span></div><div>Land 19:25 · AERO1 to San Antonio</div><div class="wcell-n">Kumharas, six minutes on foot</div></div>
+    <div class="wrow"><div class="wday"><b>03</b><span>Thu</span></div><div>FORMENTERA · ferry from Ibiza Town, L3 to Ses Illetes</div><div class="wcell-n">Pom Thai, then San Antonio</div></div>
+    <div class="wrow big"><div class="wday"><b>04</b><span>Fri</span></div><div>Pool day. Nothing that costs energy.</div><div class="wcell-n">★ CALVIN HARRIS · Ushuaïa</div></div>
+    <div class="wrow big"><div class="wday"><b>05</b><span>Sat</span></div><div>Cala Bassa on the P5 · back for sunset</div><div class="wcell-n">Es Virot, then ★ BRESH · Amnesia</div></div>
+    <div class="wrow"><div class="wday"><b>06</b><span>Sun</span></div><div>Cala Comte on the P4 · then the old town</div><div class="wcell-n">El Olivo Mio 20:30 ✓ · Dalt Vila bars</div></div>
+    <div class="wrow big"><div class="wday"><b>07</b><span>Mon</span></div><div>Cala Saladeta on the P7 · sunset on the strip</div><div class="wcell-n">Aragma, then Es Paradís · walk home</div></div>
+    <div class="wrow"><div class="wday"><b>08</b><span>Tue</span></div><div>Es Vedrà by catamaran</div><div class="wcell-n">Chi Kee Wun · optional Pacha</div></div>
+    <div class="wrow"><div class="wday"><b>09</b><span>Wed</span></div><div>Last swim at Xinxó, lunch, bags</div><div class="wcell-n">AERO1 16:30 · fly 20:15</div></div>
   </div>
-  <div class="stubs" id="stubs"></div>
 
-  <div class="call">
-    <div class="ct m">⚠ The single most important thing on this page</div>
-    <p><b>Ushuaïa is an open-air venue with an early licence. Calvin Harris finishes at 23:00.</b> That is an evening show, not a night out — you will be standing on Playa d'en Bossa at 11pm with the night not yet started. Have the "after" decided before you leave the hotel.</p>
-    <p>The easy answer: <b>Hï Ibiza is directly across the road</b>. Two-minute walk, doors 23:30, €40. No taxi, no queue, no decision at 11pm. If you'd rather have reggaeton, <b>Puro Reggaeton at Es Paradís</b> runs every Friday 23:30–06:00 (€40) and it's back in San Antonio, five minutes from home.</p>
+  <div class="call info" style="margin:22px 0 0">
+    <div class="ct m">Read this before you Google anything</div>
+    <p><b>On 1 April 2026 Ibiza scrapped its whole bus system.</b> ALSA took over and every old line number
+    was deleted and replaced with letters: <b>T</b> trunk, <b>P</b> beach, <b>D</b> Discobus, <b>N</b> night,
+    <b>AERO</b> airport, <b>A</b> rural feeder, <b>U</b> urban. Every blog, forum and travel guide still lists
+    the old numbers — <b>so does the hotel's own website</b>. Everything below is from ALSA's own 2026
+    timetables, valid 1 May–30 Sept.</p>
+    <p><b>Always tap a contactless card.</b> Card fares are roughly 30% cheaper than cash on every line, and
+    the multi-day tourist passes people talk about don't exist — the travel cards are residents-only.</p>
   </div>
 </section>
 
 <section id="days">
   <div class="sechead">
-    <span class="no">03 / THE PLAN</span>
+    <span class="no m">02 / The plan</span>
     <h2>Day by day</h2>
-    <p>Sun side, moon side. Times are real — buses, sunsets and door times all checked against 2026 timetables.</p>
+    <p>Times are real. The last bus home is printed on every leg, in red, because it is the only number that can actually ruin an evening.</p>
   </div>
 
-  <div class="dayzone">
-    <aside class="rail">
-      <div class="rl m">Jump to</div>
-      <ol id="railList"></ol>
-      <div class="toggles">
-        <button class="tg on" data-t="sun">☀ Days</button>
-        <button class="tg on" data-t="moon">☾ Nights</button>
+<!-- ================= WED 2 ================= -->
+<article class="day" id="d02">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#FDEBD4"/>
+      <path d="M0,74 L120,66 L240,72 L360,62 L480,70 L600,60 L720,68 L840,58 L960,66 L1080,60 L1200,68 L1200,110 L0,110 Z" fill="#2E8FA6" opacity=".35"/>
+      <path d="M0,88 L1200,80 L1200,110 L0,110 Z" fill="#0C7C99" opacity=".55"/>
+      <circle cx="1010" cy="46" r="24" fill="#F6A94C" opacity=".8"/>
+      <path d="M120,58 l14,-9 l14,9 z" fill="#B9A88F"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">02</div>
+    <div class="meta">
+      <div class="dow m">Wednesday 2 September</div>
+      <h3>Land, drop bags, walk to the good bar</h3>
+      <p class="note">You land at 19:25, so the sunset (20:23) is gone before you clear baggage. Don't fight it —
+      get to the hotel, get changed, and walk six minutes to the best low-key spot in the Bay.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">19:25</div><div><h4>Wheels down at IBZ</h4><p>Passport, bags, out. Realistically landing-side clear by 19:50–20:10.</p></div></li>
+      <li><div class="t">20:30</div><div><h4>AERO1 to San Antonio</h4><p>Straight from the terminal. Fifty minutes, and it drops at San Antonio bus station.</p></div></li>
+      <li><div class="t">21:25</div><div><h4>The last 3.5 km</h4><p>The hotel is in <b>Cala de Bou, not San Antonio town</b>. The P2 bay-road bus runs hourly until 23:30; otherwise it's a short taxi. Several booking sites claim "10 minutes to the centre" — they're measuring straight across the water.</p></div></li>
+      <li><div class="t">22:00</div><div><h4>Kumharas</h4><p>Six minutes on foot. Bohemian beachside bar-restaurant — street-food stalls, a nightly hippy market, live music, no minimum spend and <b>no booking</b>. Open until midnight. The single best thing within walking distance of your bed.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-air">AERO1</span><span class="route">Airport → San Antonio</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">30 min</div></div>
+        <div><div class="k">Takes</div><div class="v">50 min</div></div>
+        <div><div class="k">Card / cash</div><div class="v">€4.00 / €5.60</div></div>
+        <div><div class="k">Last from airport</div><div class="v last">01:30</div></div>
       </div>
-    </aside>
-    <div id="dayList"></div>
+      <div class="trans-note">Runs 07:00–01:30 from the airport, 06:00–00:30 back. A taxi door-to-door is roughly €28–33 and about 30 minutes if you'd rather not wait.</div>
+    </div>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">P2</span><span class="route">San Antonio ↔ the bay road (your local)</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">Hourly</div></div>
+        <div><div class="k">Stop</div><div class="v">H. Bergantín</div></div>
+        <div><div class="k">Last out of town</div><div class="v last">23:30</div></div>
+        <div><div class="k">Then</div><div class="v">Taxi ≈ €8</div></div>
+      </div>
+      <div class="trans-note">Last P2 leaves San Antonio at <b>23:30</b>, reaching Cala de Bou about 23:40 and Es Port des Torrent 23:54. After that the final 3.5 km is a taxi — budget roughly €40 across the whole week. The <b>A1</b> also calls at Cala de Bou and starts earlier in the morning (07:59 towards San Antonio), which is useful for the Formentera day.</div>
+    </div>
+
+    <div class="opts">
+      <div class="opt pick"><div class="on">Kumharas</div><div class="od">Sunset bar and street-food market. No bookings, no minimum spend, live music.</div><span class="om">6 min walk · to midnight</span></div>
+      <div class="opt"><div class="on">Kojima Izakaya</div><div class="od">Japanese small plates, on the hotel's own corner and the highest-rated thing within two minutes.</div><span class="om">2 min · ≈€20–30</span></div>
+      <div class="opt"><div class="on">The Kitchen 62</div><div class="od">Burgers. The obvious answer on a night nobody wants to walk anywhere.</div><span class="om">2 min</span></div>
+      <div class="opt"><div class="on">Cool Café</div><div class="od">Open 07:00–02:00, so it's both breakfast tomorrow and somewhere to end tonight.</div><span class="om">6 min</span></div>
+    </div>
+
+    <div class="call">
+      <div class="ct m">If you want a first night out</div>
+      <p><b>Hï has MEDUZA and James Hype — €35 before midnight</b>, the cheapest Hï door all week and the
+      best-fitting big room of the trip: pop and R&amp;B edits at house tempo, Jonas Blue in the second room.
+      The <b>D3</b> runs from San Antonio to Playa d'en Bossa from 16:00 until 06:47.</p>
+      <p>The cost is tomorrow — Formentera is a 09:00 start and it's the best day out of the week. Your call.</p>
+    </div>
   </div>
+</article>
+
+<!-- ================= THU 3 ================= -->
+<article class="day" id="d03">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#E6F4F6"/>
+      <path d="M0,84 L1200,76 L1200,110 L0,110 Z" fill="#2E8FA6" opacity=".5"/>
+      <rect y="92" width="1200" height="18" fill="#0C7C99" opacity=".45"/>
+      <g transform="translate(520,42)">
+        <path d="M0,26 L96,26 L86,40 L10,40 Z" fill="#FFFFFF"/>
+        <rect x="22" y="12" width="52" height="14" fill="#FFFFFF"/>
+        <rect x="34" y="4" width="26" height="9" fill="#FFFFFF"/>
+        <rect x="30" y="16" width="8" height="6" fill="#0C7C99"/><rect x="44" y="16" width="8" height="6" fill="#0C7C99"/>
+        <rect x="58" y="16" width="8" height="6" fill="#0C7C99"/>
+      </g>
+      <path d="M900,80 L960,72 L1020,78 L1080,70 L1140,76 L1200,72 L1200,84 L900,84 Z" fill="#F3E4C4"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">03</div>
+    <div class="meta">
+      <div class="dow m">Thursday 3 September</div>
+      <h3>Formentera, while you're still fresh</h3>
+      <p class="note">Do this now, on the one morning you haven't been out until 6am. Ses Illetes genuinely looks
+      like the photos — turquoise, shallow, white sand — and it is the best day out in the Balearics.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">08:15</div><div><h4>Breakfast, then the bay road</h4><p>The <b>A1</b> passes Cala de Bou at 07:59 towards San Antonio; the P2 starts later. Or take a taxi to the bus station and start the day without watching a clock.</p></div></li>
+      <li><div class="t">09:00</div><div><h4>T1 to Ibiza Town</h4><p>Every 15 minutes on weekdays, 45 minutes. Stay on to the <b>Port d'Eivissa stop, not the bus station</b> — the ferry terminal is right there and it saves you a walk across town.</p></div></li>
+      <li><div class="t">10:00</div><div><h4>Fast ferry to La Savina</h4><p>Four operators run it — Baleària, Trasmapi, Aquabus and Formentera Lines — and between them there's a sailing every 20–30 minutes. <b>Check you're on a fast one</b>: the conventional ferries take up to an hour.</p></div></li>
+      <li><div class="t">10:30</div><div><h4>L3 to Ses Illetes</h4><p>The yellow "Bus Turístic" from the port. Ten minutes, <b>€10 return</b>, and the first one of the day is 10:30 — an earlier ferry just means waiting at the port.</p></div></li>
+      <li><div class="t">11:00</div><div><h4>Ses Illetes</h4><p>The headline. Walk the sandbar out towards Espalmador. Bring cash — the facilities are limited.</p></div></li>
+      <li><div class="t">14:00</div><div><h4>Lunch on the sand</h4><p><b>Kiosko El Pirata</b> on Illetes is the honest one — a hippy beach bar from the early 80s, casual food, famous cocktails. See the traps below before booking Juan y Andrea.</p></div></li>
+      <li><div class="t">18:45</div><div><h4>Last bus off the beach</h4><p>The <b>18:45 L3</b> is the last one, into the port at 18:55. Miss it and it's a taxi.</p></div></li>
+      <li><div class="t">21:30</div><div><h4>Pom Thai</h4><p>Back on your own side of the bay. Upmarket Thai sharing plates, confirmed open for 2026, and the evening drifts naturally into drinks.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">T1</span><span class="route">San Antonio ↔ Sant Rafel ↔ Port d'Eivissa</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">15 min</div></div>
+        <div><div class="k">Takes</div><div class="v">45 min</div></div>
+        <div><div class="k">Card</div><div class="v">€1.85–2.60</div></div>
+        <div><div class="k">Last back</div><div class="v last">23:20</div></div>
+      </div>
+      <div class="trans-note">Every 15 min Mon–Sat, every 30 on Sundays. The official line name is <b>Sant Antoni – Sant Rafel – Port Eivissa</b>: it serves both the bus station and the port, and the port stop is much closer to both the ferry terminal and Dalt Vila.</div>
+    </div>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-boat">FERRY</span><span class="route">Ibiza Town → La Savina, Formentera</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">20–30 min</div></div>
+        <div><div class="k">Takes</div><div class="v">25–35 min</div></div>
+        <div><div class="k">Return</div><div class="v">≈€40–60 each</div></div>
+        <div><div class="k">Last back</div><div class="v last">See note</div></div>
+      </div>
+      <div class="trans-note"><b>The last sailing differs by operator</b> and your open return is only valid on the company that issued it — so the operator you pick sets your curfew. Formentera Lines runs to about 01:00; Trasmapi's last is 23:00 with one further 00:00; Baleària's could not be confirmed. <b>Ask at the desk when you buy.</b> ID is required to board.</div>
+    </div>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">L3</span><span class="route">La Savina ↔ Platja de ses Illetes (Formentera)</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Out</div><div class="v">10:30 · 11:30 · 12:30 · 13:15</div></div>
+        <div><div class="k">Then</div><div class="v">16:30 · 17:30 · 18:30</div></div>
+        <div><div class="k">Return</div><div class="v">€10 · 10 min</div></div>
+        <div><div class="k">Last off beach</div><div class="v last">18:45</div></div>
+      </div>
+      <div class="trans-note"><b>The afternoon gap is the trap: no bus leaves the beach between 12:45 and 16:10.</b> Returns are 10:45, 11:45, 12:45 — then nothing until 16:10, 17:00, 17:45 and 18:45. Plan to leave on one of those or budget a taxi (€13.80–17.90 depending how far up the beach you are).</div>
+    </div>
+
+    <div class="call ok">
+      <div class="ct m">Good news on the park fee</div>
+      <p>Ses Illetes sits inside a protected natural park with an access charge — but it is a <b>per-vehicle</b>
+      charge. Arriving by bus, by taxi or on foot, <b>you pay nothing</b>. Only hire a scooter and it applies
+      (about €3/day). Quads are banned from the park outright.</p>
+    </div>
+
+    <div class="call warn">
+      <div class="ct m">Two things worth knowing before you book anything</div>
+      <p><b>Juan y Andrea</b> is the famous restaurant on Ses Illetes, rated around 3.0, with prepaid minimum
+      spends of €120–250 per person depending where they seat you, and €14 water. If you go, book the "random
+      placement" slot — same food, same sand, no minimum. Es Molí de Sal has the same problem.</p>
+      <p><b>The L3 timetable is disputed by its own operator.</b> The 2026 poster shows seven round trips
+      starting 10:30; busformentera.com's own page still says every 30 minutes from 09:45. Both are official.
+      Work to the poster and check the board at La Savina when you land.</p>
+    </div>
+
+    <div class="opts">
+      <div class="opt pick"><div class="on">Pom Thai</div><div class="od">Upmarket Thai sharing plates with a shop attached. Confirmed reopened for the 2026 season.</div><span class="om">near the hotel</span></div>
+      <div class="opt"><div class="on">Kugo Ibiza Sushi</div><div class="od">4.9 from 700+ reviews — statistically the best-rated food in walking range. Mostly takeaway, so check before planning to sit in.</div><span class="om">walkable</span></div>
+      <div class="opt"><div class="on">Relish</div><div class="od">#3 of 182 in Sant Josep. Evenings only except Sunday — the special-occasion one nearby.</div><span class="om">book ahead</span></div>
+      <div class="opt"><div class="on">Sky of Salia</div><div class="od">Rooftop at the far west end of Cala de Bou facing open sea. The most polished sunset dinner you can walk to.</div><span class="om">book the sunset slot</span></div>
+    </div>
+
+    <div class="call info">
+      <div class="ct m">Drinks and dancing in San Antonio afterwards</div>
+      <p><b>Soul City</b> in the West End is the best match for your taste anywhere in San Antonio — twenty years
+      of R&amp;B, hip-hop, dancehall, garage and grime, open every night, no €40 ticket. Hard close at 03:00.
+      <b>Ítaca</b> is the other one, and it's on the <b>bay side</b> of town, which is the right side for getting
+      home. <b>Ibiza Rocks Bar</b> is free entry, on the beach, DJs and live music until 04:00.</p>
+      <p>Closer to bed: <b>Kumharas</b> for the sunset and live music, and <b>Nocturna</b> beneath Hotel Los
+      Felices is the only actual late club within walking distance — though it's house and electronic, not your
+      music.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= FRI 4 ================= -->
+<article class="day isbig" id="d04">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#FBE3D6"/>
+      <circle cx="640" cy="52" r="30" fill="#D9452A" opacity=".22"/>
+      <circle cx="640" cy="52" r="17" fill="#D9452A" opacity=".4"/>
+      <path d="M0,86 L1200,78 L1200,110 L0,110 Z" fill="#D9452A" opacity=".3"/>
+      <g fill="#D9452A" opacity=".35">
+        <rect x="120" y="60" width="5" height="34" rx="2"/><rect x="200" y="48" width="5" height="46" rx="2"/>
+        <rect x="280" y="66" width="5" height="28" rx="2"/><rect x="960" y="54" width="5" height="40" rx="2"/>
+        <rect x="1040" y="68" width="5" height="26" rx="2"/><rect x="1110" y="46" width="5" height="48" rx="2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">04</div>
+    <div class="meta">
+      <div class="dow m">Friday 4 September · the anchor</div>
+      <h3>Pool day, then Calvin Harris</h3>
+      <p class="note">The one you booked. Keep the day flat and shallow — you're at the pool, you eat early, and
+      you're on a bus to Playa d'en Bossa by 16:00. It starts in daylight and it's over by 23:00.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">11:00</div><div><h4>Pool, and nothing else</h4><p>Hotel pool, or <b>Playa d'en Xinxó</b> four minutes from the door if you want sea. Today is about arriving at 17:00 with legs.</p></div></li>
+      <li><div class="t">14:00</div><div><h4>Eat properly, and eat early</h4><p>You will not eat again until very late, and drinks at Ushuaïa are eye-watering. <b>Es Puetó</b> does a menu del día with a sunset view; <b>The Kitchen 62</b> is two minutes away.</p></div></li>
+      <li><div class="t">15:30</div><div><h4>Pre-drinks, then to the bus station</h4><p>Have them at the hotel or on the Cala de Bou front — anything you drink here costs a quarter of what it does inside. Then the P2 or a short taxi to San Antonio bus station.</p></div></li>
+      <li><div class="t">16:00</div><div><h4>D3 Discobus → Playa d'en Bossa</h4><p>The D3 starts at <b>16:00</b>, which is exactly what a 17:00 door needs. About 47 minutes, and it stops at Ushuaïa.</p></div></li>
+      <li><div class="t">17:00</div><div><h4>★ Calvin Harris · Ushuaïa</h4><p>Open-air, with <b>MK</b>, Illyus &amp; Barrientos and Tyson O'Brien warming up. <b>Runs 17:00 to 23:00</b> — bring sunglasses, it starts in daylight. 18+, original physical ID.</p></div></li>
+      <li><div class="t">23:33</div><div><h4>D3 home</h4><p>Be at the stop by <b>23:15</b> — six thousand people leave at once. The 23:33 gets into San Antonio at 00:15.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">D3</span><span class="route">San Antonio ↔ Playa d'en Bossa (Ushuaïa &amp; Hï)</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Starts</div><div class="v">16:00</div></div>
+        <div><div class="k">Takes</div><div class="v">47 min</div></div>
+        <div><div class="k">Card / cash</div><div class="v">€4.00 / €5.60</div></div>
+        <div><div class="k">Last back</div><div class="v last">06:47</div></div>
+      </div>
+      <div class="trans-note">Runs daily, 1 June–30 Sept. After Ushuaïa closes the departures from Playa d'en Bossa are <b>23:33 (arrives San Antonio 00:15), 00:03 and 00:43</b>, then every 30 minutes through the night. <b>The last P2 out of San Antonio is 23:30, so you will miss it</b> — the final 3.5 km home is a taxi, about €8. Screenshot this now; your phone will be at 4% and there'll be no signal.</div>
+    </div>
+
+    <div class="call">
+      <div class="ct m">The single most important thing on this page</div>
+      <p><b>Ushuaïa is open-air with an early licence, and Calvin Harris finishes at 23:00.</b> That's an evening
+      show, not a night out — you'll be standing on Playa d'en Bossa at 11pm with the night not yet started.
+      Decide the "after" before you leave the hotel.</p>
+      <p>The easy answer is <b>Hï, directly across the road</b> — two-minute walk, doors 23:30, from €40, and
+      CamelPhat's Summer Of Love is on. If you'd rather have reggaeton, <b>Puro Reggaeton at Es Paradís</b> runs
+      every Friday 23:30–06:00 for €40 and it's back in San Antonio, five minutes from your bed. And if you want
+      an event rather than a regular Friday, <b>Charlie Sloth's Fire In The Club at Eden is a season closing
+      party</b> that night — UK rap, R&amp;B and bashment, €25, and you can walk home from it.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= SAT 5 ================= -->
+<article class="day isbig" id="d05">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#E8F3E4"/>
+      <path d="M0,80 L1200,72 L1200,110 L0,110 Z" fill="#2E8FA6" opacity=".38"/>
+      <g fill="#5F7C43" opacity=".5">
+        <path d="M90,78 l0,-26 M78,60 q12,-14 24,0" stroke="#5F7C43" stroke-width="4" fill="none"/>
+        <path d="M180,78 l0,-32 M166,56 q14,-16 28,0" stroke="#5F7C43" stroke-width="4" fill="none"/>
+        <path d="M1080,78 l0,-28 M1066,58 q14,-15 28,0" stroke="#5F7C43" stroke-width="4" fill="none"/>
+      </g>
+      <path d="M300,80 L420,66 L540,76 L660,64 L780,74 L900,68 L900,80 Z" fill="#F3E4C4"/>
+      <circle cx="1140" cy="40" r="20" fill="#DE8C10" opacity=".55"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">05</div>
+    <div class="meta">
+      <div class="dow m">Saturday 5 September · the big one</div>
+      <h3>Cala Bassa, sunset at Es Virot, then Bresh</h3>
+      <p class="note">The week handed you a gift. Bresh is the Argentinian party that fuses pop, reggaeton and
+      electronic, and 5 September is the season closing. This is your night.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">11:00</div><div><h4>Sleep in, then the P5</h4><p>Slow morning. The P5 leaves San Antonio bus station for Cala Bassa and takes about 34 minutes.</p></div></li>
+      <li><div class="t">12:30</div><div><h4>Cala Bassa</h4><p>Wide, pine-backed and genuinely beautiful — busier and more commercial than the coves up north, but the water is superb. Cala Bassa Beach Club is upscale lounge rather than a party.</p></div></li>
+      <li><div class="t">18:15</div><div><h4>Leave. Properly, on time.</h4><p>This is the one time today that matters — see the note below. Or take the little boat back to San Antonio port instead, which is more fun and lands you in town.</p></div></li>
+      <li><div class="t">20:00</div><div><h4>Es Virot, for sunset</h4><p>Seafront on the Cala de Bou front, walkable from the hotel. Rice dishes are the reason to go. Sunset is <b>20:20</b>.</p></div></li>
+      <li><div class="t">23:00</div><div><h4>To San Antonio, then the D1</h4><p>The D1 Discobus leaves San Antonio every 30 minutes from 23:30, and Amnesia is 13 minutes up the road at Sant Rafel. <b>Buy your return as you board.</b></p></div></li>
+      <li><div class="t">23:45</div><div><h4>★ Bresh closing party · Amnesia</h4><p>Pop, reggaeton and electronic across the <b>Main Room and the Terraza</b> — the Terraza has a glass roof that floods with light at sunrise, and it is worth being in there at 6am to see it. From <b>€50</b>. Amnesia has lockers, unlike Hï.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">P5</span><span class="route">San Antonio ↔ Cala Bassa</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Takes</div><div class="v">34 min</div></div>
+        <div><div class="k">Season</div><div class="v">1 Jun – 30 Sep</div></div>
+        <div><div class="k">Calls at</div><div class="v">Cala Bou 21:10</div></div>
+        <div><div class="k">Last back</div><div class="v last">21:00</div></div>
+      </div>
+      <div class="trans-note"><b>The last P5 leaves Cala Bassa at 21:00</b>, reaching Cala de Bou at 21:10 and San Antonio at 21:33 — that is an hour <em>after</em> sunset. If you want to eat at Es Virot while the sun goes down, you need to be on a bus around <b>18:15</b>. The boat from San Antonio port is the alternative and it's the nicer trip.</div>
+    </div>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">D1</span><span class="route">Discobus → Sant Rafel (Amnesia, UNVRS) → Ibiza port</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">30 min</div></div>
+        <div><div class="k">Runs</div><div class="v">23:30 – 06:30</div></div>
+        <div><div class="k">Card / cash</div><div class="v">€3.00 / €4.20</div></div>
+        <div><div class="k">To Amnesia</div><div class="v">13 min</div></div>
+      </div>
+      <div class="trans-note">Runs <b>every day</b>, 1 June–30 September, both directions. This is the single best piece of infrastructure on the island for you — it solves the 4am taxi shortage completely, and almost no visitors use it properly.</div>
+    </div>
+
+    <div class="call warn">
+      <div class="ct m">Ask the price of the fish. Out loud. Before it's cooked.</div>
+      <p>Fish sold by the kilo is the most reliable way to get stung in Ibiza — one documented single dish came
+      to €354. Es Virot, Can Pujol and El Gallo Viejo are all excellent and all serve whole fresh fish, so this
+      applies to every one of them. The rice dishes sidestep it entirely.</p>
+    </div>
+
+    <div class="opts">
+      <div class="opt pick"><div class="on">Es Virot</div><div class="od">Seafront, rice dishes and pizza, confirmed trading all through your window.</div><span class="om">walkable · sunset 20:20</span></div>
+      <div class="opt"><div class="on">Can Pujol</div><div class="od">The serious one — traditional Ibizan seafood since 1980. Bullit de peix and arròs a banda rated among the island's best.</div><span class="om">same stretch</span></div>
+      <div class="opt"><div class="on">Es Puetó</div><div class="od">Feet-in-the-sand chiringuito since 1969. Best value on this list and a proper sunset view — go early, the seats vanish.</div><span class="om">open to 01:00</span></div>
+      <div class="opt"><div class="on">Salvaje</div><div class="od">Dinner with live cabaret 21:00–23:00 — flamenco, fire, tightrope. Turns eating into an evening out.</div><span class="om">6 min walk</span></div>
+    </div>
+
+    <div class="call info">
+      <div class="ct m">Bresh or elrow?</div>
+      <p><b>Bresh at Amnesia, €50</b> — a confirmed season closing, your exact music, and the crowd knows every
+      word. It sold out 17 consecutive editions last year, so book it rather than wait; the special guest is
+      deliberately unannounced and may never be revealed.</p>
+      <p><b>elrow that night is at UNVRS, not Ushuaïa</b>, and it's €85 with Patrick Topping — a spectacle, but
+      tech-house, which isn't your brief. If you want elrow specifically, the better one is <b>Wednesday at
+      Ushuaïa</b> with Armand Van Helden, outdoors, and it's elrow's last outdoor date of 2026.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= SUN 6 ================= -->
+<article class="day" id="d06">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#F6EEE2"/>
+      <path d="M0,92 L1200,86 L1200,110 L0,110 Z" fill="#0C7C99" opacity=".35"/>
+      <g fill="#C9BBA6">
+        <path d="M700,92 L700,54 L740,44 L790,50 L840,40 L900,48 L960,42 L1010,52 L1010,92 Z"/>
+      </g>
+      <g fill="#B0A088">
+        <rect x="836" y="20" width="10" height="24"/><path d="M826,24 L841,6 L856,24 Z"/>
+      </g>
+      <circle cx="220" cy="44" r="22" fill="#DE8C10" opacity=".5"/>
+      <path d="M0,88 L120,80 L240,86 L360,78 L480,84 L600,80 L600,92 L0,92 Z" fill="#F3E4C4"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">06</div>
+    <div class="meta">
+      <div class="dow m">Sunday 6 September</div>
+      <h3>Cala Comte, then Dalt Vila</h3>
+      <p class="note">The best water on the island in the afternoon, and the prettiest evening in the Balearics
+      after it. Dalt Vila is a UNESCO-listed walled city on a hill and the only genuinely ancient thing here.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">12:00</div><div><h4>P4 to Cala Comte</h4><p>Thirty-five minutes from San Antonio bus station. The water here is the best on the island and the seabed drops away in bands of turquoise.</p></div></li>
+      <li><div class="t">12:40</div><div><h4>Comte, and the cheap trick</h4><p>Sunbeds on Sant Josep beaches are capped at €10 and <b>drop to €5 after 15:30</b>. Walk the cliff steps west to <b>Cala Escondida</b> if you want the quiet cove.</p></div></li>
+      <li><div class="t">16:30</div><div><h4>Back, and change</h4><p>The P4 calls at Cala de Bou on its way in, so you can get off at the hotel rather than riding into town and back out.</p></div></li>
+      <li><div class="t">18:30</div><div><h4>T1 to Ibiza Town</h4><p>Every 30 minutes on a Sunday, 45 minutes. Stay on to the <b>Port d'Eivissa stop</b> — it's a much shorter walk up to the walls than from the bus station.</p></div></li>
+      <li><div class="t">19:30</div><div><h4>Up through the Portal de ses Taules</h4><p>The main gate — a steep stone drawbridge into the walled city. <b>Wear proper shoes</b>: narrow, steep, cobbled, and this is the single most common complaint people have.</p></div></li>
+      <li><div class="t">19:45</div><div><h4>A drink on the steps at S'Escalinata</h4><p>Cushions scattered straight onto the stone steps on the ramp up. The most charming half hour in Ibiza Town, and it's on the way to your table.</p></div></li>
+      <li><div class="t">20:17</div><div><h4>Sunset from Baluard de Sant Bernat</h4><p>The sunset-facing bastion, looking over Figueretes, Playa d'en Bossa and the salt flats. Free, spectacular, and two minutes from dinner.</p></div></li>
+      <li><div class="t">20:30</div><div><h4>El Olivo Mio ✓ booked</h4><p>Plaça de Vila 9, inside the citadel — boho, organic, live music, on the prettiest square inside the walls.</p></div></li>
+      <li><div class="t">22:30</div><div><h4>Carrer de la Verge</h4><p>The old town's bar street, just below the walls — about twenty tiny bars, many carved into the rock, and the dancing happens in the lane itself. No ticket, no door charge.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">P4</span><span class="route">San Antonio ↔ Platges de Comte</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Takes</div><div class="v">35 min</div></div>
+        <div><div class="k">Season</div><div class="v">1 Jun – 30 Sep</div></div>
+        <div><div class="k">Calls at</div><div class="v">Cala Bou 21:57</div></div>
+        <div><div class="k">Last back</div><div class="v last">21:45</div></div>
+      </div>
+      <div class="trans-note">The last P4 leaves Comte at <b>21:45</b>, Cala de Bou 21:57, San Antonio 22:20. You're leaving long before that today — but it's the number that makes a Comte sunset possible on any other day, and a taxi back from out there is about €16 if you ever need one.</div>
+    </div>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">D1</span><span class="route">Ibiza port → San Antonio, all night</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">30 min</div></div>
+        <div><div class="k">Runs</div><div class="v">23:30 – 06:30</div></div>
+        <div><div class="k">Card</div><div class="v">€3.00</div></div>
+        <div><div class="k">Runs Sunday</div><div class="v" style="color:var(--olive)">Yes — daily</div></div>
+      </div>
+      <div class="trans-note"><b>This is what frees you to stay out.</b> The D1 leaves from the port — where all these bars are — every 30 minutes until 06:30, every day of the season. You never have to watch the clock in a bar. The one catch: the last P2 out of San Antonio is 23:30, so the final 3.5 km home will be a taxi, about €8.</div>
+    </div>
+
+    <div class="call ok">
+      <div class="ct m">If you want the whole way home on buses</div>
+      <p>There is exactly one connection that works, and it's earlier than you'd guess. Take the <b>22:35 T1</b>
+      out of Ibiza — Sant Rafel 22:55, San Antonio 23:15 — which leaves fifteen minutes for the <b>23:30 P2</b>.
+      The 22:50 T1 looks like it works and does not: it arrives at 23:30, the same minute the P2 leaves, from a
+      different stand. Treat it as a miss.</p>
+    </div>
+
+    <div class="call warn">
+      <div class="ct m">Two Sunday traps in the old town</div>
+      <p><b>Teatro Pereyra</b> is in every older guide as the free live-music bar. It isn't that any more — it's
+      been rebuilt as a ticketed dinner show. <b>Malanga Café</b> is exactly your music (funk, soul, afro, Latin)
+      but it opens <b>Friday and Saturday only</b>. Don't walk to either.</p>
+      <p>What is open: <b>Bar 1805</b> every day 20:00–04:00, food until 02:30, and it's the reliable one.
+      <b>Paradise Lost</b> is the best bet for actually dancing without a ticket — small, loud, resident DJs —
+      but its Sunday hours are disputed, so phone before you walk.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= MON 7 ================= -->
+<article class="day isbig" id="d07">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#FDF0DA"/>
+      <path d="M0,66 L90,54 L170,64 L250,44 L330,60 L400,72 L400,110 L0,110 Z" fill="#B9A88F"/>
+      <path d="M1200,60 L1120,48 L1040,60 L960,42 L900,58 L860,72 L860,110 L1200,110 Z" fill="#B9A88F"/>
+      <path d="M400,78 L860,78 L860,110 L400,110 Z" fill="#2E8FA6" opacity=".45"/>
+      <circle cx="630" cy="60" r="26" fill="#D9452A" opacity=".35"/>
+      <path d="M560,78 L700,78 L740,110 L520,110 Z" fill="#FFD9A0" opacity=".45"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">07</div>
+    <div class="meta">
+      <div class="dow m">Monday 7 September</div>
+      <h3>Saladeta, the strip, and the best-value night of the week</h3>
+      <p class="note">The clearest water you will see, then a free sunset, then a €25 club you can walk home
+      from. This is the day that costs almost nothing and might be the best one.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">10:30</div><div><h4>P7 to Cala Salada</h4><p><b>New for 2026 and most guides don't know it.</b> Cala Salada used to be taxi-only; now there's a bus every 15 minutes taking 15 minutes. Meanwhile the access road is closed to cars 09:30–17:00, so drivers park up the hill and walk. You win.</p></div></li>
+      <li><div class="t">11:00</div><div><h4>Walk round to Saladeta</h4><p>Cala Salada has sunbeds, a restaurant and toilets. Then take the rocky path round the back of the cove, ten to fifteen minutes, to <b>Saladeta</b> — the clearest water on the island and <b>absolutely no facilities</b>.</p></div></li>
+      <li><div class="t">17:30</div><div><h4>Back and change</h4><p>Buses run every 15 minutes, so there's no drama — but the last one is 20:50 and you want to be on the strip before then anyway.</p></div></li>
+      <li><div class="t">19:45</div><div><h4>Sunset on the strip</h4><p>Café Mambo, Café del Mar and Savannah all face it. <b>The sea wall along the promenade is free and has the identical view</b> — see the note below before you commit to a table.</p></div></li>
+      <li><div class="t">21:00</div><div><h4>Aragma</h4><p>Modern Greek and Mediterranean mezze, currently rated #1 of 228 restaurants in San Antonio. Calle Madrid 4 — about 400 m back from the strip, above the marina, so it's a five-minute walk from sunset to table. <b>Book a few days ahead.</b></p></div></li>
+      <li><div class="t">23:45</div><div><h4>★ You Know The Vibes · Es Paradís</h4><p><b>€25</b>, and it's the only Es Paradís night this week with actual names attached: <b>DJ Policy</b> with Bubba, Danny Beck, Grant Collins and MC Broown over the top. Hip-hop, bashment, afrobeats and reggaeton under the glass pyramid, which slides open around 02:00. Runs until <b>07:00</b>.</p></div></li>
+    </ul>
+
+    <div class="trans">
+      <div class="trans-h"><span class="badge b-bus">P7</span><span class="route">San Antonio ↔ Can Coix ↔ Cala Salada</span></div>
+      <div class="trans-facts">
+        <div><div class="k">Every</div><div class="v">15 min</div></div>
+        <div><div class="k">Takes</div><div class="v">15 min</div></div>
+        <div><div class="k">Card</div><div class="v">≈€1.90</div></div>
+        <div><div class="k">Last back</div><div class="v last">20:50</div></div>
+      </div>
+      <div class="trans-note">The last P7 leaves Cala Salada at <b>20:50</b> and reaches San Antonio at 21:05. <b>There is no boat to Saladeta</b> — you asked whether bus or ferry is better, and the bus is the only option. It's also the closest beach of the week, fifteen minutes each way.</div>
+    </div>
+
+    <div class="call warn">
+      <div class="ct m">Saladeta has nothing. Bring everything.</div>
+      <p>No bar, no toilets, no shade, no lifeguard. Bring water, food and something to sit on, and wear
+      <b>trainers or grippy sandals</b> — the path round is rocky and flip-flops will not do it. Do the walk in
+      daylight, not on the way back at dusk.</p>
+    </div>
+
+    <div class="call">
+      <div class="ct m">Do not book a table on the sunset strip</div>
+      <p>A front table at <b>Café Mambo</b> carries a per-person minimum spend — realistically <b>€200–300 for
+      two</b> before you have eaten anything. Café del Mar has the same structure and reviewers report €13 for
+      two bottles of Corona. The music is genuinely good at Mambo, and you can hear all of it, see all of it and
+      pay none of it by standing on the promenade wall outside.</p>
+      <p>If you want a seat, <b>Golden Buddha</b> at the quiet end is the value pick — Balinese beds, famous
+      mojitos, open to 04:00. <b>Mint by Mambo</b> may still be closed; don't build the evening around it.</p>
+    </div>
+
+    <div class="call ok">
+      <div class="ct m">Why tonight is the sleeper of the week</div>
+      <p>Es Paradís is on the San Antonio side, so from Aragma it's a short walk, and afterwards you walk home
+      or take a €8 taxi rather than waiting for a Discobus at 5am. €25 for a named line-up in your exact genre,
+      running an hour later than everything else on the island. Pound for pound it beats every €50 room in the
+      week.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= TUE 8 ================= -->
+<article class="day" id="d08">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#E9F2F6"/>
+      <path d="M0,84 L1200,78 L1200,110 L0,110 Z" fill="#2E8FA6" opacity=".42"/>
+      <g transform="translate(180,40)">
+        <path d="M0,34 L70,34 L62,46 L8,46 Z" fill="#FFFFFF"/>
+        <path d="M34,32 L34,2 L58,28 Z" fill="#FFFFFF"/>
+        <path d="M30,32 L30,8 L10,32 Z" fill="#FFFFFF" opacity=".85"/>
+      </g>
+      <path d="M880,84 L900,60 L916,34 L928,16 L940,32 L956,58 L974,84 Z" fill="#8892A0"/>
+      <circle cx="1090" cy="40" r="18" fill="#DE8C10" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">08</div>
+    <div class="meta">
+      <div class="dow m">Tuesday 8 September · last full day</div>
+      <h3>Es Vedrà from the water, then the lantern garden</h3>
+      <p class="note">The one thing you can't do on any other day, from your own port, done by early afternoon —
+      which leaves the evening entirely clear.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">10:00</div><div><h4>Es Vedrà by catamaran</h4><p>Capitán Nemo sail 10:00–14:00 from San Antonio port — underwater viewing windows, snorkel gear, a swim stop, past Cala Bassa and Cala Comte to Es Vedrà, which rises 400 m straight out of the sea. <b>Explicitly a scenic excursion, not a booze cruise.</b></p></div></li>
+      <li><div class="t">14:30</div><div><h4>Lunch in town, then nothing</h4><p>You've earned an afternoon of nothing. The beach four minutes from the hotel door will do.</p></div></li>
+      <li><div class="t">20:00</div><div><h4>Chi Kee Wun</h4><p>Modern Chinese across eight regional cuisines, served in an outdoor garden strung with scarlet lanterns, with circular booths and shisha. Order the crispy duck and the dim sum. It's a looks-and-atmosphere restaurant as much as a food one — go for the setting.</p></div></li>
+      <li><div class="t">23:30</div><div><h4>Optional: Pacha</h4><p><b>Gordo presents Taraka</b>, from €30 — Latin-leaning percussive house from the Colombian-American producer, with Shimza. The iconic club you'd otherwise miss, and the cheapest big room of your week. The D1 drops you at the door.</p></div></li>
+    </ul>
+
+    <div class="call info">
+      <div class="ct m">Use the coordinates for Chi Kee Wun, not the street name</div>
+      <p>You were right to be suspicious. The official site says <b>12 Camí des Molí</b>, but the address is
+      genuinely ambiguous and drivers get it wrong. Give the taxi <b>38.972985, 1.309019</b>. Book on
+      <b>+34 682 22 81 77</b> or chikeewun.com — a few days ahead is plenty. Kitchen 19:00–00:30.</p>
+    </div>
+
+    <div class="call">
+      <div class="ct m">The alternative day, if you'd rather party than sail</div>
+      <p><b>KISSTORY at O Beach</b>, 13:00–22:00, <b>€25 if you're in before 14:00</b>. DJ Cameo playing garage,
+      hip-hop, R&amp;B and old-skool anthems with live drums, poolside, in San Antonio — walkable at both ends.
+      It's the closest thing all week to your actual playlist. The catch is it runs to 22:00 and eats the
+      Chi Kee Wun booking, so it's one or the other.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= WED 9 ================= -->
+<article class="day" id="d09">
+  <div class="dayband">
+    <svg viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="1200" height="110" fill="#F6EEE2"/>
+      <path d="M0,88 L1200,82 L1200,110 L0,110 Z" fill="#2E8FA6" opacity=".35"/>
+      <path d="M760,58 l150,-16 l30,10 l-140,26 z" fill="#FFFFFF" opacity=".9"/>
+      <path d="M840,52 l-6,-22 l16,4 l10,18 z" fill="#FFFFFF" opacity=".7"/>
+      <circle cx="200" cy="46" r="24" fill="#DE8C10" opacity=".45"/>
+    </svg>
+  </div>
+  <div class="dayhead">
+    <div class="daynum">09</div>
+    <div class="meta">
+      <div class="dow m">Wednesday 9 September</div>
+      <h3>Home</h3>
+      <p class="note">A 20:15 flight gives you almost the whole day. Don't waste it in the hotel lobby.</p>
+    </div>
+  </div>
+  <div class="daybody">
+    <ul class="tl">
+      <li><div class="t">11:00</div><div><h4>Check out, bags in storage</h4><p>Every hotel will hold them. Ask at reception on the way to breakfast.</p></div></li>
+      <li><div class="t">11:30</div><div><h4>Playa d'en Xinxó</h4><p>Four minutes from the hotel door. Last swim, and you can be back in ten minutes if anything goes wrong.</p></div></li>
+      <li><div class="t">13:30</div><div><h4>Last lunch</h4><p>Kumharas one more time, or <b>Es Cucó</b> at the top of the Port des Torrent hill for rotisserie chicken — cheap, local, and forty-five years old. It's 2.4 km, so bus out and taxi back.</p></div></li>
+      <li><div class="t">16:30</div><div><h4>AERO1 → Airport</h4><p>Every 30 minutes, fifty minutes' run, <b>€4 by card</b>. The 16:30 gets you there at 17:20; the 17:00 gets you there at 17:50. Both comfortable for a 20:15 departure.</p></div></li>
+      <li><div class="t">20:15</div><div><h4>Wheels up</h4><p>Sunset that evening is 20:12 — if you're on the right side of the plane you get it on the way out.</p></div></li>
+    </ul>
+  </div>
+</article>
 </section>
 
-<section id="move">
+<!-- ================= BUSES ================= -->
+<section id="buses">
   <div class="sechead">
-    <span class="no">04 / LOGISTICS</span>
-    <h2>Getting<br>around</h2>
-    <p>No car, and you won't need one. But Ibiza rebuilt its entire bus network four months ago, so every guide you've read online is wrong.</p>
-  </div>
-
-  <div class="call warn">
-    <div class="ct m">⚠ Read this before you Google anything</div>
-    <p><b>On 1 April 2026 Ibiza scrapped its whole bus system.</b> ALSA took over, and every old line number — L3, L8, L9, L5, L6 — was deleted and replaced with letters: <b>T</b> trunk, <b>P</b> beach, <b>D</b> disco, <b>N</b> night, <b>AERO</b> airport, <b>U/A</b> local. Roughly 100 new buses and about 50% more service.</p>
-    <p>Every blog, forum post and travel guide still lists the old numbers. <b>So does the Vibra Riviera's own website.</b> Ignore all of it. The routes below are from the official 2026 ALSA timetables, all valid 1 May–30 Sept, which covers your whole trip. Re-check at <a href="https://www.alsaibiza.es/en/schedules">alsaibiza.es/en/schedules</a> the week before.</p>
-    <p><b>Always tap a contactless card.</b> Card and QR fares are around 30% cheaper than cash on every line, and the multi-day tourist passes people talk about don't exist — the travel cards are residents-only.</p>
-  </div>
-
-  <div class="routes" id="routes" style="margin-top:26px"></div>
-
-  <div class="call" style="margin-top:26px">
-    <div class="ct m">⚠ The last-mile problem — budget for this</div>
-    <p>The hotel is in <b>Cala de Bou, at the far western end of the bay</b> — not in San Antonio town. It's about <b>3.5 km from the bus station</b>: a 45-minute walk, or roughly €8 in a taxi. Several booking sites claim "10 minutes to the centre". They're measuring straight across the water.</p>
-    <p><b>This matters most at 5am.</b> The Discobus drops you at San Antonio bus station, not the Bay, and the P2 local bus stops running at midnight. So every club night ends with a short <b>€8–10 taxi for the final 3 km</b>. Factor roughly €40 across the week. The upside: demand for taxis at the San Antonio rank at 5am is far lower than at the club doors, so it's a quick one to get.</p>
-  </div>
-
-  <div class="call info" style="margin-top:14px">
-    <div class="ct m">Taxis — numbers, fares, and the 4am reality</div>
-    <p><b>Save these now:</b> island-wide WhatsApp <b>+34 971 33 33 33</b> (share your location) · San Antonio rank <b>+34 971 34 37 64</b> · Radio Taxi Ibiza <b>+34 971 39 84 83</b>. Uber works in Ibiza but only dispatches licensed local taxis, so it's the same limited pool of cars. TaxiClick is the local app. You generally <b>cannot pre-book for a specific time</b> — it's dispatch-on-demand.</p>
-    <p><b>Official 2026 fares from San Antonio:</b> Ibiza Town €22.15 day / €26.05 night · Airport €28.20 / €33.40 · Amnesia &amp; UNVRS at Sant Rafel roughly €15–25 · Playa d'en Bossa roughly €30–45. Night rate runs 21:00–07:00, <b>plus from 15:00 on Saturdays and all day Sunday</b>. Real-world tends to run above the calculator.</p>
-    <p><b>The honest warning:</b> Ibiza's taxi licences are capped and club chuck-out demand massively exceeds supply. Expect 30–60 minute waits at Amnesia or Playa d'en Bossa between 04:00 and 06:00, apps showing no cars, and unlicensed touts working the queue. <b>The Discobus is the answer</b> — €3–4, every 30 minutes until 06:30, and it's right there. Buy a return when you board so you're not queuing at the machine at 5am.</p>
-  </div>
-</section>
-
-<section id="sand">
-  <div class="sechead">
-    <span class="no">05 / DAYLIGHT</span>
-    <h2>The coast</h2>
-    <p>Ranked by how good they are versus how hard they are to reach with no car. Sunset in your week runs 20:23 down to 20:12 — be in position by 19:30.</p>
+    <span class="no m">03 / Logistics</span>
+    <h2>Every bus<br>you need</h2>
+    <p>From ALSA's own 2026 timetables. The last-bus column is the one worth screenshotting.</p>
   </div>
   <div class="tw">
-    <table id="beaches">
-      <thead><tr><th>Beach</th><th>How you get there</th><th>Time / fare</th><th>Verdict</th></tr></thead>
-      <tbody></tbody>
+    <table>
+      <thead><tr><th>Line</th><th>Route</th><th>Frequency &amp; time</th><th>Fare (card)</th><th>Last back</th></tr></thead>
+      <tbody>
+        <tr><td><b>AERO1</b></td><td>Airport ↔ San Antonio<span class="sm">How you arrive and how you leave</span></td><td>Every 30 min · 50 min</td><td>€4.00<span class="sm">€5.60 cash</span></td><td class="last">01:30</td></tr>
+        <tr><td><b>T1</b></td><td>San Antonio ↔ Sant Rafel ↔ Port d'Eivissa<span class="sm">The workhorse. Serves both the bus station and the port — use the port stop for the ferry and for Dalt Vila</span></td><td>Every 15 min Mon–Sat<span class="sm">Every 30 min Sunday · 45 min</span></td><td>€1.85–2.60<span class="sm">Exact stage not published</span></td><td class="last">23:20<span class="sm">23:15 Sunday</span></td></tr>
+        <tr><td><b>P2</b></td><td>San Antonio ↔ Es Port des Torrent<span class="sm">Your local. Runs along the bay road past the hotel</span></td><td>Hourly</td><td>Stage 0</td><td class="last">23:30<span class="sm">out of San Antonio</span></td></tr>
+        <tr><td><b>A1</b></td><td>Cala Tarida ↔ San Antonio<span class="sm">Also calls at Cala de Bou, and starts earlier than the P2 — 07:59 towards town</span></td><td>Roughly 90 min<span class="sm">Daily, 1 May–30 Sept</span></td><td>Stage 0–1</td><td class="last">19:14</td></tr>
+        <tr><td><b>P4</b></td><td>San Antonio ↔ Platges de Comte<span class="sm">Calls at Cala de Bou. Sunbeds €5 after 15:30</span></td><td>35 min<span class="sm">1 Jun – 30 Sept</span></td><td>Stage 1</td><td class="last">21:45<span class="sm">San Antonio 22:20</span></td></tr>
+        <tr><td><b>P5</b></td><td>San Antonio ↔ Cala Bassa<span class="sm">Or take the boat from San Antonio port instead</span></td><td>34 min<span class="sm">1 Jun – 30 Sept</span></td><td>Stage 1</td><td class="last">21:00<span class="sm">San Antonio 21:33</span></td></tr>
+        <tr><td><b>P7</b></td><td>San Antonio ↔ Cala Salada<span class="sm">New for 2026. Access road closed to cars 09:30–17:00</span></td><td>Every 15 min · 15 min</td><td>≈€1.90</td><td class="last">20:50<span class="sm">San Antonio 21:05</span></td></tr>
+        <tr><td><b>D1</b></td><td>Discobus → Sant Rafel (Amnesia, UNVRS) → Ibiza port<span class="sm">Your Saturday, your Sunday night and your Tuesday</span></td><td>Every 30 min<span class="sm">23:30–06:30, daily</span></td><td>€3.00<span class="sm">€4.20 cash</span></td><td class="last">06:30</td></tr>
+        <tr><td><b>D3</b></td><td>Discobus → Playa d'en Bossa (Ushuaïa, Hï, DC10)<span class="sm">Starts at 16:00, which is what a 17:00 door needs</span></td><td>16:00–06:47 · 47 min</td><td>€4.00<span class="sm">€5.60 cash</span></td><td class="last">06:47</td></tr>
+        <tr><td><b>L3</b></td><td>La Savina ↔ Ses Illetes <em>(Formentera)</em><span class="sm">Separate island, separate operator. New for 2026</span></td><td>7 round trips · 10 min</td><td>€10 return</td><td class="last">18:45<span class="sm">off the beach</span></td></tr>
+      </tbody>
     </table>
   </div>
 
-  <div class="call info" style="margin-top:22px">
-    <div class="ct m">The Cala Comte play — the best-value evening of the week</div>
-    <p>Sunbed prices on Sant Josep beaches are capped at €10 a day, and <b>drop to €5 after 15:30</b>. So: catch the <b>15:30 P4</b>, arrive 16:05, pay €5 each for a bed as the day crowd thins, swim in the best water on the island, watch the sun go down at 20:15, and take the <b>21:45 bus</b> home at 22:20.</p>
-    <p>Total cost, sunbed and both bus fares included: <b>roughly €10–12 each.</b> It fits a late wake-up perfectly, and the light is better in the afternoon anyway. Bring a bottle from the Spar and sit on the rocks — that's the good version. You do not need to book a restaurant to enjoy this sunset.</p>
+  <div class="call" style="margin:22px 0 0">
+    <div class="ct m">The last-mile problem — budget for this</div>
+    <p>The hotel is in <b>Cala de Bou at the far western end of the bay</b>, about <b>3.5 km from the bus
+    station</b>: a 45-minute walk or roughly €8 in a taxi. This matters most after midnight, because the
+    Discobus drops you at San Antonio bus station and <b>the P2 stops at 23:30</b>. So every club night ends
+    with a short €8–10 taxi for the final 3 km. Factor roughly €40 across the week.</p>
+    <p>The upside: demand at the San Antonio rank at 5am is far lower than at the club doors, so it's a quick
+    one to get. <b>Save these now:</b> island-wide WhatsApp <b>+34 971 33 33 33</b> (share your location) ·
+    San Antonio rank <b>+34 971 34 37 64</b> · Radio Taxi Ibiza <b>+34 971 39 84 83</b>.</p>
   </div>
 </section>
 
+<!-- ================= EAT ================= -->
 <section id="eat">
   <div class="sechead">
-    <span class="no">06 / FEEDING</span>
+    <span class="no m">04 / Feeding</span>
     <h2>Where to eat</h2>
-    <p>Ibiza turns restaurants over fast and prices bite. Everything below was checked as trading in 2026 — but Google Maps it on the day before you set out.</p>
+    <p>Everything here was checked as trading in 2026 — but Google Maps it on the day before you set out.</p>
   </div>
-  <div class="eatgrid" id="eatgrid"></div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Place</th><th>What</th><th>Where</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><b>Kumharas</b></td><td>Sunset bar &amp; street-food market</td><td>6 min walk</td><td>No bookings, no minimum spend, live music. Open to midnight. The best thing near your bed.</td></tr>
+        <tr><td><b>Pom Thai</b></td><td>Thai sharing plates</td><td>Walkable</td><td>Confirmed reopened 1 May 2026. Drifts naturally into drinks.</td></tr>
+        <tr><td><b>Es Virot</b></td><td>Seafront Mediterranean, rice dishes</td><td>Cala de Bou front</td><td>Your Saturday sunset. Rice dishes over the whole fish — see the by-the-kilo warning.</td></tr>
+        <tr><td><b>Kojima Izakaya</b></td><td>Japanese small plates</td><td>2 min</td><td>4.9/5 and on the hotel's own corner. Check the day — reports of a midweek closure.</td></tr>
+        <tr><td><b>Kugo</b></td><td>Sushi</td><td>Walkable</td><td>Best-rated food in walking range. Primarily takeaway — don't plan a sit-down without checking.</td></tr>
+        <tr><td><b>Es Puetó</b></td><td>Chiringuito since 1969</td><td>On the sand</td><td>Menu del día, feet in the sand, proper sunset view, open to 01:00. Best value on the list.</td></tr>
+        <tr><td><b>Can Pujol</b></td><td>Traditional Ibizan seafood</td><td>Same stretch</td><td>Bullit de peix and arròs a banda among the island's best. Highest by-the-kilo risk — ask first.</td></tr>
+        <tr><td><b>Relish</b></td><td>International, private pool</td><td>Short hop</td><td>#3 of 182 in Sant Josep. Evenings only except Sunday.</td></tr>
+        <tr><td><b>Sky of Salia</b></td><td>Rooftop Mediterranean</td><td>West end of Cala de Bou</td><td>The most polished sunset dinner you can walk to. Book the sunset slot well ahead.</td></tr>
+        <tr><td><b>Salvaje</b></td><td>Dinner with live cabaret</td><td>6 min</td><td>Flamenco, fire, tightrope, 21:00–23:00. Mis-filed online as Indian — it isn't.</td></tr>
+        <tr><td><b>Cool Café</b></td><td>Breakfast and late</td><td>6 min</td><td>07:00–02:00 in summer, so it's both ends of the day.</td></tr>
+        <tr><td><b>Aragma</b></td><td>Greek mezze, ≈€65</td><td>Calle Madrid 4, San Antonio</td><td>#1 of 228 in San Antonio. 400 m back from the sunset strip. Book ahead.</td></tr>
+        <tr><td><b>Chi Kee Wun</b></td><td>Chinese, lantern garden</td><td>Use 38.972985, 1.309019</td><td>+34 682 22 81 77 · 19:00–00:30. The street address is genuinely ambiguous.</td></tr>
+        <tr><td><b>El Olivo Mio</b></td><td>Mediterranean, ✓ booked 20:30 Sun</td><td>Plaça de Vila 9, Dalt Vila</td><td>Inside the citadel on the prettiest square. The walk up is steep and cobbled.</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
-<section id="truth">
-  <div class="sechead">
-    <span class="no">07 / STRAIGHT TALK</span>
-    <h2>Traps<br>&amp; truths</h2>
-    <p>The things that quietly ruin a week in Ibiza, and the few that genuinely live up to it.</p>
-  </div>
-  <div class="traps" id="traps"></div>
-</section>
-
+<!-- ================= PACK ================= -->
 <section id="pack">
   <div class="sechead">
-    <span class="no">08 / ADMIN</span>
+    <span class="no m">05 / Admin</span>
     <h2>Before<br>you fly</h2>
-    <p>Tap to tick. Bresh is a season closer and Friday is a Guetta-and-Calvin night — the tickets that matter will move.</p>
+    <p>Tap to tick. Bresh is a season closer and Friday is a Calvin-and-CamelPhat night — the tickets that matter will move.</p>
   </div>
-  <div class="checks" id="checks"></div>
-
-  <h3 class="d" style="font-size:clamp(1.3rem,3vw,2rem);margin:clamp(44px,6vw,72px) 0 20px">What it roughly costs, each</h3>
-  <div class="money" id="money"></div>
+  <div class="checks" id="checkgrid"></div>
 </section>
+</main>
 
 <footer>
-  <div class="fgrid">
+  <div class="wrap">
     <div class="fw">Vamos.</div>
-    <p>
-      Built 13 Aug 2026 for 2–9 Sept 2026. Bus times from official ALSA 2026 timetables (valid 1 May–30 Sept); Calvin Harris confirmed on Ushuaïa's own site; Bresh closing confirmed on Amnesia's. Sunset times computed for Ibiza.<br><br>
-      Prices marked <span class="hll">≈</span> are estimates or from third-party sources — the Cruceros Portmany boat fares and the water-taxi September evening timetable are not published online and need confirming at the Passeig de la Mar kiosk on day one.
-    </p>
+    <p>Bus times taken from ALSA's own 2026 timetables (valid 1 May–30 Sept) and verified line by line against
+    the published PDFs; Formentera's L3 from the Consell de Formentera's 2026 poster. Sunset times computed for
+    Ibiza. Prices are the cheapest advertised tier and rise as dates fill. Where a line-up or a timetable was
+    disputed between sources, it says so rather than picking one.</p>
   </div>
 </footer>
 
 <script>
-/* ==================== DATA ==================== */
-const DAYS = [
-{
-  n:'01', dow:'Wednesday', date:'2 September', big:false, tag:'easy',
-  title:'Land, drop bags, walk to the good bar',
-  note:'You land at 19:25, so the sunset (20:23) is gone before you clear baggage. Don\'t fight it — get to the hotel, get changed, and walk six minutes to the best low-key spot in the Bay.',
-  sun:[
-    {t:'19:25', h:'Wheels down at IBZ', p:'Passport, bags, out. Realistically you\'re landing-side clear by 19:50–20:10.'},
-    {t:'20:30', h:'AERO1 bus to San Antonio', p:'Every 30 minutes until 01:30, 50 minutes, <b>€4 by card</b>. The 21:00 is your fallback — nothing is lost by missing one. Then a €8 taxi for the last 3 km to the hotel.', tags:['AERO1 · €4','or taxi €28–33 door to door']},
-    {t:'21:20', h:'Check in · Vibra Riviera', p:'C/ des Caló 49, Cala de Bou. Ask for a room <b>away from the Plastik club side</b> — sea-view rooms catch the noise. Spar is 100 m away for water, breakfast bits and sunset wine.'}
-  ],
-  moon:[
-    {t:'22:00', h:'Kumharas', p:'Six-minute walk from the hotel. Bohemian beachside bar-restaurant — street food stalls, a nightly hippy market, live music, no minimum spend and no booking. Open until midnight. <b>The single best thing within walking distance of your bed.</b>', tags:['≈€20–30pp','walk 6 min','no booking']},
-    {t:'—', h:'If the kitchen\'s shut', p:'Es Virot or Pisco Beach on the Cala de Bou waterfront, or Ausonia for wood-fired pizza. All within 25 minutes on foot along the bay road.'}
-  ]
-},
-{
-  n:'02', dow:'Thursday', date:'3 September', big:false, tag:'easy',
-  title:'Formentera, while you\'re still fresh',
-  note:'Do this now, on the one morning of the week you haven\'t been out until 6am. Ses Illetes genuinely looks like the photos — turquoise, shallow, white sand — and it is the best day out in the Balearics.',
-  sun:[
-    {t:'09:20', h:'Taxi to San Antonio port', p:'≈€8. The water taxi doesn\'t start until 10:00, so this one\'s a cab. Grab a coffee at the port.'},
-    {t:'10:00', h:'Direct boat: San Antonio → La Savina', p:'Cruceros Portmany sail direct from San Antonio, daily in September. About <b>90 minutes</b>, and it\'s a scenic coastal run past Cala Bassa, Cala Comte and Es Vedrà rather than a fast ferry. Back at 20:00.', tags:['≈€35–45 return','confirm price at the kiosk']},
-    {t:'11:30', h:'Land at La Savina', p:'Either grab the L7 bus to Ses Illetes, a taxi (€12–13, fixed fare — agree it first), or hire scooters right at the port (≈€30/day). <b>Book scooters online in advance</b> — there\'s a hard quota on rental bikes in September.'},
-    {t:'12:00', h:'Ses Illetes', p:'The headline. Walk the sandbar out towards Espalmador. Bring cash — it\'s inside a protected natural park with an access fee and limited facilities.'},
-    {t:'14:00', h:'Lunch on the sand', p:'<b>Kiosko El Pirata</b> on Illetes is the honest one — a hippy beach bar from the early 80s, casual food, famous cocktails. Or ride into Sant Francesc for <b>Can Carlos</b>. See the Traps section before you book Juan y Andrea.'},
-    {t:'17:00', h:'One more stop', p:'Cala Saona for a second swim, or Es Cap de Barbaria lighthouse if you took scooters — Mars-like scrubland and a cliff edge. Don\'t try to add a third thing; Formentera rewards slowness.'},
-    {t:'18:00', h:'Back to La Savina', p:'Return the scooters, cold drink at the port, board for 20:00.'}
-  ],
-  moon:[
-    {t:'20:00', h:'Sail back into San Antonio', p:'You\'ll come in with the light going. Good end to the day.'},
-    {t:'21:30', h:'Chi Kee Wun', p:'Eight minutes in a taxi from the hotel. Modern Chinese fusion in a lantern-strung garden with circular booths, cocktails and shisha — the crispy duck and the dim sum are what to order. <b>Book a few days ahead.</b> It\'s a looks-and-atmosphere restaurant more than a food destination, so go for the setting.', tags:['≈€45–60pp','book: +34 682 22 81 77','19:00–00:30']},
-    {t:'—', h:'Then home', p:'Early-ish one. Tomorrow starts at 17:00 and doesn\'t stop.'}
-  ],
-  calls:[{k:'info',t:'If 09:20 is too brutal',b:'Skip the direct boat. Take the T1 to Ibiza Town (every 15 minutes, 45 min) and catch a fast ferry from Botafoc — they run every 30 minutes, cross in about 30 minutes, and go from around €9.50 one way. You leave later and get more time on the island; you just lose the scenic sail. Bring ID, it\'s required to board.'}]
-},
-{
-  n:'03', dow:'Friday', date:'4 September', big:true, tag:'big',
-  title:'Calvin Harris',
-  note:'The one you booked. Keep the day short and shallow — you\'re on a beach by 11, back by 14:30, and on a bus to Playa d\'en Bossa by 16:00.',
-  sun:[
-    {t:'10:15', h:'Up, breakfast', p:'Hotel breakfast runs to <b>11:00</b>, so you have about 45 minutes of runway. Use it.'},
-    {t:'11:30', h:'Cala Salada → Cala Saladeta', p:'The <b>P7</b> leaves San Antonio every 15 minutes and takes 15 minutes. Cala Salada has sunbeds (capped €7), a restaurant and toilets — then walk the rocky path round the back of the cove, 10–15 minutes, to <b>Saladeta</b>, which has the clearest water on the island and <b>absolutely no facilities</b>.', tags:['P7 · ≈€1.90','every 15 min','bring water + trainers']},
-    {t:'14:30', h:'Last bus back', p:'Buses run back to San Antonio every 15–30 minutes. Don\'t linger — you want a shower and a proper get-ready.'},
-    {t:'15:45', h:'Taxi to San Antonio bus station', p:'≈€8. Or the P2 from the bay road if the timing lines up.'}
-  ],
-  moon:[
-    {t:'16:00', h:'D3 Discobus → Playa d\'en Bossa', p:'The D3 runs from 16:00 and takes about 47 minutes. <b>€4 by card.</b> Alternative: taxi door to door, ≈€30–45, 35 minutes.', tags:['D3 · €4','47 min']},
-    {t:'17:00', h:'★ CALVIN HARRIS · Ushuaïa', p:'Open-air, Playa d\'en Bossa. With <b>MK</b>, Illyus &amp; Barrientos and Tyson O\'Brien warming up. <b>Runs 17:00 to 23:00</b> — bring sunglasses, it starts in daylight. 18+, original physical ID.', tags:['BOOKED ✓','17:00–23:00','open air']},
-    {t:'23:30', h:'Hï Ibiza — walk across the road', p:'Literally opposite Ushuaïa. <b>CamelPhat present Summer Of Love</b>, with Âme b2b Trikk, Ewan McVicar and Young Marco. Doors 23:30, closes 06:00, from <b>€40</b>. <b>There is no cloakroom at Hï</b> — travel light, take one small bag between you. No re-entry anywhere in Ibiza.', tags:['≈€40','23:30–06:00','2 min walk']},
-    {t:'04:00–06:00', h:'Getting home', p:'<b>D3 back to San Antonio</b> — departures from Playa d\'en Bossa at 03:03, 03:33, 04:18, 04:48, 05:18, 06:03 and 06:48. Then a €8 taxi for the last 3 km. Screenshot these times now; your phone will be at 4% and there\'ll be no signal.'}
-  ],
-  calls:[{k:'',t:'Swap option — the Latin version of the same night',b:'If you\'d rather have reggaeton than house after Ushuaïa: <b>Puro Reggaeton at Es Paradís</b>, every Friday 23:30–06:00, €40 — and it\'s in <b>San Antonio</b>, five minutes from your bed. You\'d take the D3 back at around 23:15 and be through the door by 00:15. Cheaper to get home from, and far more your music. The trade-off is you lose the "walk across the road" simplicity.'}]
-},
-{
-  n:'04', dow:'Saturday', date:'5 September', big:true, tag:'big',
-  title:'Bresh · closing party',
-  note:'The week handed you a gift. Bresh is the Argentinian party that fuses pop, reggaeton and electronic — Amnesia calls it the only party on the island doing it — and 5 September is the season closing. This is your night.',
-  sun:[
-    {t:'11:00', h:'Sleep in. Properly.', p:'You finished at 6am. The correct move is a slow morning and a beach you can walk to.'},
-    {t:'13:00', h:'Cala Gracioneta', p:'A tiny cove just north of San Antonio — 15 minutes on foot from the town, or the P1 bus, or a short taxi. Sunbeds, a stepped chiringuito, clear water. Perfect hangover geography. <b>Look at the fish prices before you order anything</b> — see Traps.'},
-    {t:'—', h:'Or, if you have legs', p:'<b>Las Dalias hippy market</b> at Sant Carles, Saturdays 10:00–20:00, direct on the <b>T5</b> from San Antonio. It\'s the real craft market on the island — better than Punta Arabí. A big day though, and you have a 6am finish ahead.'},
-    {t:'18:00', h:'Early dinner, then get ready', p:'Eat properly and eat early. Bresh doesn\'t open until 23:30 and you won\'t stop until 6.'}
-  ],
-  moon:[
-    {t:'23:00', h:'Taxi to San Antonio bus station', p:'≈€8. Note the Saturday taxi night-rate kicks in from 15:00, not 21:00.'},
-    {t:'23:30', h:'D1 Discobus → Sant Rafel', p:'Every 30 minutes from 23:30 to 06:30, and Amnesia is 13 minutes up the road. <b>€3 by card.</b> Buy your return as you board.', tags:['D1 · €3','13 min']},
-    {t:'23:45', h:'★ BRESH CLOSING · Amnesia', p:'Pop, reggaeton and electronic across the <b>Main Room and the Terraza</b> — the Terraza has a glass roof that floods with light at sunrise, and it is worth being in there at 6am to see it. From <b>€50</b>, cheaper if you arrive before 1am. Special guests TBA; past ones include Bad Gyal, Bizarrap and Lola Índigo.', tags:['from €50','23:30–06:00','SEASON CLOSER'],},
-    {t:'—', h:'Amnesia has lockers', p:'One of the few clubs that does — useful, unlike Hï. Also home to the ice cannons.'},
-    {t:'06:00', h:'D1 home', p:'Runs every 30 minutes until 06:30 back to San Antonio. Then the €8 taxi.'}
-  ],
-  calls:[{k:'',t:'Book this one first',b:'It\'s a closing party on a Saturday in peak season, ticket pricing is dynamic and rises with demand, and it is the single best fit for what you actually want to listen to. <b>Book it before anything else on this page.</b>'}]
-},
-{
-  n:'05', dow:'Sunday', date:'6 September', big:false, tag:'easy',
-  title:'Old Town · Dalt Vila',
-  note:'Recovery, then the prettiest evening on the island. Dalt Vila is a UNESCO-listed walled city on a hill and it is the only genuinely ancient thing in Ibiza — a good antidote to two nights of superclubs.',
-  sun:[
-    {t:'11:30', h:'Brunch', p:'<b>Café Bondi</b> by the fountains in San Antonio for eggs Benedict and a full English, or <b>Rita\'s Cantina</b> for the year-round locals\' version. Both ≈€12–20.'},
-    {t:'15:00', h:'T1 to Ibiza Town', p:'Every 30 minutes on Sundays, 45 minutes. Go early enough to have an afternoon there.', tags:['T1 · ≈€2.20–2.60']},
-    {t:'16:00', h:'Talamanca beach', p:'A 20-minute walk round the harbour from Ibiza Town, or the little cross-harbour ferry. Long, soft, shallow, quiet, loved by locals and almost no music. Underrated, and the perfect warm-up to walking up into the old town.'}
-  ],
-  moon:[
-    {t:'19:00', h:'Tapas at La Bodega', p:'At the foot of the Dalt Vila ramp. The best tapas in town and <b>they don\'t take bookings</b> — the queue snakes down the street, so go early.', tags:['≈€25–35pp','no bookings']},
-    {t:'19:45', h:'Up through the Portal de ses Taules', p:'The main gate — a steep stone drawbridge into the walled city. Keep climbing to the cathedral at the summit. <b>Wear proper shoes</b>: narrow, steep, cobbled, and this is the single most common complaint people have.'},
-    {t:'20:17', h:'Sunset from Baluard de Sant Bernat', p:'The sunset-facing bastion, looking over Figueretes, Playa d\'en Bossa and the salt flats. Baluard de Santa Llúcia has the old cannons and the harbour view. Both free, both spectacular.'},
-    {t:'21:00', h:'Dinner in Plaça de Vila', p:'<b>El Olivo Mio</b> (boho, organic, live music), <b>Jardín La Brasa</b> (walled garden strung with pink flowers — the most romantic terrace in Ibiza), or <b>La Oliva</b> for the proper fine-dining version. Book any of them.', tags:['≈€40–85pp','book ahead']},
-    {t:'23:15', h:'Last T1 home', p:'Or the D1 Discobus from Ibiza port, every 30 minutes until 06:30, which removes all the pressure.'},
-    {t:'OPTIONAL', h:'Hï Ibiza · MESTIZA', p:'If you want a fourth club night: the Spanish duo <b>MESTIZA</b> take over Hï\'s Theatre — flamenco and Latin grooves folded into house — with <b>Indira Paganotto</b> in the Club Room. <b>€30 before midnight</b>, rising to €50. ⚠ One ticket site has flagged this date as cancelled while the official Hï calendar has it running — <b>check hiibiza.com before you buy.</b>', tags:['€30 before midnight','verify on hiibiza.com']}
-  ]
-},
-{
-  n:'06', dow:'Monday', date:'7 September', big:false, tag:'sun',
-  title:'The sunset night · Cala Comte',
-  note:'The best evening of the week and it costs about a tenner. Nothing before 15:00 — this is the day you do genuinely nothing until the afternoon.',
-  sun:[
-    {t:'11:00', h:'Slowest morning of the trip', p:'Breakfast, the beach 4 minutes from the hotel door, a swim, a book. No bus, no plan.'},
-    {t:'13:30', h:'Long lunch in the Bay', p:'Pom Thai, Kojima or Es Virot along the Cala de Bou strip — all walkable, all ≈€15–35.'},
-    {t:'15:30', h:'P4 bus → Cala Comte', p:'From San Antonio bus station, 35 minutes. Get to the station on the P2 or a €8 taxi.', tags:['P4','35 min']},
-    {t:'16:05', h:'Arrive · grab €5 sunbeds', p:'Sunbeds are capped at €10 and <b>drop to €5 after 15:30</b>. The day crowd is thinning, the light is getting good, and the water here is the best on the island. Walk the cliff steps west to <b>Cala Escondida</b> if you want the quiet cove.'},
-    {t:'—', h:'Buy the wine before you go', p:'Spar is 100 m from the hotel. A cold bottle on the rocks beats a €40 beach-club table, and the view is identical.'}
-  ],
-  moon:[
-    {t:'20:15', h:'★ Sunset over the islands', p:'This is the one. The horizon here is broken up by islets, so you get the full show — golden hour from 19:41, sun down at 20:15, and it keeps going until dusk ends at 20:43.', tags:['free','the good one']},
-    {t:'21:00', h:'Dinner, or don\'t', p:'<b>Sunset Ashram</b> is right there and needs booking for sunset (+34 661 347 222) — but it\'s rated 3.4 and reviewers use the phrase "tourist trap" a lot. Have one drink there for the setting, or eat back in San Antonio afterwards.'},
-    {t:'21:45', h:'Last bus home', p:'<b>The 21:45 is the last P4</b>, arriving San Antonio 22:20. Do not miss it — a taxi back from Comte is ≈€16 and they don\'t hang around out there.', tags:['LAST BUS 21:45']}
-  ]
-},
-{
-  n:'07', dow:'Tuesday', date:'8 September', big:true, tag:'big',
-  title:'Last night out',
-  note:'One more. Two ways to play it, depending on whether you want to end the trip in daylight or at 6am.',
-  sun:[
-    {t:'11:00', h:'PLAN A · O Beach — KISSTORY', p:'A day party in San Antonio, <b>13:00 to 22:00, ≈€30</b>. Old skool, garage, R&amp;B and hip-hop rather than house — and it\'s on your doorstep, so no transport problem at either end. Often sells out; pre-book. Ends at 22:00, which means you can actually pack.', tags:['≈€30','13:00–22:00','walkable']},
-    {t:'10:00', h:'PLAN B · Es Vedrà by catamaran', p:'Capitán Nemo sail 10:00–14:00 from San Antonio port — underwater viewing windows, snorkel gear, a swim stop, past Cala Bassa and Cala Comte to Es Vedrà. <b>Explicitly a scenic excursion, not a booze cruise.</b> Then a quiet afternoon and a big night.', tags:['4 hrs','scenic, not a party boat']},
-    {t:'19:00', h:'Last proper dinner', p:'<b>Aragma</b> — Greek-Mediterranean, currently rated #1 of 228 restaurants in San Antonio, €65 mezze experience. Or <b>Sa Capella</b>, a converted honey-stone church 15 minutes out, ≈€70–95. Both need booking.', tags:['book ahead']}
-  ],
-  moon:[
-    {t:'23:30', h:'★ Pacha · Gordo presents Taraka', p:'The one iconic Ibiza club you\'d otherwise miss, and Gordo plays Latin-leaning house — Colombian-American, Taraka is his own party. With Shimza. <b>From €30</b>, the cheapest big room of the week. Doors 23:00.', tags:['from €30','23:00–06:00'],},
-    {t:'—', h:'Getting there and back', p:'<b>D1 Discobus</b> from San Antonio to Ibiza port, every 30 minutes from 23:30 — Pacha is right by the port. Same bus back until 06:30. €3.', tags:['D1 · €3']},
-    {t:'ALT', h:'If you\'d rather go harder', p:'Amnesia has Joseph Capriati with Seth Troxler, Maceo Plex and Dubfire (€50) and UNVRS has Anyma (€70) — but both are techno, which isn\'t your brief. Pacha is the right call.'}
-  ]
-},
-{
-  n:'08', dow:'Wednesday', date:'9 September', big:false, tag:'easy',
-  title:'Home',
-  note:'A 20:15 flight gives you almost the whole day. Don\'t waste it in the hotel lobby.',
-  sun:[
-    {t:'11:00', h:'Check out, bags in storage', p:'Every hotel will hold them. Ask at reception on the way to breakfast.'},
-    {t:'11:30', h:'Playa d\'en Xinxó', p:'Four minutes from the hotel door. Last swim, and you can be back in ten minutes if anything goes wrong.'},
-    {t:'13:30', h:'Last lunch', p:'Kumharas one more time, or Es Cucó at the top of the Port des Torrent hill for rotisserie chicken — cheap, local, and on your side of the bay.'},
-    {t:'15:45', h:'Collect bags, taxi to the bus station', p:'≈€8, ten minutes.'}
-  ],
-  moon:[
-    {t:'16:30', h:'AERO1 → Airport', p:'Every 30 minutes, 50 minutes\' run, <b>€4 by card</b>. The 16:30 gets you there at 17:20; the 17:00 gets you there at 17:50. Both comfortable for a 20:15 departure.', tags:['AERO1 · €4','50 min']},
-    {t:'—', h:'Or one taxi', p:'≈€30 from the hotel door, 30 minutes. Leave by 17:15. Worth it if you\'re carrying more than you flew out with, which you will be.'},
-    {t:'20:15', h:'Wheels up', p:'Sunset that evening is 20:12 — if you\'re on the right side of the plane you get it on the way out.'}
-  ]
-}
+/* the checklist — rendered here so the markup above stays readable */
+var CHECKS = [
+  ['Book Bresh · Amnesia, Sat 5 Sept','Season closing party, dynamic pricing, peak Saturday. It sold out 17 editions in a row last year. Book this before anything else.'],
+  ['Decide Friday’s after','Hï across the road, Puro Reggaeton at Es Paradís, or Fire In The Club at Eden — which is a closing party and walkable. Decide before you fly, not at 11pm on Playa d’en Bossa.'],
+  ['Book Aragma · Mon 7 Sept','#1 of 228 in San Antonio, and it is five minutes from where you will be watching the sunset.'],
+  ['Book Chi Kee Wun · Tue 8 Sept','+34 682 22 81 77. A few days ahead is plenty. Save the coordinates, not the address.'],
+  ['Book the Formentera ferry','And ask at the desk what time their last sailing back is — your open return is only valid on the operator that issued it.'],
+  ['Book the Es Vedrà catamaran','Capitán Nemo, 10:00–14:00 from San Antonio port. Confirm it is the scenic sail and not a party boat.'],
+  ['Consider Es Paradís · Mon 7','€25, DJ Policy, runs to 07:00, and you walk home. The best value of the week.'],
+  ['Request a room away from Plastik','There is a club next to the hotel and the sea-view side catches the noise. Email ahead.'],
+  ['Download ALSA Mobi4U','Live bus tracking and tickets. Then screenshot the P4, P5, P7, D1 and D3 timetables — no signal and 4% battery is a real 5am scenario.'],
+  ['Bring a contactless card you like','Card and QR bus fares are ~30% cheaper than cash. Revolut or Starling for the FX on €20 club drinks.'],
+  ['Trainers or grippy sandals','Non-negotiable for the Saladeta path and the Dalt Vila cobbles. Flip-flops will not do either.'],
+  ['Original physical ID for clubs','18+, and they want the real thing, not a photo. Also: no re-entry to any Ibiza club.'],
+  ['Budget the eco tax','≈€2.20 per person per night on a 3★, so roughly €15.40 each for the week. Paid at the hotel.'],
+  ['Cash for Formentera','Ses Illetes has limited facilities, and a couple of the coves are cash-only.']
 ];
-
-const STUBS = [
-{
-  cls:'', night:'Friday 4 September', name:'Calvin Harris', venue:'Ushuaïa · Playa d\'en Bossa',
-  lineup:'With MK, Illyus &amp; Barrientos and Tyson O\'Brien. Open-air, so it starts in full daylight.',
-  facts:[['BOOKED ✓','paid'],['17:00 → 23:00',''],['≈€155 GA',''],['18+ · ID',''],['D3 bus · €4','']],
-  home:'<b>Ends at 23:00.</b> Hï is a two-minute walk across the road — that\'s your after. D3 home from Playa d\'en Bossa runs to 06:48.'
-},
-{
-  cls:'c2', night:'Friday 4 September · after', name:'CamelPhat', venue:'Hï Ibiza · Summer Of Love',
-  lineup:'Âme b2b Trikk, Ewan McVicar, Young Marco. Theatre plus Club Room, and the Wild Corner.',
-  facts:[['from €40','hot'],['23:30 → 06:00',''],['walk across the road',''],['NO CLOAKROOM','hot']],
-  home:'Travel light — Hï genuinely has nowhere to put a coat or a bag. D3 Discobus back to San Antonio, then €8 taxi.'
-},
-{
-  cls:'c3', night:'Saturday 5 September', name:'Bresh', venue:'Amnesia · CLOSING PARTY',
-  lineup:'Pop, reggaeton and electronic across the Main Room and the Terraza. Special guests TBA — past ones include Bad Gyal, Bizarrap and Lola Índigo.',
-  facts:[['from €50','hot'],['23:30 → 06:00',''],['SEASON CLOSER','hot'],['has lockers',''],['D1 bus · €3','']],
-  home:'The best fit of the week for what you actually listen to. <b>Book this one first</b> — closing party, dynamic pricing. D1 Discobus both ways, every 30 min to 06:30.'
-},
-{
-  cls:'c4', night:'Tuesday 8 September', name:'Gordo · Taraka', venue:'Pacha · Ibiza Town',
-  lineup:'Latin-leaning house from the Colombian-American producer, with Shimza. The iconic club you\'d otherwise miss.',
-  facts:[['from €30','paid'],['23:00 → 06:00',''],['cheapest big room',''],['D1 bus · €3','']],
-  home:'Pacha sits by Ibiza port, so the D1 drops you almost at the door and picks you up there until 06:30. Optional swap: O Beach KISSTORY in the daytime instead, 13:00–22:00.'
-}
-];
-
-const WEEK = [
-{d:'02',dow:'WED',t:'easy',day:'Land 19:25 · AERO1 to San Antonio',sun:'Missed — you\'re still at the airport',night:'Kumharas, six minutes on foot',tag:'Arrive'},
-{d:'03',dow:'THU',t:'easy',day:'FORMENTERA · direct boat 10:00, back 20:00',sun:'From the deck, sailing home',night:'Chi Kee Wun · Chinese fusion garden',tag:'Big day out'},
-{d:'04',dow:'FRI',t:'big',day:'Cala Salada + Saladeta · P7 bus',sun:'20:20 — but you\'re at Ushuaïa',night:'★ CALVIN HARRIS → Hï Ibiza',tag:'Big night'},
-{d:'05',dow:'SAT',t:'big',day:'Cala Gracioneta · or Las Dalias market',sun:'Quiet one, early dinner',night:'★ BRESH CLOSING · Amnesia',tag:'Big night'},
-{d:'06',dow:'SUN',t:'easy',day:'Brunch, T1 to Ibiza Town, Talamanca',sun:'20:17 from the Dalt Vila walls',night:'Old Town dinner · optional Hï',tag:'Old Town'},
-{d:'07',dow:'MON',t:'sun',day:'Nothing until 15:30. Genuinely nothing.',sun:'★ 20:15 at Cala Comte — the good one',night:'Last bus 21:45. Early night.',tag:'Sunset night'},
-{d:'08',dow:'TUE',t:'big',day:'O Beach KISSTORY · or Es Vedrà catamaran',sun:'Last dinner — Aragma or Sa Capella',night:'★ PACHA · Gordo presents Taraka',tag:'Last night'},
-{d:'09',dow:'WED',t:'easy',day:'Last swim at Xinxó, lunch, bags',sun:'20:12 — from the plane',night:'AERO1 16:30 · fly 20:15',tag:'Home'}
-];
-
-const ROUTES = [
-{b:'AERO1',c:'b-aero',h:'Airport ↔ San Antonio',p:'The old L9. Every <b>30 minutes, 07:00–01:30</b> from the airport, 06:00–00:30 back. Fifty minutes. This is how you both arrive and leave.',d:['€4 card','€5.60 cash','50 min']},
-{b:'T1',c:'b-t',h:'San Antonio ↔ Ibiza Town',p:'The workhorse. <b>Every 15 minutes Mon–Sat</b>, every 30 on Sundays, 45 minutes. Last bus out of Ibiza Town 23:20 (23:15 Sunday) — and the D1 Discobus takes over at 23:30, so there is effectively a 24-hour link all summer.',d:['≈€2.20–2.60 card','45 min','every 15 min']},
-{b:'P4',c:'b-p',h:'→ Cala Comte',p:'1 June–30 Sept, 35 minutes. Out at 15:30, 17:00, 18:15, 19:30, 20:00, 21:00 among others. <b>Last bus back 21:45</b>, arriving 22:20 — which is what makes the Comte sunset work.',d:['35 min','LAST BACK 21:45']},
-{b:'P5',c:'b-p',h:'→ Cala Bassa',p:'1 June–30 Sept, about 34 minutes. Last back at 21:00. Or take the little boat from San Antonio port instead — more fun, lands you on the sand.',d:['34 min','last back 21:00']},
-{b:'P7',c:'b-p',h:'→ Cala Salada',p:'<b>New for 2026 and most guides don\'t know it.</b> Cala Salada used to be taxi-only; now there\'s a bus <b>every 15 minutes</b> taking 15 minutes. Meanwhile the access road is closed to cars 09:30–17:00, so drivers park up the hill and walk. You win.',d:['≈€1.90 card','15 min','every 15 min']},
-{b:'P2',c:'b-p',h:'Bay road ↔ San Antonio',p:'Your local. Runs along Carrer des Caló past the hotel, <b>hourly</b>. Last one out 23:30, last one back at midnight — after that it\'s a taxi.',d:['hourly','STOPS AT 00:00']},
-{b:'D1',c:'b-d',h:'Discobus → Amnesia, UNVRS, Pacha',p:'San Antonio ↔ Sant Rafel ↔ Ibiza port. <b>Every 30 minutes, 23:30 to 06:30</b>, both directions. Thirteen minutes to Amnesia. This is your Saturday and your Tuesday.',d:['€3 card','€4.20 cash','23:30–06:30']},
-{b:'D3',c:'b-d',h:'Discobus → Ushuaïa, Hï, DC10',p:'San Antonio ↔ Playa d\'en Bossa, and it starts at <b>16:00</b> — which is exactly what you need for a 17:00 Ushuaïa door. Runs until 06:50. About 47 minutes.',d:['€4 card','16:00–06:50','47 min']},
-{b:'N1',c:'b-n',h:'Night bus',p:'San Antonio ↔ Sant Josep ↔ Ibiza Town, <b>Saturdays, Sundays and holidays only</b>, hourly 23:00–03:00. A useful second string on the weekend.',d:['Sat + Sun only','hourly']},
-{b:'BOAT',c:'b-w',h:'Water taxi across the bay',p:'Playa Xinxó — right by the hotel — to San Antonio in 10–15 minutes instead of a 45-minute walk. <b>€5 single</b>, every 30 minutes from 10:00. ⚠ 1–15 September is a shoulder period with reduced evening sailings, and the timetable isn\'t published online — <b>photograph the board at the jetty on day one.</b>',d:['€5 single','from 10:00','⚠ check evening times']}
-];
-
-const BEACHES = [
-{n:'Cala Comte',r:'<b>P4</b> from San Antonio bus station',t:'35 min · last back 21:45',v:'The best on the island and the best sunset. Sunbeds €5 after 15:30. Do it twice.',s:'high'},
-{n:'Cala Saladeta',r:'<b>P7</b> to Cala Salada, then a 10–15 min rocky path',t:'15 min · every 15 min',v:'The clearest water you\'ll see. <b>No facilities at all</b> — bring water, food, shade and grippy shoes.',s:'high'},
-{n:'Cala Salada',r:'<b>P7</b> direct to the sand',t:'15 min · ≈€1.90',v:'Sunbeds capped €7, restaurant, toilets. The easy-mode base for the walk to Saladeta.',s:'high'},
-{n:'Cala Bassa',r:'<b>P5</b>, or the boat from San Antonio port',t:'34 min bus · 15 min boat',v:'Beautiful, but busier and more commercial. Cala Bassa Beach Club is upscale lounge, not a party.',s:'mid'},
-{n:'Cala Gracioneta',r:'15-min walk from San Antonio, or <b>P1</b>',t:'walkable',v:'Tiny, lovely, and the easiest hangover beach. But check the fish prices in writing — see Traps.',s:'mid'},
-{n:'Talamanca',r:'<b>T1</b> to Ibiza Town, then a 20-min harbour walk',t:'≈1 hr',v:'Quiet, local, barely any music. Underrated — pair it with a Dalt Vila evening.',s:'mid'},
-{n:'Ses Salines',r:'<b>T1</b> to Ibiza, change to <b>A7</b> or <b>P3</b>',t:'≈1 hr 30 · two buses',v:'Famous and gorgeous, but it\'s the see-and-be-seen beach with beach-club volume. Not your brief.',s:'mid'},
-{n:'Cala d\'Hort',r:'<b>No bus in 2026.</b> T2 to Sant Josep then taxi, or taxi throughout',t:'≈€60–80 return in taxis',v:'Es Vedrà rises 400 m out of the sea a few hundred metres offshore. Worth one taxi day — pair it with the Torre des Savinar walk.',s:'mid'},
-{n:'Benirràs',r:'<b>T7</b> then <b>P6</b> — but the last bus back towards San Antonio leaves at 19:23',t:'≈2 hrs each way',v:'The Sunday sunset drumming is real and still running in 2026. But you\'d be stranded — it\'s a €60–75 taxi home. Comte gives you 90% of the magic for 3% of the cost.',s:'low'},
-{n:'Aguas Blancas',r:'—',t:'—',v:'<b>Closed.</b> Access road and car park shut for rockfall risk, restaurant shut since 2024, no services. Don\'t attempt it.',s:'low'}
-];
-
-const EAT = [
-{
-  head:'Walkable from the hotel',
-  items:[
-    {n:'Kumharas',p:'≈€20–30',d:'Six minutes on foot. Bohemian sunset bar, street-food stalls, nightly hippy market, live music. No minimum spend, open to midnight. The best thing near your bed.',bk:''},
-    {n:'Es Virot / Pisco Beach',p:'≈€20–35',d:'Cala de Bou waterfront. Seafood, paella, fish and Pisco Sours respectively.',bk:''},
-    {n:'Pom Thai · Kojima',p:'≈€15–35',d:'Thai and Japanese along the bay strip, both well rated and good value.',bk:''},
-    {n:'Es Cucó',p:'≈€12–20',d:'Top of the Port des Torrent hill. Rotisserie chicken, cheap, local. The hangover answer.',bk:''}
-  ]
-},
-{
-  head:'San Antonio · short taxi',
-  items:[
-    {n:'Aragma',p:'€65 mezze',d:'Greek-Mediterranean, currently rated #1 of 228 restaurants in San Antonio. The best-value special dinner available to you. Ten minutes in a taxi.',bk:'book a few days ahead'},
-    {n:'Chi Kee Wun',p:'≈€45–60',d:'Chinese fusion in a lantern-lit garden with circular booths, cocktails and shisha. Order the crispy duck and the dim sum. Give the driver the coordinates, not the street name.',bk:'+34 682 22 81 77'},
-    {n:'Sa Capella',p:'≈€70–95',d:'Dinner inside a converted honey-stone church on the Santa Agnès road. The most atmospheric room on your side of the island.',bk:'+34 971 34 00 57'},
-    {n:'Es Ventall',p:'≈€50–65',d:'The town\'s long-standing quality kitchen. Closed Wednesdays, and busy — book.',bk:'book ahead'},
-    {n:'Café Bondi · Rita\'s Cantina',p:'≈€12–20',d:'Brunch. Eggs Benedict, full English, bagels, milkshakes. Rita\'s is the year-round locals\' one.',bk:''}
-  ]
-},
-{
-  head:'Ibiza Town &amp; Dalt Vila',
-  items:[
-    {n:'La Bodega',p:'≈€25–35',d:'Best tapas in town, at the foot of the Dalt Vila ramp. No bookings — the queue snakes down the street, so go at 19:00.',bk:'no bookings · go early'},
-    {n:'Jardín La Brasa',p:'≈€40–60',d:'A walled garden strung with pink flowers. The most romantic terrace in Ibiza Town.',bk:'book ahead'},
-    {n:'El Olivo Mio',p:'≈€40–60',d:'Boho, organic and local, live music, on the prettiest square inside the walls.',bk:'recommended'},
-    {n:'La Oliva',p:'≈€55–85',d:'French-Mediterranean fine dining inside Dalt Vila with cathedral views. The proper night out.',bk:'essential in season'},
-    {n:'Café Montesol',p:'≈€40–60',d:'A 1933 institution on Vara de Rey with a rooftop bar and island views.',bk:'recommended'}
-  ]
-},
-{
-  head:'Beach &amp; further out',
-  items:[
-    {n:'Cala Bassa Beach Club',p:'≈€40–70',d:'Four restaurants on the sand, lounge and deep house all day, boat straight from San Antonio port. Pre-book beds in September.',bk:'WhatsApp +34 971 342 661'},
-    {n:'Hostal La Torre',p:'≈€45–70',d:'Clifftop terrace at Cap Negret, 16 minutes in a taxi. Arguably the island\'s best sunset that isn\'t a superclub. ⚠ There\'s a minimum spend on tables booked after 18:00, and the amount isn\'t published — ask when you book.',bk:'+34 690 25 62 91 · weeks ahead'},
-    {n:'Es Boldado',p:'≈€60–90',d:'Clifftop above Cala d\'Hort with the single most iconic view of Es Vedrà. Taxi only, and taxis back are scarce — book your return.',bk:'book ahead + book your taxi back'},
-    {n:'Can Carlos, Formentera',p:'≈€50–75',d:'Italian-Mediterranean in a candlelit courtyard in Sant Francesc. The sane choice on an island of minimum-spend traps.',bk:'a few days ahead'}
-  ]
-}
-];
-
-const TRAPS = [
-{ok:0,v:'Timing trap',h:'Ushuaïa closes at 23:00',p:'It\'s an open-air venue with an early licence. Calvin Harris is a 17:00–23:00 show, not a night out. Decide your "after" before you leave the hotel — Hï is across the road, or Puro Reggaeton at Es Paradís is back in San Antonio.'},
-{ok:0,v:'Bill shock',h:'Juan y Andrea, Formentera',p:'The famous one on Ses Illetes, and rated around 3.0 with minimum spends of €120–250 per person, prepaid, depending on where they sit you. €14 water. If you go, book the "random placement" slot — same food, same sand, no minimum. Es Molí de Sal has the same problem.'},
-{ok:0,v:'Bill shock',h:'Fish sold by the kilo',p:'The single most reliable way to get stung in Ibiza. Chiringuito Cala Gracioneta and Es Torrent both have well-documented histories of it — one reported single dish at €354. <b>Ask for the price in euros, out loud, before it goes near a pan.</b>'},
-{ok:0,v:'Overrated',h:'Sunset Ashram at Cala Comte',p:'Rated 3.4 and ranked #156 of 180 restaurants in its municipality. You are paying a lot for a view that is free from the rocks a hundred metres away. Have one drink for the setting; eat somewhere else.'},
-{ok:0,v:'Not what it says',h:'Café Mambo\'s sunset sessions',p:'Marketed as a sunset, functionally a club pre-party with a big-name DJ warming up for the night ahead. It is precisely the thing you said you didn\'t want during the day. The sea wall along the strip is free and has the identical view.'},
-{ok:0,v:'Marketing',h:'Any boat trip with an "open bar"',p:'That\'s a booze cruise with better photography. San Antonio is the booze-cruise capital of the Mediterranean. If you want the scenic version, Capitán Nemo\'s Es Vedrà catamaran and the Cruceros Portmany beach transfers are both explicitly not parties.'},
-{ok:0,v:'Logistics trap',h:'Benirràs on a Sunday',p:'The drumming is genuinely still happening — the transport authority runs a 20-minute shuttle to the beach until 00:20 on Sundays, which nobody does for a beach that closes at sunset. But the last bus back towards San Antonio leaves Sant Miquel at 18:40. You would be stranded, and the taxi is €60–75.'},
-{ok:0,v:'Gone',h:'Aguas Blancas · Espalmador mud baths',p:'Aguas Blancas is closed — rockfall risk, restaurant shut since 2024. And the Espalmador mud lagoons are now a protected off-limits bird habitat that most boats no longer have a licence to stop at. Don\'t book a trip because of either.'},
-{ok:1,v:'Actually worth it',h:'Cala Comte at 15:30',p:'€5 sunbeds after half three, the best water and the best sunset on the island, and a bus home at 21:45. Under €10 each all in. The best-value evening of the entire week.'},
-{ok:1,v:'Actually worth it',h:'The Discobus',p:'€3–4, every 30 minutes until 06:30, direct to Amnesia, Pacha, Ushuaïa and Hï. It solves the single worst problem in Ibiza — the 4am taxi shortage — and almost no visitors use it properly.'},
-{ok:1,v:'Actually worth it',h:'Bresh closing at Amnesia',p:'Pop, reggaeton and electronic, Argentinian production, and it happens to be the season closer on the one Saturday you\'re there. For what you two actually listen to, this is the night of the week.'},
-{ok:1,v:'Actually worth it',h:'Dalt Vila on foot',p:'The only genuinely ancient thing on the island, and free. Tapas at the bottom, sunset from the bastion at the top. Wear real shoes.'}
-];
-
-const CHECKS = [
-{h:'Book Bresh · Amnesia, Sat 5 Sept',s:'Season closing party, dynamic pricing, peak Saturday. Book this before anything else on the page.'},
-{h:'Book Hï Ibiza · Fri 4 Sept',s:'Or decide you\'re doing Puro Reggaeton at Es Paradís instead. Either way, decide before you fly — not at 11pm on Playa d\'en Bossa.'},
-{h:'Book Pacha · Tue 8 Sept',s:'From €30. Cheapest big room of the week and the iconic club you\'d otherwise miss.'},
-{h:'Verify MESTIZA at Hï, Sun 6 Sept',s:'One ticket site flags it cancelled, the official Hï calendar has it running. Check hiibiza.com directly before buying.'},
-{h:'Confirm the Formentera boat',s:'Cruceros Portmany, San Antonio, 10:00. Price isn\'t published online — confirm at the Passeig de la Mar kiosk, or book the Ibiza Town fast ferry instead.'},
-{h:'Book scooters on Formentera',s:'Only if you want them — there\'s a hard rental quota in September, so walk-up availability isn\'t guaranteed.'},
-{h:'Book Chi Kee Wun · Thu 3 Sept',s:'+34 682 22 81 77 or chikeewun.com. A few days ahead is plenty.'},
-{h:'Book one special dinner',s:'Aragma (€65 mezze, #1 in San Antonio) or Sa Capella (the converted church). Both need a few days.'},
-{h:'Request a room away from Plastik',s:'There\'s a club next to the hotel and the sea-view side catches the noise. Email ahead.'},
-{h:'Download ALSA Mobi4U',s:'Live bus tracking and tickets. Then screenshot the P4, D1 and D3 timetables — no signal and 4% battery is a real 5am scenario.'},
-{h:'Bring a contactless card you like',s:'Card and QR bus fares are ~30% cheaper than cash. Revolut or Starling for the FX on €20 club drinks.'},
-{h:'Trainers or grippy sandals',s:'Non-negotiable for the Saladeta path and the Dalt Vila cobbles. Flip-flops will not do either.'},
-{h:'Original physical ID for clubs',s:'18+, and they want the real thing, not a photo. Also: no re-entry to any Ibiza club, so once you\'re out, you\'re out.'},
-{h:'Budget the eco tax',s:'≈€2.20 per person per night on a 3★, so roughly €15.40 each for the week. Paid at the hotel, not in advance.'}
-];
-
-const MONEY = [
-{v:'≈€275',l:'Club tickets',p:'Calvin Harris €155 (already paid) + Hï €40 + Bresh €50 + Pacha €30. Add €30 if you do MESTIZA too.'},
-{v:'€80–150',l:'Drinks, per big night',p:'Beer €16, spirit and mixer €20–23, water €13. This is the number people underestimate.'},
-{v:'≈€90',l:'All transport, the week',p:'Buses roughly €45, plus four €8–10 taxis for the last 3 km home from the Discobus, plus airport runs.'},
-{v:'≈€15',l:'Eco tax',p:'€2.20 per person per night on a 3★ hotel, seven nights, paid at reception.'},
-{v:'€25–65',l:'Dinner, typically',p:'Kumharas at the bottom, Sa Capella or La Oliva at the top. Beach clubs go much higher.'},
-{v:'≈€40',l:'Formentera day',p:'Boat return, plus a bus or scooter on the island, plus a sensible lunch rather than a €150 minimum spend.'}
-];
-
-/* ==================== RENDER ==================== */
-const el = (h) => { const d=document.createElement('div'); d.innerHTML=h.trim(); return d.firstChild; };
-const chips = (arr) => arr.map(t=>`<span class="chip">${t}</span>`).join('');
-
-/* week grid */
-const wg = document.getElementById('weekgrid');
-wg.appendChild(el(`<div class="wrow head"><div>Day</div><div>Daylight</div><div>Sundown</div><div>After dark</div></div>`));
-WEEK.forEach(w=>{
-  wg.appendChild(el(`<div class="wrow ${w.t==='big'?'big':''}">
-    <div class="wday"><b>${w.d}</b><span>${w.dow}</span></div>
-    <div class="wcell-d">${w.day}<span class="tagline t-${w.t}">${w.tag}</span></div>
-    <div class="wcell-d">${w.sun}</div>
-    <div class="wcell-n">${w.night}</div>
-  </div>`));
-});
-
-/* stubs */
-document.getElementById('stubs').innerHTML = STUBS.map(s=>`
-  <article class="stub ${s.cls}">
-    <div class="night m">${s.night}</div>
-    <h3>${s.name}</h3>
-    <div class="venue">${s.venue}</div>
-    <p class="lineup">${s.lineup}</p>
-    <div class="facts">${s.facts.map(f=>`<span class="chip ${f[1]}">${f[0]}</span>`).join('')}</div>
-    <div class="perf"><p class="home">${s.home}</p></div>
-  </article>`).join('');
-
-/* days */
-const dl = document.getElementById('dayList'), rl = document.getElementById('railList');
-DAYS.forEach(d=>{
-  rl.appendChild(el(`<li><a href="#d${d.n}" data-d="d${d.n}"><b>${d.n}</b> ${d.dow.slice(0,3).toUpperCase()}</a></li>`));
-  const rows = (items,cls) => items.map(i=>`
-    <li><div class="t">${i.t}</div>
-      <div><h4>${i.h}</h4><p>${i.p}</p>${i.tags?`<div class="tags">${chips(i.tags)}</div>`:''}</div>
-    </li>`).join('');
-  const calls = (d.calls||[]).map(c=>`<div class="call ${c.k}"><div class="ct m">${c.t}</div><p>${c.b}</p></div>`).join('');
-  dl.appendChild(el(`
-  <article class="day ${d.big?'isbig':''}" id="d${d.n}">
-    <div class="dayhead">
-      <div class="daynum">${d.n}</div>
-      <div class="meta">
-        <div class="dow m">${d.dow} ${d.date}</div>
-        <h3>${d.title}</h3>
-        <p class="note">${d.note}</p>
-      </div>
-    </div>
-    <div class="split">
-      <div class="panel sun">
-        <div class="ph"><span class="m">☀ Daylight</span><span class="tsp m">party-free</span></div>
-        <ul>${rows(d.sun)}</ul>
-      </div>
-      <div class="panel moon">
-        <div class="ph"><span class="m">☾ After dark</span><span class="tsp m">${d.big?'big one':'easy'}</span></div>
-        <ul>${rows(d.moon)}</ul>
-      </div>
-    </div>
-    ${calls}
-  </article>`));
-});
-
-/* routes */
-document.getElementById('routes').innerHTML = ROUTES.map(r=>`
-  <div class="route">
-    <span class="badge ${r.c}">${r.b}</span>
-    <h4>${r.h}</h4><p>${r.p}</p>
-    <div class="rdata">${chips(r.d)}</div>
-  </div>`).join('');
-
-/* beaches */
-document.querySelector('#beaches tbody').innerHTML = BEACHES.map(b=>`
-  <tr>
-    <td><b>${b.n}</b></td>
-    <td>${b.r}</td>
-    <td class="mm" style="color:var(--muted)">${b.t}</td>
-    <td>${b.v}</td>
-  </tr>`).join('');
-
-/* eat */
-document.getElementById('eatgrid').innerHTML = EAT.map(c=>`
-  <div class="eatcol"><h4>${c.head}</h4><ul>
-    ${c.items.map(i=>`<li>
-      <div class="top"><strong>${i.n}</strong><span class="pr">${i.p}</span></div>
-      <p>${i.d}</p>${i.bk?`<span class="bk">${i.bk}</span>`:''}
-    </li>`).join('')}
-  </ul></div>`).join('');
-
-/* traps */
-document.getElementById('traps').innerHTML = TRAPS.map(t=>`
-  <div class="trap ${t.ok?'ok':''}"><div class="vd">${t.v}</div><h4>${t.h}</h4><p>${t.p}</p></div>`).join('');
-
-/* checks */
-document.getElementById('checks').innerHTML = CHECKS.map(c=>`
-  <button type="button" class="chk" aria-pressed="false"><span class="box" aria-hidden="true">✓</span><span class="ctxt"><strong>${c.h}</strong><span>${c.s}</span></span></button>`).join('');
-document.querySelectorAll('.chk').forEach(c=>c.addEventListener('click',()=>{
-  const done = c.classList.toggle('done');
-  c.setAttribute('aria-pressed', String(done));
-}));
-
-/* money */
-document.getElementById('money').innerHTML = MONEY.map(m=>`
-  <div><div class="mv">${m.v}</div><div class="ml m">${m.l}</div><p>${m.p}</p></div>`).join('');
-
-/* scroll spy */
-const links = [...document.querySelectorAll('.rail a')];
-const obs = new IntersectionObserver((es)=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      links.forEach(l=>l.classList.toggle('on', l.dataset.d===e.target.id));
-    }
-  });
-},{rootMargin:'-25% 0px -60% 0px'});
-document.querySelectorAll('.day').forEach(d=>obs.observe(d));
-
-/* day / night toggles */
-document.querySelectorAll('.tg').forEach(b=>{
-  b.setAttribute('aria-pressed', String(b.classList.contains('on')));
-  b.addEventListener('click',()=>{
-    b.classList.toggle('on');
-    const on = b.classList.contains('on');
-    b.setAttribute('aria-pressed', String(on));
-    document.body.classList.toggle('hide-'+b.dataset.t, !on);
+document.getElementById('checkgrid').innerHTML = CHECKS.map(function(c){
+  return '<button type="button" class="chk" aria-pressed="false">' +
+         '<span class="box" aria-hidden="true">✓</span>' +
+         '<span><strong>' + c[0] + '</strong><span>' + c[1] + '</span></span></button>';
+}).join('');
+document.querySelectorAll('.chk').forEach(function(c){
+  c.addEventListener('click', function(){
+    var done = c.classList.toggle('done');
+    c.setAttribute('aria-pressed', String(done));
   });
 });
-
-/* ==================================================================
-   THE 20:15 LINE — the ambient light engine.
-
-   One scroll listener, rAF-throttled, writing a handful of custom
-   properties. There is no continuous animation loop: when you stop
-   scrolling, this stops doing anything at all. Everything it drives
-   animates on opacity/transform, so the compositor does the work.
-
-   It may only write --sunpos, --k-*, --ecl and --spot-*. It never touches text,
-   panel or line colour — see the invariant in the stylesheet.
-   ================================================================== */
-(function(){
-  const root = document.documentElement;
-  const body = document.body;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const hasIO = 'IntersectionObserver' in window;
-  const clamp = (v,a,b) => v<a?a:(v>b?b:v);
-  /* declared up here because setLights() below calls schedule() during init */
-  let queued = false;
-
-  /* trapezoid: 0 outside [a,d], 1 across [b,c], linear on the shoulders */
-  function ramp(x,a,b,c,d){
-    if(x<=a||x>=d) return 0;
-    if(x<b) return (x-a)/(b-a);
-    if(x<c) return 1;
-    return (d-x)/(d-c);
-  }
-
-  /* ---------------- house lights ---------------- */
-  const btn = document.getElementById('lights');
-  const KEY = 'ibiza.lights';
-  let on = true;
-  function setLights(next, persist){
-    on = next;
-    body.classList.toggle('lights-off', !on);
-    if(btn) btn.setAttribute('aria-pressed', String(on));
-    if(persist){ try{ localStorage.setItem(KEY, on?'1':'0'); }catch(e){} }
-    if(on) schedule();
-  }
-  let saved = null;
-  try{ saved = localStorage.getItem(KEY); }catch(e){}
-  /* reduced-motion readers get the lights off by default, but can opt in */
-  setLights(saved===null ? !reduce.matches : saved==='1', false);
-  if(btn) btn.addEventListener('click', ()=> setLights(!on, true));
-
-  /* ---------------- the scalar ----------------
-     --sun runs 1 -> 0 with scroll depth, and is warped so that it is
-     exactly .667 (the waterline) when section 05 crosses the middle of
-     the screen. That is where the real 20:15 sunset lives. */
-  let sandAt = .62;
-  function measure(){
-    const el = document.getElementById('sand');
-    const max = root.scrollHeight - window.innerHeight;
-    if(el && max > 0){
-      const mid = el.offsetTop + el.offsetHeight/2 - window.innerHeight/2;
-      sandAt = clamp(mid/max, .12, .92);
-    }
-  }
-
-  /* .667 is the value of --sunpos at which the disc meets the water —
-     see the .sun rule in the stylesheet. Section 05 is pinned to it. */
-  const STEPS = 20, HORIZON = .667;
-  const stubsWrap = document.getElementById('stubs');
-  let lastSun = -1, lastP = -1;
-
-  function paint(){
-    const max = root.scrollHeight - window.innerHeight;
-    const p   = max > 0 ? clamp(window.scrollY/max, 0, 1) : 0;
-
-    let sun = p <= sandAt
-      ? 1 - (1-HORIZON) * (p/sandAt)
-      : HORIZON * (1 - (p-sandAt)/(1-sandAt));
-    sun = Math.round(clamp(sun,0,1)*STEPS)/STEPS;
-    const pq = Math.round(p*STEPS)/STEPS;
-
-    /* --- all reads first, so we never interleave read and write ---
-       The spot is deliberately NOT quantised: it has to track the card you
-       are looking at, and 1/20th of an 18,000px page is ~900px of scroll,
-       which would leave it stranded. It is transform-only, so following
-       every frame is cheap. */
-    let spotOn = 0, spotX = 0, spotY = 0;
-    if(stubsWrap){
-      const vh = window.innerHeight;
-      const r  = stubsWrap.getBoundingClientRect();
-      if(r.bottom > vh*0.12 && r.top < vh*0.88){
-        let bestD = Infinity, best = null;
-        const els = stubsWrap.querySelectorAll('.stub');
-        for(let i=0;i<els.length;i++){
-          const b = els[i].getBoundingClientRect();
-          const d = Math.abs(b.top + b.height/2 - vh/2);
-          if(d < bestD){ bestD = d; best = b; }
-        }
-        if(best){ spotOn = 1; spotX = best.left + best.width/2; spotY = best.top + best.height/2; }
-      }
-    }
-
-    /* --- then all writes --- */
-    const s = root.style;
-    s.setProperty('--k-spot', String(spotOn));
-    if(spotOn){
-      s.setProperty('--spot-x', Math.round(spotX)+'px');
-      s.setProperty('--spot-y', Math.round(spotY)+'px');
-    }
-
-    /* the light itself only moves when the quantised step actually changes,
-       so the sky repaints at most 20 times over the whole page */
-    if(sun===lastSun && pq===lastP) return;
-    lastSun = sun; lastP = pq;
-    s.setProperty('--sunpos', String(sun));
-    /* calibrated around the .667 waterline: golden hands over to dusk as
-       the disc lands, and night owns everything below about .30 */
-    s.setProperty('--k-golden', ramp(sun, .54, .72, 1.1, 1.2).toFixed(3));
-    s.setProperty('--k-dusk',   ramp(sun, .18, .40, .74, .90).toFixed(3));
-    s.setProperty('--k-night',  ramp(sun, -1, -.5, .30, .56).toFixed(3));
-    /* the disc keeps full opacity all the way down; the sea hides it */
-    s.setProperty('--k-road',   ramp(sun, .38, .56, .84, 1.0).toFixed(3));
-    s.setProperty('--k-dawn',   ramp(pq,  .93, .985, 1.1, 1.2).toFixed(3));
-  }
-
-  function schedule(){
-    if(queued || !on) return;
-    queued = true;
-    requestAnimationFrame(()=>{ queued = false; if(on) paint(); });
-  }
-  window.addEventListener('scroll', schedule, {passive:true});
-  window.addEventListener('resize', ()=>{ measure(); lastSun=-1; lastP=-1; schedule(); }, {passive:true});
-
-  measure();
-  paint();
-
-  /* ---------------- Es Vedrà rises with the coast ---------------- */
-  const sand = document.getElementById('sand');
-  if(sand && hasIO){
-    new IntersectionObserver(es=>{
-      es.forEach(e=> root.style.setProperty('--k-vedra', e.isIntersecting ? '1' : '0'));
-    }, {rootMargin:'-8% 0px -22% 0px'}).observe(sand);
-  }
-
-  /* ---------------- the eclipse ----------------
-     Section 02 (the big nights) and section 07 (the hard truths) take
-     the daylight away. It is a multiplier on the ambient, not a change
-     to the clock — the sun keeps setting underneath. */
-  if(hasIO){
-    const dark = ['nights','truth'].map(id=>document.getElementById(id)).filter(Boolean);
-    if(dark.length){
-      const live = new Set();
-      const io = new IntersectionObserver(es=>{
-        es.forEach(e=> e.isIntersecting ? live.add(e.target) : live.delete(e.target));
-        root.style.setProperty('--ecl', live.size ? '.26' : '1');
-      }, {rootMargin:'-32% 0px -32% 0px'});
-      dark.forEach(el=>io.observe(el));
-    }
-  }
-
-  /* ---------------- the departure board ----------------
-     Real section, real day. Never a fake clock: the only times on this
-     page are ones you can actually catch a bus with. */
-  const board = document.getElementById('board');
-  const LABELS = {
-    week:'01 · OVERVIEW', nights:'02 · AFTER DARK', days:'03 · THE PLAN',
-    move:'04 · LOGISTICS', sand:'05 · DAYLIGHT', eat:'06 · FEEDING',
-    truth:'07 · STRAIGHT TALK', pack:'08 · ADMIN'
-  };
-  const HOME = '02—09 SEP 26';
-  let shown = null;
-  function setBoard(txt){
-    if(!board || txt === shown) return;
-    shown = txt;
-    const frag = document.createDocumentFragment();
-    const chars = Array.from(txt);
-    for(let i=0;i<chars.length;i++){
-      const sp = document.createElement('span');
-      if(chars[i] === ' '){ sp.className = 'sp'; sp.textContent = ' '; }
-      else sp.textContent = chars[i];
-      if(!reduce.matches) sp.style.animationDelay = (i*22)+'ms';
-      frag.appendChild(sp);
-    }
-    board.textContent = '';
-    board.appendChild(frag);
-  }
-  setBoard(HOME);
-  if(board && hasIO){
-    const secs = Object.keys(LABELS).map(id=>document.getElementById(id)).filter(Boolean);
-    /* -45%/-45% means at most one section can be intersecting: the one
-       crossing the middle of the screen */
-    const io = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting) setBoard(LABELS[e.target.id] || HOME); });
-    }, {rootMargin:'-45% 0px -45% 0px'});
-    secs.forEach(s=>io.observe(s));
-    /* back at the very top, show the dates again */
-    const hero = document.querySelector('.hero');
-    if(hero) new IntersectionObserver(es=>{
-      if(es[0].isIntersecting) setBoard(HOME);
-    }, {rootMargin:'0px 0px -70% 0px'}).observe(hero);
-  }
-
-  /* ---------------- reveals ----------------
-     Applied from JS, so if any of this fails the content is simply
-     visible. A failsafe un-hides everything regardless after 3.5s. */
-  const GROUPS = [
-    ['.sechead',0], ['.week',0], ['.stub',1], ['.day',0], ['.route',1],
-    ['.tw',0], ['.eatcol',1], ['.trap',1], ['.chk',1], ['.money > div',1],
-    ['.call',0], ['footer .fgrid',0]
-  ];
-  const items = [];
-  GROUPS.forEach(function(g){
-    document.querySelectorAll(g[0]).forEach(function(el,i){
-      el.classList.add('rv');
-      if(g[1]) el.style.setProperty('--i', String(Math.min(i,8)));
-      items.push(el);
-    });
-  });
-  /* Once an element has arrived, drop the reveal classes altogether.
-     .rv.in sets transform:none, which sits at equal specificity to — and
-     later in the sheet than — the .stub/.route/.trap hover lifts, so leaving
-     it on would silently kill every hover transform on the page. */
-  function reveal(el){
-    el.classList.add('in');
-    let done = false;
-    const settle = function(){
-      if(done) return;
-      done = true;
-      el.classList.remove('rv','in');
-    };
-    el.addEventListener('transitionend', settle, {once:true});
-    /* transitionend never fires in a background tab, so don't rely on it */
-    setTimeout(settle, 2000);
-  }
-  function showAll(){ items.forEach(reveal); }
-
-  let arrived = 0;
-  if(hasIO && !reduce.matches){
-    const io = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting){ arrived++; reveal(e.target); io.unobserve(e.target); } });
-    }, {threshold:.06, rootMargin:'0px 0px -6% 0px'});
-    items.forEach(el=>io.observe(el));
-  } else showAll();
-  /* Failsafe only if the observer never reported anything at all — a hidden
-     tab, no rendering opportunities, a thrown error. Firing it unconditionally
-     would flash the entire page in at 3.5s and cancel the effect outright. */
-  setTimeout(function(){ if(arrived === 0) showAll(); }, 3500);
-
-  /* the time spine fills once, as each panel arrives */
-  const panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
-  if(hasIO && !reduce.matches){
-    const pio = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); pio.unobserve(e.target); } });
-    }, {threshold:.12});
-    panels.forEach(p=>pio.observe(p));
-  } else panels.forEach(p=>p.classList.add('in'));
-
-  /* the boarding pass lands, and lands slightly crooked */
-  const strip = document.querySelector('.strip');
-  if(strip && !reduce.matches) strip.classList.add('drop');
-
-  /* the wordmark catches the light — but only while it is on screen */
-  const wm = document.querySelector('.wordmark');
-  if(wm && hasIO && !reduce.matches){
-    let heroIn = false;
-    const sync = ()=> wm.classList.toggle('lit', heroIn && !document.hidden);
-    new IntersectionObserver(es=>{ heroIn = es[0].isIntersecting; sync(); }, {threshold:.05}).observe(wm);
-    document.addEventListener('visibilitychange', sync);
-  }
-})();
 </script>
 </body>
 </html>
