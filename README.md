@@ -9,8 +9,13 @@ A small Streamlit app that serves hand-designed trip itineraries as shareable we
 
 Each itinerary is a single **self-contained HTML page** with its own art direction — its own
 fonts, palette, layout and motion. [`streamlit_app.py`](streamlit_app.py) wires them up as
-navigable pages and [`shared.py`](shared.py) renders each one full-bleed, hiding Streamlit's
-chrome so the itinerary itself is all you see.
+navigable pages and renders each one full-bleed, hiding Streamlit's chrome so the itinerary
+itself is all you see.
+
+It is deliberately one file with no local imports. Streamlit Cloud executes page scripts without
+the app root on `sys.path`, so a `from shared import …` inside a `views/` or `pages/` file raises
+`ModuleNotFoundError` on deploy even though it runs fine locally. Defining the pages as callables
+passed to `st.Page(...)` avoids that entirely.
 
 > Deliberately a standalone repo, separate from the Eunice Platform.
 
