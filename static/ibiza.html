@@ -293,6 +293,75 @@ footer .fw{font-family:var(--disp);text-transform:uppercase;
   font-size:clamp(2.2rem,8vw,5rem);line-height:.85;color:var(--coral)}
 footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;margin-top:1rem}
 
+
+/* ---------------- the atlas card ----------------
+   A full-width map banner over the copy. The preview is not decoration: the
+   lines are the actual GPS geometry of the bus routes and the dots are the
+   real 72 places, projected straight out of the atlas file — so this is a
+   true thumbnail of what opens. Banner rather than a side-by-side because a
+   landscape map next to a column of text letterboxes badly. */
+.atlas{
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:var(--paper);margin-top:clamp(26px,4vw,44px);
+}
+.atlas-map{
+  position:relative;width:100%;aspect-ratio:820/470;max-height:420px;
+  background:#F1EADD;border-bottom:1px solid var(--line);
+}
+.atlas-map svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.atlas-map .sea{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(110% 80% at 20% 12%, rgba(46,134,171,.13), transparent 62%),
+    radial-gradient(90% 70% at 85% 95%, rgba(46,134,171,.10), transparent 60%)}
+.atlas-map .stamp{
+  position:absolute;left:14px;bottom:12px;display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);background:rgba(255,255,255,.86);border:1px solid var(--line);
+  border-radius:999px;padding:5px 10px;
+}
+.atlas-body{
+  padding:clamp(18px,2.4vw,28px);display:grid;grid-template-columns:1fr auto;
+  gap:clamp(14px,3vw,34px);align-items:end;
+}
+.atlas-copy{display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.atlas-copy .eyebrow{color:var(--sea)}
+.atlas-copy h2{font-family:var(--disp);text-transform:uppercase;
+  font-size:clamp(1.5rem,3.4vw,2.35rem);line-height:.93;text-wrap:balance}
+.atlas-copy p{font-size:.9rem;color:var(--muted);line-height:1.55;max-width:58ch}
+.atlas-copy p b{color:var(--ink-2)}
+.atlas-stats{display:flex;gap:20px;flex-wrap:wrap;padding-top:.15rem}
+.atlas-stats div{display:flex;flex-direction:column}
+.atlas-stats b{font-family:var(--disp);font-size:1.6rem;line-height:1;color:var(--coral)}
+.atlas-stats span{font-family:var(--mono);font-size:.57rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-top:3px}
+.atlas-key{display:flex;flex-wrap:wrap;gap:6px 12px}
+.atlas-key i{display:inline-flex;align-items:center;gap:5px;font-style:normal;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted)}
+.atlas-key i::before{content:'';width:9px;height:9px;border-radius:50%;background:currentColor}
+.k-base::before{background:var(--coral) !important}
+.k-beach::before{background:#2E86AB !important}
+.k-night::before{background:#6C3FA0 !important}
+.k-eat::before{background:#E8A33D !important}
+.k-stop::before{background:#8A8F98 !important}
+.atlas-act{display:flex;flex-direction:column;gap:.55rem;min-width:250px}
+.atlas-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+  background:var(--coral);color:#fff;text-decoration:none;font-weight:700;font-size:1.02rem;
+  padding:15px 24px;border-radius:4px;border:1px solid var(--coral);
+  transition:background .16s,transform .16s,box-shadow .16s;
+  box-shadow:0 6px 18px -10px rgba(196,58,34,.9);
+}
+.atlas-cta:hover{background:#A93018;border-color:#A93018;transform:translateY(-1px);
+  box-shadow:0 10px 22px -10px rgba(196,58,34,.95)}
+.atlas-cta:active{transform:translateY(0)}
+.atlas-cta .arr{font-family:var(--mono);font-size:.85em}
+.atlas-note{font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);text-align:center;line-height:1.5}
+@media(max-width:820px){
+  .atlas-body{grid-template-columns:1fr}
+  .atlas-act{min-width:0}
+  .atlas-map{max-height:none}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}
@@ -377,6 +446,122 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
     </div>
   </div>
 </header>
+
+<section class="wrap" id="atlas" style="padding-top:0">
+  <div class="atlas">
+    <div class="atlas-map">
+      <svg viewBox="0 0 820 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Preview of the Ibiza Atlas: the island's bus routes drawn from real GPS geometry, with all 72 places in the itinerary marked">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".85">
+      <path d="M519.8 417.0 L519.2 414.0 L521.8 412.2 L538.1 402.6 L540.7 402.2 L558.5 401.2 L571.0 393.3 L584.6 388.9 L590.4 384.6 L592.6 375.0 L593.0 362.4 L609.4 336.1 L614.9 316.6 L624.1 302.7 L644.4 294.1 L649.0 292.1 L647.6 289.9 L637.8 267.3 L618.3 227.4 L616.9 224.1 L609.0 205.7 L605.8 195.4 L598.3 183.5 L582.1 171.3 L565.0 164.0 L547.7 161.8 L525.4 155.3 L485.2 144.7 L477.3 143.0 L467.8 142.0 L457.8 143.0 L450.1 137.5 L449.0 134.4 L440.5 132.6 L392.8 119.7 L385.5 118.5 L377.8 114.7 L377.7 113.8" stroke="#6FA35B" stroke-width="2.2"/>
+      <path d="M377.7 113.8 L380.1 112.4 L381.9 115.6 L385.5 118.5 L392.8 119.7 L420.0 127.3 L448.2 134.9 L455.2 142.3 L462.3 143.6 L477.2 143.4 L484.4 144.8 L525.4 155.6 L547.7 162.1 L570.7 166.1 L584.7 173.4 L597.7 184.4 L603.9 191.6 L607.9 205.4 L616.8 224.9 L631.6 256.8 L636.3 267.9 L647.5 292.1 L653.4 304.6 L662.0 317.3 L668.7 316.0" stroke="#1B4F72" stroke-width="2.6"/>
+      <path d="M377.7 113.8 L380.1 112.4 L381.9 115.6 L385.5 118.5 L392.8 119.7 L420.0 127.3 L448.2 134.9 L455.2 142.3 L463.3 143.5 L473.3 142.4 L479.5 143.8 L517.4 153.2 L542.0 161.1 L563.2 163.9 L579.1 169.8 L596.8 183.3 L601.0 187.2 L608.2 204.0 L616.5 224.1 L618.0 227.5 L636.3 266.6 L647.4 290.1 L643.4 293.9 L625.2 301.3 L617.2 311.3 L609.1 336.1 L591.5 364.3 L593.6 364.5 L601.5 374.6 L606.1 378.6 L605.7 385.0 L599.3 393.9" stroke="#6C3FA0" stroke-width="2.4"/>
+      <path d="M377.7 113.8 L380.1 112.4 L382.3 118.0 L377.1 117.9 L383.6 128.5 L385.3 138.9 L387.8 154.6 L379.8 158.6 L367.2 160.9 L364.0 161.0 L348.8 155.9 L337.3 155.0 L321.4 156.0 L300.3 160.9 L294.4 164.5 L301.5 188.0 L290.4 191.7 L277.6 200.0 L262.9 205.1 L252.4 205.7 L232.5 198.6 L224.9 193.4 L214.3 188.1 L199.1 176.6 L184.8 171.9" stroke="#2E86AB" stroke-width="2.2"/>
+      <path d="M377.7 113.8 L380.1 112.4 L382.3 118.0 L377.1 117.9 L383.6 128.5 L385.3 138.9 L387.8 154.6 L379.8 158.6 L367.2 160.9 L364.0 161.0 L348.8 155.9 L337.3 155.0 L321.4 156.0 L301.4 161.1 L297.1 162.1 L299.5 181.1 L291.4 191.3 L283.3 191.9 L266.2 189.7 L251.5 189.0 L243.4 177.4 L240.2 169.5 L235.9 165.8 L235.5 161.6" stroke="#2E86AB" stroke-width="2.2"/>
+      <path d="M377.7 113.8 L380.1 112.4 L380.9 112.3 L383.6 106.5 L384.6 104.6 L383.0 95.5 L382.1 85.2 L379.6 70.5 L379.1 60.0 L372.7 56.3 L370.0 49.2 L368.5 43.0 L368.5 36.4 L370.9 33.5 L364.2 32.4 L365.4 31.9 L366.5 30.2" stroke="#2E86AB" stroke-width="2.2"/>
+      <path d="M333.9 147.6 L338.0 154.8 L355.1 158.8 L365.1 161.4 L367.7 161.2 L387.0 157.5 L387.3 153.6 L385.0 138.3 L378.5 118.9 L377.3 117.5 L381.8 114.8 L378.2 112.6 L377.7 113.8" stroke="#8A8F98" stroke-width="1.8"/>
+      <path d="M377.7 113.8 L381.1 113.3 L377.3 117.5 L383.6 128.5 L387.5 152.6 L387.0 157.5 L367.2 160.9 L360.2 158.9 L338.0 154.8 L333.9 147.6" stroke="#C43A22" stroke-width="1.5" stroke-dasharray="5 6" opacity=".55"/>
+      <path d="M333.9 147.6 L329.8 154.4 L348.8 155.9 L365.1 161.4 L369.3 161.1 L387.2 158.2 L387.5 152.6 L385.3 137.9 L384.7 138.4" stroke="#C43A22" stroke-width="1.5" stroke-dasharray="5 6" opacity=".55"/>
+      <path d="M519.8 417.0 L521.0 412.4 L520.8 411.5 L505.9 410.8 L492.0 387.5 L499.4 375.0 L496.7 367.8 L467.6 372.8 L428.9 351.5 L403.0 345.3 L398.3 341.5 L401.4 329.0 L398.0 314.2 L387.4 301.7 L382.3 287.9 L355.9 288.1 L347.5 285.9 L344.7 280.2 L341.0 275.9 L335.3 267.7 L341.1 254.3 L344.0 221.1 L345.9 217.1 L345.0 206.2 L341.4 199.5 L342.0 188.5 L344.3 181.4 L338.0 155.3 L333.9 147.6" stroke="#C43A22" stroke-width="1.5" stroke-dasharray="5 6" opacity=".55"/>
+    </g>
+    <g>
+      <circle cx="334.6" cy="147.5" r="7" fill="#C43A22"/>
+      <circle cx="332.5" cy="141.2" r="4.6" fill="#2E86AB"/>
+      <circle cx="324.5" cy="140.3" r="3.4" fill="#E8A33D"/>
+      <circle cx="333.9" cy="144.8" r="3.4" fill="#E8A33D"/>
+      <circle cx="332.1" cy="144.7" r="3.4" fill="#E8A33D"/>
+      <circle cx="343.6" cy="148.7" r="3.4" fill="#E8A33D"/>
+      <circle cx="329.6" cy="142.4" r="3.4" fill="#E8A33D"/>
+      <circle cx="345.2" cy="147.1" r="3.4" fill="#E8A33D"/>
+      <circle cx="350.9" cy="157.6" r="3.4" fill="#E8A33D"/>
+      <circle cx="351.6" cy="154.0" r="3.4" fill="#E8A33D"/>
+      <circle cx="313.4" cy="146.1" r="3.4" fill="#E8A33D"/>
+      <circle cx="320.5" cy="150.8" r="4.6" fill="#6C3FA0"/>
+      <circle cx="357.6" cy="150.8" r="3.4" fill="#E8A33D"/>
+      <circle cx="312.4" cy="147.2" r="3.4" fill="#E8A33D"/>
+      <circle cx="290.9" cy="160.2" r="3.4" fill="#E8A33D"/>
+      <circle cx="371.3" cy="147.8" r="3.4" fill="#E8A33D"/>
+      <circle cx="300.7" cy="187.8" r="3.4" fill="#E8A33D"/>
+      <circle cx="384.4" cy="137.9" r="3.4" fill="#E8A33D"/>
+      <circle cx="363.5" cy="120.7" r="3.4" fill="#E8A33D"/>
+      <circle cx="378.9" cy="141.2" r="4.6" fill="#6C3FA0"/>
+      <circle cx="382.5" cy="126.9" r="4.6" fill="#6C3FA0"/>
+      <circle cx="382.1" cy="126.3" r="4.6" fill="#6C3FA0"/>
+      <circle cx="370.6" cy="118.1" r="4.6" fill="#6C3FA0"/>
+      <circle cx="381.9" cy="121.4" r="4.6" fill="#6C3FA0"/>
+      <circle cx="381.7" cy="120.3" r="4.6" fill="#6C3FA0"/>
+      <circle cx="378.5" cy="113.7" r="2.4" fill="#8A8F98"/>
+      <circle cx="373.0" cy="118.3" r="4.2" fill="#1B4F72"/>
+      <circle cx="374.7" cy="119.5" r="4.2" fill="#1B4F72"/>
+      <circle cx="360.8" cy="126.5" r="4.2" fill="#1B4F72"/>
+      <circle cx="342.0" cy="79.6" r="4.6" fill="#2E86AB"/>
+      <circle cx="361.8" cy="31.6" r="4.6" fill="#2E86AB"/>
+      <circle cx="358.4" cy="26.0" r="4.6" fill="#2E86AB"/>
+      <circle cx="366.6" cy="30.2" r="2.4" fill="#8A8F98"/>
+      <circle cx="227.9" cy="152.9" r="4.6" fill="#2E86AB"/>
+      <circle cx="226.3" cy="152.6" r="3.4" fill="#E8A33D"/>
+      <circle cx="235.4" cy="161.6" r="2.4" fill="#8A8F98"/>
+      <circle cx="183.3" cy="168.0" r="4.6" fill="#2E86AB"/>
+      <circle cx="176.0" cy="162.6" r="4.6" fill="#2E86AB"/>
+      <circle cx="184.7" cy="172.0" r="2.4" fill="#8A8F98"/>
+      <circle cx="330.3" cy="154.5" r="2.4" fill="#8A8F98"/>
+      <circle cx="330.9" cy="144.6" r="2.4" fill="#8A8F98"/>
+      <circle cx="311.5" cy="160.1" r="2.4" fill="#8A8F98"/>
+      <circle cx="368.1" cy="153.0" r="2.4" fill="#8A8F98"/>
+      <circle cx="294.5" cy="164.6" r="2.4" fill="#8A8F98"/>
+      <circle cx="301.3" cy="188.3" r="2.4" fill="#8A8F98"/>
+      <circle cx="608.9" cy="211.6" r="4.6" fill="#6C3FA0"/>
+      <circle cx="612.5" cy="213.6" r="2.4" fill="#8A8F98"/>
+      <circle cx="609.1" cy="181.9" r="4.6" fill="#6C3FA0"/>
+      <circle cx="596.5" cy="183.4" r="2.4" fill="#8A8F98"/>
+      <circle cx="602.5" cy="394.0" r="4.6" fill="#6C3FA0"/>
+      <circle cx="599.3" cy="391.1" r="4.6" fill="#6C3FA0"/>
+      <circle cx="599.5" cy="394.1" r="2.4" fill="#8A8F98"/>
+      <circle cx="668.5" cy="317.7" r="2.4" fill="#8A8F98"/>
+      <circle cx="670.2" cy="314.2" r="4.2" fill="#1B4F72"/>
+      <circle cx="673.4" cy="326.5" r="4.6" fill="#2AA198"/>
+      <circle cx="667.1" cy="327.2" r="3.4" fill="#E8A33D"/>
+      <circle cx="672.7" cy="332.8" r="4.6" fill="#2AA198"/>
+      <circle cx="670.8" cy="325.9" r="3.4" fill="#E8A33D"/>
+      <circle cx="676.4" cy="323.6" r="4.6" fill="#B23A8F"/>
+      <circle cx="675.7" cy="325.6" r="4.6" fill="#6C3FA0"/>
+      <circle cx="675.4" cy="324.5" r="4.6" fill="#6C3FA0"/>
+      <circle cx="666.9" cy="324.2" r="3.4" fill="#E8A33D"/>
+      <circle cx="688.2" cy="296.8" r="4.6" fill="#6C3FA0"/>
+      <circle cx="517.8" cy="419.8" r="4.6" fill="#6FA35B"/>
+      <circle cx="519.9" cy="417.1" r="2.4" fill="#8A8F98"/>
+      <circle cx="131.8" cy="444.0" r="4.6" fill="#2AA198"/>
+    </g>
+      </svg>
+      <div class="sea" aria-hidden="true"></div>
+      <div class="stamp"><span>Live map · 9 days · every route</span></div>
+    </div>
+    <div class="atlas-body">
+      <div class="atlas-copy">
+        <div class="eyebrow m">The map</div>
+        <h2>Every place, every bus line, on one screen</h2>
+        <p>The whole week plotted — base camp, the beaches, the four big rooms, the restaurants and
+        the stops that get you between them. <b>Pick a date and the map shows only that day:</b> the bus
+        out, the bus back, and what to do once the last one has gone. The lines are the
+        <b>real route geometry</b>, not straight hops between pins.</p>
+        <div class="atlas-stats">
+          <div><b>72</b><span>Places</span></div>
+          <div><b>11</b><span>Routes drawn</span></div>
+          <div><b>9</b><span>Days + overview</span></div>
+        </div>
+        <div class="atlas-key">
+          <i class="k-base">Base</i><i class="k-beach">Beaches</i><i class="k-night">Nights</i>
+          <i class="k-eat">Food</i><i class="k-stop">Bus stops</i>
+        </div>
+      </div>
+      <div class="atlas-act">
+        <a class="atlas-cta" href="/app/static/ibiza-atlas.html" target="_blank" rel="noopener">
+          Open the Ibiza Atlas <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <div class="atlas-note">New tab · filter by day<br>or by ☀ day / ☾ night</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <main class="wrap">
 
