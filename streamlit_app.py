@@ -169,7 +169,10 @@ def mallorca() -> None:
 
 PAGES = [
     st.Page(ibiza, title="Ibiza", icon="🌴", url_path="ibiza", default=True),
-    st.Page(atlas, title="Atlas", icon="🗺️", url_path="atlas"),
+    # hidden from the sidebar on purpose: for now the Atlas is reached from the
+    # Ibiza page itself. When a wider multi-location atlas exists it can become a
+    # visible top-level entry.
+    st.Page(atlas, title="Atlas", icon="🗺️", url_path="atlas", visibility="hidden"),
     st.Page(mallorca, title="Mallorca", icon="🌊", url_path="mallorca"),
 ]
 
