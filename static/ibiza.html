@@ -294,6 +294,20 @@ footer .fw{font-family:var(--disp);text-transform:uppercase;
 footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;margin-top:1rem}
 
 
+/* jump from a day straight to that day on the map. The atlas reads the hash,
+   so #d06 lands on Sunday rather than the overview. target=_blank because the
+   page renders inside a sandboxed iframe that allows popups but not
+   top-navigation — a same-tab link would silently do nothing. */
+.daymap{
+  display:inline-flex;align-items:center;gap:.45em;align-self:flex-start;margin-top:10px;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--sea);text-decoration:none;border:1px solid var(--line);
+  background:var(--sand);border-radius:999px;padding:6px 11px;transition:.16s;
+}
+.daymap:hover{background:var(--sea);border-color:var(--sea);color:#fff}
+.day.isbig .daymap{color:var(--coral)}
+.day.isbig .daymap:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+
 /* ---------------- the atlas card ----------------
    A full-width map banner over the copy. The preview is not decoration: the
    lines are the actual GPS geometry of the bus routes and the dots are the
@@ -554,10 +568,10 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
         </div>
       </div>
       <div class="atlas-act">
-        <a class="atlas-cta" href="/app/static/ibiza-atlas.html" target="_blank" rel="noopener">
+        <a class="atlas-cta" href="/atlas" target="_blank" rel="noopener">
           Open the Ibiza Atlas <span class="arr" aria-hidden="true">↗</span>
         </a>
-        <div class="atlas-note">New tab · filter by day<br>or by ☀ day / ☾ night</div>
+        <div class="atlas-note">Opens in a new tab · filter by day<br>or by ☀ day / ☾ night</div>
       </div>
     </div>
   </div>
@@ -620,6 +634,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <h3>Land, drop bags, walk to the good bar</h3>
       <p class="note">You land at 19:25, so the sunset (20:23) is gone before you clear baggage. Don't fight it —
       get to the hotel, get changed, and walk six minutes to the best low-key spot in the Bay.</p>
+      <a class="daymap" href="/atlas?day=d02" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -693,6 +708,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <h3>Formentera, while you're still fresh</h3>
       <p class="note">Do this now, on the one morning you haven't been out until 6am. Ses Illetes genuinely looks
       like the photos — turquoise, shallow, white sand — and it is the best day out in the Balearics.</p>
+      <a class="daymap" href="/atlas?day=d03" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -829,6 +845,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <h3>Pool day, then Calvin Harris</h3>
       <p class="note">The one you booked. Keep the day flat and shallow — you're at the pool, you eat early, and
       you're on a bus to Playa d'en Bossa by 16:00. It starts in daylight and it's over by 23:00.</p>
+      <a class="daymap" href="/atlas?day=d04" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -888,6 +905,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <h3>Cala Bassa, sunset at Es Virot, then Bresh</h3>
       <p class="note">The week handed you a gift. Bresh is the Argentinian party that fuses pop, reggaeton and
       electronic, and 5 September is the season closing. This is your night.</p>
+      <a class="daymap" href="/atlas?day=d05" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -968,6 +986,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <p class="note">Recovery day. You finished at 6am yesterday, so this one costs almost nothing and asks
       almost nothing: no bus before three o'clock, the sunbeds halve their price at 15:30, and the best sunset
       on the island is free. Home by ten, something cheap near the hotel, bed.</p>
+      <a class="daymap" href="/atlas?day=d06" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -1041,6 +1060,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <h3>Saladeta by boat, then the old town</h3>
       <p class="note">The clearest water you will see, reached the good way — a forty-minute coastal sail
       instead of a bus. Then across the island to the only genuinely ancient thing on it.</p>
+      <a class="daymap" href="/atlas?day=d07" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -1145,6 +1165,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <p class="note">Nothing booked, on purpose. You have had four nights out by this point and you fly
       tomorrow evening — so this is the day you decide on the morning of, based on how you feel. Everything
       below is within reach on the day; none of it needs deciding now.</p>
+      <a class="daymap" href="/atlas?day=d08" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">
@@ -1199,6 +1220,7 @@ footer p{color:var(--muted);font-size:.82rem;max-width:60ch;line-height:1.6;marg
       <div class="dow m">Wednesday 9 September</div>
       <h3>Home</h3>
       <p class="note">A 20:15 flight gives you almost the whole day. Don't waste it in the hotel lobby.</p>
+      <a class="daymap" href="/atlas?day=d09" target="_blank" rel="noopener">See this day on the map ↗</a>
     </div>
   </div>
   <div class="daybody">

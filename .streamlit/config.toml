@@ -1,16 +1,20 @@
-# Matches the default page (Ibiza), so there is no flash of the wrong colour
-# on load and nothing pale bleeds around the edges. Each itinerary re-themes
-# the surrounding chrome to its own palette when it renders.
+# Matches the default page (Ibiza), which is a light, sun-bleached document —
+# so there is no flash of the wrong colour on load and nothing dark bleeds
+# around the edges. Each page re-themes the surrounding chrome as it renders.
 [theme]
-base = "dark"
-backgroundColor = "#06050A"
-secondaryBackgroundColor = "#100D19"
-primaryColor = "#FF2E8B"
-textColor = "#FFF6FA"
+base = "light"
+backgroundColor = "#FAF6EE"
+secondaryBackgroundColor = "#F3EADB"
+primaryColor = "#C43A22"
+textColor = "#1B2733"
 
 [browser]
 gatherUsageStats = false
 
 [server]
 headless = true
+# NB: Streamlit resolves ./static relative to the MAIN MODULE's directory, and
+# Cloud runs views/ibiza.py — so this serves nothing there today. It is kept
+# for local use and for if the Cloud app is ever re-created pointing at
+# streamlit_app.py. Nothing in the app links to /app/static/ any more.
 enableStaticServing = true

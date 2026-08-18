@@ -1329,6 +1329,25 @@ document.querySelectorAll('#phase button').forEach(b=>b.addEventListener('click'
   state.activeLeg=null;render();
 }));
 document.getElementById('grab').addEventListener('click',()=>{document.getElementById('panel').classList.toggle('tall');setTimeout(()=>map.invalidateSize(),300);});
+
+/* ---------- deep links ----------
+   /atlas#d06 opens straight onto that day, so the itinerary can link each
+   day card at the matching map. Selecting a day also writes the hash, which
+   makes the URL shareable and the back button behave. */
+function applyHash(){
+  /* window.__ATLAS_DAY is injected by the Streamlit page when the URL carries
+     ?day=... — the srcdoc iframe cannot see the parent's hash, so that is the
+     channel that actually works in the app. The hash is still honoured for
+     when this file is opened directly. */
+  const id = window.__ATLAS_DAY || (location.hash||'').replace('#','');
+  if(!id||!DAYS.some(d=>d.id===id)||id===state.day) return false;
+  state.day=id; state.activeLeg=null; return true;
+}
+window.addEventListener('hashchange',()=>{ window.__ATLAS_DAY=null; if(applyHash()) render(); });
+daysEl.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+  try{ history.replaceState(null,'', c.dataset.id==='ov' ? location.pathname : '#'+c.dataset.id); }catch(e){}
+}));
+applyHash();
 window.addEventListener('resize',()=>map.invalidateSize());
 function zoomClass(){const z=map.getZoom();document.body.classList.toggle('z-low',z<13&&state.day==='ov');document.body.classList.toggle('z-vlow',z<11.5&&state.day==='ov');}
 map.on('zoomend',zoomClass);

@@ -11,11 +11,12 @@ inside a pages/ file raises ModuleNotFoundError on deploy even though it works
 locally. Defining the pages as callables here avoids that failure mode
 entirely — see the `st.Page(...)` calls at the bottom.
 
-With `server.enableStaticServing` on (see .streamlit/config.toml) every page is
-also reachable raw, with no Streamlit chrome at all, at:
-    <app-url>/app/static/<name>.html
+Note on static serving: Streamlit resolves ./static relative to the MAIN
+MODULE's directory. Cloud runs views/ibiza.py, so /app/static/* is a dead URL
+in the deployed app and nothing links to it. Everything is served as a page.
 """
 
+import re
 from pathlib import Path
 
 import streamlit as st
@@ -48,11 +49,13 @@ def load_page(filename: str) -> str:
     return _read(str(page), page.stat().st_mtime)
 
 
-def render_itinerary(filename: str, bg: str, accent: str = "#FF2E8B") -> None:
+def render_itinerary(filename: str, bg: str, accent: str = "#FF2E8B",
+                     html: str | None = None) -> None:
     """Render a self-contained itinerary page full-bleed.
 
     `bg` should match the page's own background colour so the surrounding
     Streamlit chrome blends into it instead of flashing a different shade.
+    `html` overrides the file contents, for pages that inject state first.
     """
     st.markdown(
         f"""
@@ -85,9 +88,9 @@ def render_itinerary(filename: str, bg: str, accent: str = "#FF2E8B") -> None:
               top: .55rem !important;
               left: .55rem !important;
               z-index: 1002 !important;
-              background: rgba(0, 0, 0, .45) !important;
-              color: #fff !important;
-              border: 1px solid rgba(255, 255, 255, .22) !important;
+              background: rgba(255, 255, 255, .82) !important;
+              color: {accent} !important;
+              border: 1px solid rgba(27, 39, 51, .18) !important;
               border-radius: 8px !important;
               backdrop-filter: blur(8px);
           }}
@@ -119,7 +122,7 @@ def render_itinerary(filename: str, bg: str, accent: str = "#FF2E8B") -> None:
           /* --- sidebar, themed to the itinerary on screen --- */
           [data-testid="stSidebar"] {{
               background: {bg};
-              border-right: 1px solid rgba(255, 255, 255, .10);
+              border-right: 1px solid rgba(27, 39, 51, .12);
           }}
           [data-testid="stSidebarNav"] a[aria-current="page"] {{
               border-left: 2px solid {accent};
@@ -129,12 +132,34 @@ def render_itinerary(filename: str, bg: str, accent: str = "#FF2E8B") -> None:
         unsafe_allow_html=True,
     )
 
-    st.iframe(load_page(filename), height=900)
+    st.iframe(html if html is not None else load_page(filename), height=900)
 
 
 def ibiza() -> None:
     """Ibiza · 2–9 September 2026."""
-    render_itinerary("ibiza.html", bg="#06050A", accent="#FF2E8B")
+    render_itinerary("ibiza.html", bg="#FAF6EE", accent="#C43A22")
+
+
+def atlas() -> None:
+    """The whole Ibiza week on one interactive map.
+
+    Served as a page rather than a static file: Streamlit resolves ./static
+    relative to the main module's directory, and Cloud runs views/ibiza.py,
+    so /app/static/* is a dead URL there.
+
+    ?day=d06 opens straight onto that day. It has to travel as a query
+    parameter rather than a URL fragment: the page is rendered into a srcdoc
+    iframe, which has its own empty location, so a #hash on the parent never
+    reaches the map. Streamlit can read a query param, so the selected day is
+    injected into the document before it is handed to the iframe.
+    """
+    page = load_page("ibiza-atlas.html")
+    day = str(st.query_params.get("day", ""))
+    if re.fullmatch(r"d0[2-9]", day):
+        page = page.replace(
+            "</head>", f"<script>window.__ATLAS_DAY={day!r};</script></head>", 1
+        )
+    render_itinerary("ibiza-atlas.html", bg="#F6F0E6", accent="#D4472F", html=page)
 
 
 def mallorca() -> None:
@@ -144,6 +169,7 @@ def mallorca() -> None:
 
 PAGES = [
     st.Page(ibiza, title="Ibiza", icon="🌴", url_path="ibiza", default=True),
+    st.Page(atlas, title="Atlas", icon="🗺️", url_path="atlas"),
     st.Page(mallorca, title="Mallorca", icon="🌊", url_path="mallorca"),
 ]
 

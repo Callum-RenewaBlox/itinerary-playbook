@@ -2,9 +2,10 @@
 
 A small Streamlit app that serves hand-designed trip itineraries as shareable web pages.
 
-| Itinerary | When | Page |
+| Page | When | Source |
 |---|---|---|
 | **Ibiza** — a week of it | 2–9 September 2026 | [`static/ibiza.html`](static/ibiza.html) |
+| **Atlas** — the week on one map | 2–9 September 2026 | [`static/ibiza-atlas.html`](static/ibiza-atlas.html) |
 | **Mallorca** — a fortnight for two | 2–14 July 2026 | [`static/mallorca.html`](static/mallorca.html) |
 
 Each itinerary is a single **self-contained HTML page** with its own art direction — its own
@@ -31,13 +32,27 @@ streamlit run streamlit_app.py
 On [share.streamlit.io](https://share.streamlit.io) → **Create app**, pick this repo, branch
 `main`, main file `streamlit_app.py`. No secrets required.
 
-Because `server.enableStaticServing` is on, every itinerary is *also* reachable raw, with no
-Streamlit chrome at all — handy for sharing a single page on its own:
+**A note on static serving.** Streamlit resolves `./static` relative to the **main module's**
+directory, and the Cloud app runs `views/ibiza.py` (see the shim) — so `/app/static/*` is a dead
+URL in the deployed app. Everything is served as a page instead; nothing links to `/app/static/`.
 
-```
-<app-url>/app/static/ibiza.html
-<app-url>/app/static/mallorca.html
-```
+## The Atlas
+
+Every place, every bus line and every day of the week on one Leaflet map — 72 places, 11 routes
+drawn from real GPS geometry, filterable by day and by ☀ day / ☾ night. It has its own page at
+`/atlas`, and the itinerary links to it twice: a banner card at the top, and a **"See this day on
+the map"** link on each day.
+
+Those day links pass `?day=d06` rather than `#d06`, deliberately. Each page is rendered into a
+**srcdoc** iframe, which has its own empty location, so a fragment on the parent URL never reaches
+the map. Streamlit *can* read a query parameter, so `atlas()` injects the selected day into the
+document before handing it to the iframe. The map still honours `#d06` when the file is opened
+directly.
+
+Links out of a page also need `target="_blank"`: the iframe sandbox allows popups but **not**
+top-navigation, so a same-tab link silently does nothing.
+
+The map tiles come from CartoCDN, so the Atlas needs a connection — the itinerary itself does not.
 
 ## The Ibiza page — "the 20:15 line"
 
